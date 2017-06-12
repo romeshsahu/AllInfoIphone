@@ -1,0 +1,105 @@
+/* 
+  Localizable.strings
+  All Info
+
+  Created by iPhones on 5/13/16.
+  Copyright © 2016 PS.com. All rights reserved.
+*/
+"English language"="английский язык";
+"Russian language"="русский язык";
+"Hebrew language"="Иврит";
+"Arabic language"="арабский язык";
+//
+// Business Deatils
+
+"READ Review"="Обзор ЧТЕНИЕ";
+"Wright Review"="Райт Обзор";
+"VISIT WEBSITE"="ПОСЕТИТЕ ВЕБСАЙТ";
+"WATCH VIDEO"="СМОТРЕТЬ ВИДЕО";
+"LINK"="ССЫЛКА";
+"Business hours"="Рабочие часы";
+
+///
+//serchView
+"Search"="поиск";
+
+///WriteView
+"User"="пользователь";
+"Add Comments"="Добавить Комментарии";
+"Comment"="комментарий";
+"Add Rating"="Добавить рейтинг";
+"ADD COMMENT"="Добавить комментарий";
+"Done"="сделано";
+//////////
+
+
+//Registred View
+"User Name"="имя пользователя";
+"Address"="Адрес";
+"Comment"="комментарий";
+"SelectCategory"="выберите категорию";
+"Password"="пароль";
+"Email"="Email";
+"Business Email"="Бизнес Email";
+"Phone"="Телефон";
+"Business Name"="Наименование фирмы";
+"Select Sub Category"="Выберите подкатегорию";
+"WebURL"="Web URL";
+"Business type"="Вид бизнеса";
+"Video Url"="URL видео";
+"facebook Url"="facebook Url";
+"Description"="Описание";
+"PROFILE IMAGE"="ИЗОБРАЖЕНИЕ ПРОФИЛЯ";
+"ADD IMAGE"="добавить изображение";
+"SENT"="ПОСЛАЛ";
+"Business hours"="Рабочие часы";
+////MenuView
+"REGISTER"="РЕГИСТР";
+"HELP"="ПОМОГИТЕ";
+"CONTECT"="Contect";
+"LOGIN"="АВТОРИЗОВАТЬСЯ";
+"LOGOUT"="ВЫЙТИ";
+
+////leave Mesasge View
+"Name"="שֵׁם";
+"Phone"="טלפון";
+"email"="אֶלֶקטרוֹנִי";
+"Message"="הוֹדָעָה";
+"Send"="לִשְׁלוֹחַ";
+
+"Please  enter Name."="נא להזין שם.";
+"Please enter a valid phone Number."="בבקשה הכנס מספר טלפון תקין.";
+"Please enter Message."="נא לכתוב את ההודעה.";
+"Please enter email."="נא להזין את הדוא ל.";
+
+"Leave a message"="השאר הודעה";
+
+//close alert
+"Do you want to close the Allinfo"="האם אתה רוצה לסגור את אולאינפו";
+/////AddBussinList
+"My Business"="העסק שלי";
+
+////new add business Add form
+"Address"="כתובת";
+"SelectCategory"="בחר קטגוריה";
+"Business Email"="דוא ל עסקי";
+"Phone"="טלפון";
+"Business Name"="שם עסק";
+"Select Sub Category"="בחר תת קטגוריה";
+"WebURL"="תובת אתר אינטרנט";
+"Business type"="טיפוס עסקי";
+"Video Url"="Url וידאו";
+"facebook Url"="facebook Url";
+
+///contect Us
+"A message from Allinfo user"="";
+"Subject"="";
+"Phone"="";
+"Email"="";
+"Name"="";
+"Sent"="";
+
+
+
+
+

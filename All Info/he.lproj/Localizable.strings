@@ -1,0 +1,176 @@
+/* 
+  Localizable.strings
+  All Info
+
+  Created by iPhones on 5/13/16.
+  Copyright © 2016 PS.com. All rights reserved.
+*/
+// selecte Lanaguage view
+"English language"="שפה אנגלית";
+"Russian language"="שפה רוסית";
+"Hebrew language"="שפה עברית";
+"Arabic language"="שפה ערבית";
+//-------------------------------//
+
+// Business Deatils
+
+"READ Review"="קרא סקירה";
+"Wright Review"="כתוב סקירה  ";
+"VISIT WEBSITE"="בקר באתר";
+"WATCH VIDEO"="צפה בוידאו";
+"LINK"="קישור";
+"Business hours"="שעות פעילות";
+
+"Restaurants and cafes"="מסעדות ובתי קפה";
+"Restaurants"="מסעדות";
+"cafes"="קפה";
+///
+
+//serchView
+"Search"="חיפוש";
+
+
+///WriteView
+"User"="שם";
+"Add Comments"="להוסיף תגובות";
+"Comment"="תגובה";
+"Add Rating"="הוספת דירוג";
+"ADD COMMENT"="להשאיר תגובה";
+"Done"="בוצע";
+//////////
+
+"Are you sure you want to logout?"="?האם אתה בטוח שאתה רוצה להתנתק";
+
+//Registred View
+"User Name"="שם משתמש";
+"Address"="כתובת";
+"Comment"="תגובה";
+"SelectCategory"="בחר קטגוריה";
+"Password"="סיסמה";
+"Email"="אֶלֶקטרוֹנִי";
+"Business Email"="דוא ל עסקי";
+"Phone"="טלפון";
+"Business Name"="שם עסק";
+"Select Sub Category"="בחר תת קטגוריה";
+"WebURL"= "כתובת אתר אינטרנט";
+"Business type"="טיפוס עסקי";
+"Video Url"="כתובת וידאו";
+"facebook Url"="כתובת פייסבוק";
+"Description"="תיאור";
+"PROFILE IMAGE"="תמונת פרופיל";
+"ADD IMAGE"="הוספת תמונה";
+"send successfully."="הודעה נשלחה";
+
+"Business hours"="שעות פעילות";
+"Fill valid Email Field"="למלא שדה דוא ל תקף";
+
+///Registrain Validation
+"Fill Name Field"="מלא שם שדה";
+"Fill Password Field"="למלא שדה סיסמה";
+"Fill Email Field"="למלא שדה דוא ל";
+"Fill Business Email Field"="למלא שדה דוא ל עסקי";
+"Fill Phone Field"="למלא שדה טלפון";
+"Fill Address Field"="למלא שדה כתובת";
+"Fill Website Url Field"="למלא שדה כתובת האתר";
+"Fill Video Url Field"="למלא שדה Url וידאו";
+"Fill Facbook Url Field"="למלא שדה כתובת Facbook";
+"Fill Business Name  Field"="מלאו שם העסק מולא";
+"Fill Description Field"="למלא שדה תיאור";
+"Registation Successfully"="Registation בהצלחה";
+"Email already exists"="האימייל כבר קיים";
+
+
+
+
+////MenuView
+"Register"="הרשמה";
+"Login"="כניסה";
+"Help"="עזרה";
+"Contact"="יצירת קשר";
+"Logout"="התנתקות";
+
+///LoginView
+"Please enter your User Name."="נא להזין את שם המשתמש.";
+"Please enter Password."="נא להזין סיסמא.";
+"User Name"="שם משתמש";
+"Password"="סיסמה";
+"LOGIN"="התחבר";
+"Restaurantes y cafés"="מסעדות ובתי קפה";
+
+
+////BookingResturent
+"NAME"="שֵׁם";
+"DATE"="תַאֲרִיך";
+"NUMBER OF PEOPLE"="מספר אנשים";
+"TIME"="זְמַן";
+"PHONE"="טלפון";
+"MESSAGE"="הוֹדָעָה";
+"BOOK A RESERVATION"="הזמנה";
+"Fill NUMBER OF PEOPLE Field"="מלאו מספר אנשי השדה";
+"no business email found"="לא עֵסֶק אֶלֶקטרוֹנִ מצאתי ";
+
+"Fill Name Field"="מלא שם שדה";
+"Fill DATE Field"="מלאו שדה תאריך";
+"Fill Time Field"="למלא שדה זמן";
+"Fill NUMBER OF PEOPLE"="מלאו מספר האנשים";
+"Fill Phone number Field"="למלא שדה מספר טלפון";
+"Fill Valid Phone number"="מקיש את מספר טלפון חוקי";
+"Fill MESSAGE Field"="מלאו הוֹדָעָה שדה";
+"OK"="בסדר";
+"Send"="לִשְׁלוֹחַ";
+"Save"="שמירה";
+////leave Mesasge View
+"Name"="שֵׁם";
+"Phone"="טלפון";
+"email"="אֶלֶקטרוֹנִי";
+"Message"="הוֹדָעָה";
+"Send"="לִשְׁלוֹחַ";
+"A message from All Info user"="את הודעה מכל משתמשי המידע";
+
+"Please  enter Name."="נא להזין שם.";
+"Please enter a valid phone Number."="בבקשה הכנס מספר טלפון תקין.";
+"Please enter Message."="נא לכתוב את ההודעה.";
+"Please enter email."="נא להזין את הדוא ל.";
+
+"Leave a message"="השאר הודעה";
+
+//close alert
+"Do you want to close the Allinfo"="האם אתה רוצה לסגור את אולאינפו";
+"Current Location"="";
+/////AddBussinList
+"My Business"="העסק שלי";
+"History"="היסטוריה";
+"Favorite"="מועדפים";
+
+
+"Close" = "סגור";
+
+////new add business Add form
+"Address"="כתובת";
+"SelectCategory"="בחר קטגוריה";
+"Business Email"="דוא ל עסקי";
+"Phone"="טלפון";
+"Business Name"="שם עסק";
+"Select Sub Category"="בחר תת קטגוריה";
+"WebURL"="כתובת אתר אינטרנט";
+"Business type"="טיפוס עסקי";
+"Video Url"="כתובת וידאו";
+"facebook Url"="כתובת פייסבוק";
+"No data found"="לא נמצאו נתונים";
+"Add Pictures To Gallery" = "להוסיף תמונות לגלריה";
+"Description of Business"="תיאור עסק";
+
+///contect Us
+"A message from Allinfo user"="את הודעה מכל משתמשי המידע";
+"Subject"="נושא";
+"Phone"="טלפון";
+"Email"="אֶלֶקטרוֹנִי";
+"Name"="שֵׁם";
+
+"Fill Subject Field"="למלא שדה נושא";
+"Fill message Field"="למלא שדה הודעה";
+"Fill Comment Field"="מילוי תגובה מולא";
+
+"Menu url" = "לינק לתפריט";
+"Table url" = "לינק הזמנת שולחן‎";
+

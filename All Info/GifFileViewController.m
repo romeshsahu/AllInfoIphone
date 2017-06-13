@@ -481,7 +481,6 @@ bool isShowngif = false;
         MapView.getSubcategryDic=_getSubcategryDic;
         MapView.isserchsetview=true;
 
-        
     }
 
     if ([segue.identifier isEqualToString:@"Details"]) {

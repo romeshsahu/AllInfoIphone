@@ -15,6 +15,9 @@
 #import <MapKit/MapKit.h>
 #import "mapClass.h"
 #import "UnicodeConversionClass.h"
+#import "GifFileViewController.h"
+
+
 @interface MapListViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate,MBProgressHUDDelegate>
 
 {
@@ -22,6 +25,13 @@
     MBProgressHUD *HUD;
     
     UnicodeConversionClass *classUnicode;
+    IBOutlet UIView *viewSearch;
+    IBOutlet UITextField *textSearch;
+    IBOutlet UIButton *btnSearch;
+    UIButton *btnMapTap;
+    UIView *viewMapTap;
+    UILabel *lblMapTap;
+    UIImageView *imgMapTap;
 
 }
 - (IBAction)btn_Share:(id)sender;

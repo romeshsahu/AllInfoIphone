@@ -244,3 +244,8 @@
 
 /* Class = "UILabel"; text = "My Business"; ObjectID = "zRo-83-0d3"; */
 "zRo-83-0d3.text" = "My Business";
+
+/* Class = "UITextField"; placeholder = "Search"; ObjectID = "hIa-SF-OnQ"; */
+"hIa-SF-OnQ.placeholder" = "חיפוש";
+
+

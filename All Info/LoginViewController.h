@@ -21,7 +21,6 @@
     NSString *strFBName ;
     NSString *strFBemail ;
 
-    
 }
 @property (weak, nonatomic) IBOutlet FBSDKLoginButton *loginButton;
 @property (weak, nonatomic) IBOutlet GIDSignInButton *signInButton;

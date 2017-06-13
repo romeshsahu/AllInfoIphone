@@ -22,7 +22,8 @@
     [self.LogoutBtNOut setTitle:NSLocalizedString(@"Logout",nil) forState:UIControlStateNormal];
     [self.LoginBtnOut setTitle:NSLocalizedString(@"Login",nil) forState:UIControlStateNormal];
     [self.HelpBtnOut setTitle:NSLocalizedString(@"Help",nil) forState:UIControlStateNormal];
- 
+    [self.btnCategory setTitle:NSLocalizedString(@"Category",nil) forState:UIControlStateNormal];
+
 //    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeHandler)];
 //    [self.view addGestureRecognizer:gestureRecognizer];
     // Do any additional setup after loading the view from its nib.

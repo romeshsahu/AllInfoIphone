@@ -21,9 +21,10 @@
 #import "HelpViewController.h"
 #import "ContectUsViewController.h"
 #import "MapViewController.h"
+
 @interface MapListViewController ()<MenuViewControllerDelegates,UITabBarControllerDelegate>
 {
-
+    
     NSString*Userlat;
     NSMutableDictionary *BussnessDic;
     NSString*Userlong;
@@ -31,9 +32,9 @@
     UINavigationController *nav;
     MenuViewController * sample;
     Allinfo *HistoryInfo;
-
+    
     UIView *footerView;
-     UIActivityIndicatorView * actInd;
+    UIActivityIndicatorView * actInd;
     CGPoint lastContentOffset;
     
     
@@ -42,7 +43,7 @@
     CLLocationCoordinate2D cord_Current;
     mapClass *shop1;
     CLLocation *location ;
-
+    
     
 }
 
@@ -57,17 +58,20 @@ bool isShowngif1 = false;
     [super viewDidLayoutSubviews];
 }
 - (void)viewWillAppear:(BOOL)animated {
-    serchListArr = [[NSMutableArray alloc] init];
+    [super viewWillAppear:animated];
+
+    viewSearch.hidden=YES;
+
     
-    if (self.issearch==YES) {
-        
-        [self performSelector:@selector(serchByprodect) withObject:nil afterDelay:1.0f];
-    }else{
-        [self performSelector:@selector(GetprodectList) withObject:nil afterDelay:1.0f];
-        
+    [viewMapTap removeFromSuperview];
+    [btnMapTap removeFromSuperview];
+    [lblMapTap removeFromSuperview];
+    [imgMapTap removeFromSuperview];
+    
+    for (UITapGestureRecognizer *recognizer in self.view.gestureRecognizers) {
+        [self.view removeGestureRecognizer:recognizer];
     }
 
-    [super viewWillAppear:animated];
     HistoryInfo=[[Allinfo alloc]init];
     [sample.view removeFromSuperview];
     
@@ -83,25 +87,16 @@ bool isShowngif1 = false;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    serchListArr = [[NSMutableArray alloc]init];
-    
     classUnicode=[[UnicodeConversionClass alloc]init];
-
-    if (self.issearch==YES) {
-        serchListArr=[[NSMutableArray alloc]init];
-        //self.ShowTitalLabe.text=[self.getSubcategryDic objectForKey:@"sub_category_name"];
-        //self.ShowTitalLabe.textAlignment=NSTextAlignmentCenter;
-        [self initFooterView];
-        
-    }else{
-        serchListArr=[[NSMutableArray alloc]init];
-       // self.ShowTitalLabe.text=[self.getSubcategryDic objectForKey:@"sub_category_name"];
-       // self.ShowTitalLabe.textAlignment=NSTextAlignmentCenter;
-
-        [self initFooterView];
-    }
-    
+    [self initFooterView];
     [self fetchLocation];
+    
+    serchListArr = [[NSMutableArray alloc] init];
+    if (self.issearch==YES) {
+        [self performSelector:@selector(serchByprodect) withObject:nil afterDelay:1.0f];
+    }else{
+        [self performSelector:@selector(GetprodectList) withObject:nil afterDelay:1.0f];
+    }
 
 }
 
@@ -135,7 +130,7 @@ bool isShowngif1 = false;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-        // NSLog(@"didUpdateToLocation: %f, long = %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
+    // NSLog(@"didUpdateToLocation: %f, long = %f", newLocation.coordinate.latitude, newLocation.coordinate.longitude);
     CLLocation *currentLocation = newLocation;
     if (currentLocation != nil) {
         
@@ -146,7 +141,7 @@ bool isShowngif1 = false;
                     //do something
                 }else{
                     [self serchByprodect];
-
+                    
                 }
                 
             }else{
@@ -154,7 +149,7 @@ bool isShowngif1 = false;
                     //do something
                 }else{
                     [self GetprodectList];
-
+                    
                 }
                 
             }
@@ -173,13 +168,12 @@ bool isShowngif1 = false;
             Userlat = [[NSUserDefaults standardUserDefaults]
                        stringForKey:@"Userlat"];
         }
-       
+        
     }
 }
-
 /*- (IBAction)ActionOnMapView:(id)sender {
-    [self performSegueWithIdentifier:@"MapView" sender:self];
-}*/
+ [self performSegueWithIdentifier:@"MapView" sender:self];
+ }*/
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MapView"]) {
@@ -187,8 +181,8 @@ bool isShowngif1 = false;
         MapView.delegates = self;
         MapView.isaddnew=YES;
     }
-
-    if ([segue.identifier isEqualToString:@"Details"]) {
+    
+   else if ([segue.identifier isEqualToString:@"Details"]) {
         
         NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
         dictBD = [BussnessDic mutableCopy];
@@ -200,61 +194,72 @@ bool isShowngif1 = false;
         Bissnesdetails.getBussnessDic=[dictBD mutableCopy];
         Bissnesdetails.isserchsetview=true;
     }
+    
+    else if ([segue.identifier isEqualToString:@"search"]){
+        GifFileViewController *gif=segue.destinationViewController;
+        //gif.serchnamearr=BissArr;
+        gif.serchByName=textSearch.text;
+        gif.issearch=YES;
+        [textSearch resignFirstResponder];
+        textSearch.text=@"";
+        
+    }
+
 }
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
-
- if (connection==self.connection) {
-    if (self.receivedData != nil) {
-        NSDictionary *responseDic =[NSJSONSerialization JSONObjectWithData:self.receivedData options:kNilOptions error:nil];
-        if ([responseDic isKindOfClass:[NSDictionary class]]) {
-            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-                if (![[responseDic objectForKey:@"result"] isKindOfClass:[NSNull class]]) {
-                    
-                    NSArray *responseArr = [responseDic objectForKey:@"result"];
-                    for (NSDictionary *dic in responseArr) {
-                        [serchListArr addObject:dic];
+    
+    if (connection==self.connection) {
+        if (self.receivedData != nil) {
+            NSDictionary *responseDic =[NSJSONSerialization JSONObjectWithData:self.receivedData options:kNilOptions error:nil];
+            if ([responseDic isKindOfClass:[NSDictionary class]]) {
+                if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                    if (![[responseDic objectForKey:@"result"] isKindOfClass:[NSNull class]]) {
+                        
+                        NSArray *responseArr = [responseDic objectForKey:@"result"];
+                        for (NSDictionary *dic in responseArr) {
+                            [serchListArr addObject:dic];
+                        }
                     }
-            }
-                
-                
-                [self map_pinAnnotation];
-                NSLog(@"serchListArr = %@", serchListArr);
-                
-                
-        }else {
-            
-        }
-    }
-    }
- }else  if (connection==self.connectionnew){
-     
-     if (self.receivedDatanew != nil) {
-        NSDictionary *responseDic =[NSJSONSerialization JSONObjectWithData:self.receivedDatanew options:kNilOptions error:nil];
-        if ([responseDic isKindOfClass:[NSDictionary class]]) {
-            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-                if (![[responseDic objectForKey:@"result"] isKindOfClass:[NSNull class]]) {
                     
-                    NSArray *responseArr = [responseDic objectForKey:@"result"];
                     
-                    for (NSDictionary *dic in responseArr) {
-                        [serchListArr addObject:dic];
-                    }
+                    [self map_pinAnnotation];
+                    NSLog(@"serchListArr = %@", serchListArr);
+                    
+                    
+                }else {
+                    
                 }
-                
-            }else {
-                
-                //            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"No data found",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                //            [alert show];
             }
         }
-     }
+    }else  if (connection==self.connectionnew){
+        
+        if (self.receivedDatanew != nil) {
+            NSDictionary *responseDic =[NSJSONSerialization JSONObjectWithData:self.receivedDatanew options:kNilOptions error:nil];
+            if ([responseDic isKindOfClass:[NSDictionary class]]) {
+                if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                    if (![[responseDic objectForKey:@"result"] isKindOfClass:[NSNull class]]) {
+                        
+                        NSArray *responseArr = [responseDic objectForKey:@"result"];
+                        
+                        for (NSDictionary *dic in responseArr) {
+                            [serchListArr addObject:dic];
+                        }
+                    }
+                    
+                }else {
+                    
+                    //            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"No data found",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    //            [alert show];
+                }
+            }
+        }
     }
-
+    
     
 }
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-     [HUD hide:YES];
-   
+    [HUD hide:YES];
+    
     if (connection==self.connection) {
         [self.receivedData appendData:data];
     }else if (connection==self.connectionnew) {
@@ -287,7 +292,7 @@ bool isShowngif1 = false;
     
     [AppDelegate SharedInstance].window.rootViewController=controller;
     [[AppDelegate SharedInstance].window makeKeyAndVisible];
-     //[self.navigationController popToRootViewControllerAnimated:YES];
+    //[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (IBAction)ActionOnmenu:(id)sender {
@@ -301,8 +306,8 @@ bool isShowngif1 = false;
         CATransition *transition = [CATransition animation];
         transition.duration = 0.5;
         transition.type = kCATransitionPush;
-       
-         transition.subtype = kCATransitionFromLeft;
+        
+        transition.subtype = kCATransitionFromLeft;
         [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
         [sample.view.layer addAnimation:transition forKey:nil];
         [self.view addSubview:sample.view];
@@ -322,7 +327,7 @@ bool isShowngif1 = false;
         
         isShowngif1 = false;
     }
-
+    
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag==1) {
@@ -340,6 +345,23 @@ bool isShowngif1 = false;
         
     }
 }
+
+- (IBAction)btn_Share:(id)sender {
+    viewSearch.hidden=NO;
+    
+}
+
+- (IBAction)btn_SearchClose:(id)sender {
+    viewSearch.hidden=YES;
+    
+    
+    if (textSearch.text.length==0) {}
+    else{
+        [textSearch resignFirstResponder];
+        [self performSegueWithIdentifier:@"search" sender:self];
+    }
+}
+
 
 #pragma mark - Menu delegates
 
@@ -389,7 +411,7 @@ bool isShowngif1 = false;
             ContectUsView.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:ContectUsView animated:YES];
         }
-
+            
             break;
         case 6:
         {
@@ -411,7 +433,7 @@ bool isShowngif1 = false;
     transition.duration = 1;
     transition.type = kCATransitionReveal;
     
-     transition.subtype = kCATransitionFromRight;
+    transition.subtype = kCATransitionFromRight;
     [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
     [sample.view.layer addAnimation:transition forKey:nil];
     [sample.view removeFromSuperview];
@@ -420,26 +442,6 @@ bool isShowngif1 = false;
     isShowngif1 = false;
 }
 
-- (IBAction)btn_Share:(id)sender {
-    NSString *textToShare = @"Share link using";
-    NSURL *myWebsite = [NSURL URLWithString:kAppDelegate.strShareLink];
-    
-    NSArray *objectsToShare = @[textToShare, myWebsite];
-    
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-    
-    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-                                   UIActivityTypePrint,
-                                   UIActivityTypeAssignToContact,
-                                   UIActivityTypeSaveToCameraRoll,
-                                   UIActivityTypeAddToReadingList,
-                                   UIActivityTypePostToFlickr,
-                                   UIActivityTypePostToVimeo];
-    
-    activityVC.excludedActivityTypes = excludeActivities;
-    
-    [self presentViewController:activityVC animated:YES completion:nil];
-}
 
 -(void)serchByprodect{
     
@@ -605,31 +607,18 @@ bool isShowngif1 = false;
         
         arr_lat=[serchListArr valueForKey:@"latitude"];
         arr_long=[serchListArr valueForKey:@"longitude"];
-        arr_AnnoText=[serchListArr valueForKey:@"category_name"];
+        arr_AnnoText=[serchListArr valueForKey:@"category_"];
         arr_AnnoPrice=[serchListArr valueForKey:@"phone"];
         
         NSLog(@"arrAdsList.count.....%lu",(unsigned long)arr_lat.count);
         
         for (int i=0; i<arr_lat.count; i++)
         {
-            NSString *str;
-            NSString *currency  = [NSString stringWithFormat:@"%@",[serchListArr [i] valueForKey:@"currency"]];
-            if ([currency isEqualToString:@"0"]) {
-                str=[NSString stringWithFormat:@"%@-%@ SAR",arr_AnnoText[i], arr_AnnoPrice[i]];
-            }
-            else
-            {
-                str=[NSString stringWithFormat:@"%@-$ %@",arr_AnnoText[i], arr_AnnoPrice[i]];
-            }
-            
-            
             CLLocationCoordinate2D cord1=CLLocationCoordinate2DMake([arr_lat[i] floatValue],[arr_long[i] floatValue]);
-            shop1=[[mapClass alloc]initWithTitle:str andCoordinate:cord1 andFlavours: @"Name" SubTitle: [classUnicode StringToConvert:arr_AnnoText[i]] selectedID:[NSString stringWithFormat:@"%d",i]];
+            shop1=[[mapClass alloc]initWithTitle:arr_AnnoPrice[i] andCoordinate:cord1 andFlavours: @"Name" SubTitle:arr_AnnoText[i] selectedID:[NSString stringWithFormat:@"%d",i]];
             [mapView addAnnotation:shop1];
             
         }
-        
-        
     }
     @catch (NSException *exception)
     {
@@ -640,10 +629,10 @@ bool isShowngif1 = false;
 
 #pragma mark mapView Delegates
 /*
-- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    NSLog(@"didFailWithError: %@", error);
-}*/
+ - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+ {
+ NSLog(@"didFailWithError: %@", error);
+ }*/
 
 //if user location is updated
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -669,7 +658,126 @@ bool isShowngif1 = false;
 -(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
 {
     NSLog(@"didSelectAnnotationView.....%@",view);
+    
+    [viewMapTap removeFromSuperview];
+    [btnMapTap removeFromSuperview];
+    [lblMapTap removeFromSuperview];
+    [imgMapTap removeFromSuperview];
+
+    for (UITapGestureRecognizer *recognizer in self.view.gestureRecognizers) {
+        [view removeGestureRecognizer:recognizer];
+    }
+
+    NSString *selectedSelected = [NSString stringWithFormat:@"%@",view.annotation.title];
+    
+    for (int i=0; i<serchListArr.count; i++)
+    {
+        BussnessDic = [serchListArr objectAtIndex:i];
+        NSString *srtIn=[[serchListArr objectAtIndex:i] valueForKey:@"phone"];
+        if ([srtIn isEqualToString:selectedSelected])
+        {
+
+            viewMapTap=[[UIView alloc]initWithFrame:CGRectMake(-90.0, -90.0, 90.0, 100.0)];
+            [viewMapTap setBackgroundColor:[UIColor whiteColor]];
+            [view addSubview:viewMapTap];
+            
+            imgMapTap=[[UIImageView alloc]initWithFrame:CGRectMake(10.0, 3.0, 70.0, 70.0)];
+           // [imgMapTap sd_setImageWithURL:[NSURL URLWithString:srtImg] placeholderImage:[UIImage imageNamed:@"map_icon2@3x.png"]];
+            
+            NSString *imageToLoad = [BussnessDic objectForKey:@"product_image1"];
+            NSString *imageToLoad2 = [BussnessDic objectForKey:@"product_image2"];
+            NSString *imageToLoad3 = [BussnessDic objectForKey:@"product_image3"];
+            NSString *imageToLoad4 = [BussnessDic objectForKey:@"product_image4"];
+            NSString *imageToLoad5 = [BussnessDic objectForKey:@"product_image5"];
+            NSString *imageToLoad6 = [BussnessDic objectForKey:@"product_image6"];
+            NSString *imageToLoad7 = [BussnessDic objectForKey:@"product_image7"];
+            NSString *imageToLoad8 = [BussnessDic objectForKey:@"product_image8"];
+            NSString *imageToLoad9 = [BussnessDic objectForKey:@"product_image9"];
+            NSString *imageToLoad10 = [BussnessDic objectForKey:@"product_image10"];
+            
+            NSLog(@"imageToLoad = %@", imageToLoad);
+            NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
+            if(imageToLoad.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad2.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad2] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad3.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad3] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad4.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad4] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad5.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad5] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad6.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad6] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad7.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad7] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad8.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad8] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad9.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad9] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad10.length > 0) {
+                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad10] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else {
+                if (self.issearch==NO) {
+                    [imgMapTap sd_setImageWithURL:[NSURL URLWithString:kAppDelegate.strSubCategory] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+                }else {
+                    kAppDelegate.strSubCategory = @"";
+                    FMDBManager *fm = [[FMDBManager alloc] init];
+                    [fm openDataBase];
+                    NSArray * arr = [fm SubCategryarry:BussnessDic[@"category_id"]];
+                    if(arr.count > 0){
+                        NSDictionary * dict = arr[0];
+                        kAppDelegate.strSubCategory = dict[@"sub_category_image"];
+                        NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
+                        [imgMapTap sd_setImageWithURL:[NSURL URLWithString:kAppDelegate.strSubCategory] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+                    }
+                }
+            }
+            
+            [viewMapTap addSubview:imgMapTap];
+
+            NSString *srtLbl=[classUnicode StringToConvert:[[serchListArr objectAtIndex:i] valueForKey:@"business_name"]];
+            lblMapTap=[[UILabel alloc]initWithFrame:CGRectMake(0.0, 70.0, 90.0, 30.0)];
+            lblMapTap.text=srtLbl;
+            lblMapTap.numberOfLines=2;
+            [lblMapTap setFont:[UIFont systemFontOfSize:9.0]];
+            [viewMapTap addSubview:lblMapTap];
+            
+            btnMapTap = [UIButton buttonWithType:UIButtonTypeSystem];
+            btnMapTap.frame = CGRectMake(0.0, 0.0, 90.0, 100.0);
+            btnMapTap.tag=i;
+            [viewMapTap addSubview:btnMapTap];
+            
+            btnMapTap.userInteractionEnabled = YES;
+            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
+            [self.view addGestureRecognizer:singleFingerTap];
+
+            break;
+        }
+    }
 }
+
+
+//The event handling method
+- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
+{
+    @try {
+        BussnessDic = [serchListArr objectAtIndex:[btnMapTap tag]];
+        NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
+        dictBD = [BussnessDic mutableCopy];
+        [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
+        
+        self.isserchsetview=true;
+        FMDBManager *fm = [[FMDBManager alloc] init];
+        [fm openDataBase];
+        [fm saveTude:[dictBD mutableCopy]];
+        [self performSegueWithIdentifier:@"Details" sender:self];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"exception.....%@",exception);
+    }
+}
+
 
 -(MKAnnotationView *)mapView:(MKMapView *)mV viewForAnnotation:(id <MKAnnotation>)annotation
 {
@@ -688,13 +796,18 @@ bool isShowngif1 = false;
             
             pinView.image = [UIImage imageNamed:@"map2.png"];
             
+            
+            
         }
         else {
             [mapView.userLocation setTitle:@"Current Location"];
         }
         
-        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        pinView.canShowCallout = YES;
+        
+        
+        
+        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        pinView.canShowCallout = NO;
         
         
         return pinView;
@@ -705,6 +818,7 @@ bool isShowngif1 = false;
         
     }
 }
+
 - (void)locationManager:(CLLocationManager*)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     switch (status)
@@ -739,38 +853,69 @@ bool isShowngif1 = false;
     }
 }
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+/*- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
     NSLog(@"calloutAccessoryControlTapped.....");
     
     @try {
         NSLog(@"didSelectAnnotationView.....%@",view);
         NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
-        int ii = 0;
         for (mapClass *annotationView in selectedAnnotations)
         {
             [self.mapView deselectAnnotation:annotationView animated:YES];
-            ii++;
-            BussnessDic = [serchListArr objectAtIndex:ii];
             
-            NSLog(@"BussnessDic = %@", BussnessDic);
-            NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
-            dictBD = [BussnessDic mutableCopy];
-            [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
+            NSMutableArray *arrSelectedAdsList=[[NSMutableArray alloc]init];
+            //  arrSelectedAdsList=[arrAdsList objectAtIndex:[[annotationView selectedID] integerValue]];
+            //  userDefaults = [NSUserDefaults standardUserDefaults];
+            //  [userDefaults setObject:arrSelectedAdsList  forKey:@"arrSelectedAdsList"];
+            //  [userDefaults synchronize];
             
-            self.isserchsetview=true;
-            FMDBManager *fm = [[FMDBManager alloc] init];
-            [fm openDataBase];
-            [fm saveTude:[dictBD mutableCopy]];
-            [self performSegueWithIdentifier:@"Details" sender:self];
+            //  AdsDetailViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"AdsDetailViewController"];
+            //  [self presentViewController:price1 animated:true completion:nil];
+            
+            NSLog(@"selectedAnnotations.....%@",selectedAnnotations);
         }
-        NSLog(@"selectedAnnotations.....%@",selectedAnnotations);
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"exception.....%@",exception);
+    }
+}*/
 
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    NSLog(@"calloutAccessoryControlTapped.....");
+    
+    @try {
+        NSLog(@"view.annotation.title...%@",view.annotation.title);
+        NSString *selectedSelected = [NSString stringWithFormat:@"%@",view.annotation.title];
+        
+        for (int i=0; i<serchListArr.count; i++)
+        {
+            BussnessDic = [serchListArr objectAtIndex:i];
+            NSString *srtIn=[[serchListArr objectAtIndex:i] valueForKey:@"phone"];
+            if ([srtIn isEqualToString:selectedSelected])
+            {
+                NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
+                dictBD = [BussnessDic mutableCopy];
+                [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
+                
+                self.isserchsetview=true;
+                FMDBManager *fm = [[FMDBManager alloc] init];
+                [fm openDataBase];
+                [fm saveTude:[dictBD mutableCopy]];
+                [self performSegueWithIdentifier:@"Details" sender:self];
+                break;
+            }
+        }
+        
     }
     @catch (NSException *exception) {
         NSLog(@"exception.....%@",exception);
     }
 }
+
+
 
 
 

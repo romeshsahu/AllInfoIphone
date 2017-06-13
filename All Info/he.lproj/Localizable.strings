@@ -42,6 +42,8 @@
 "Are you sure you want to logout?"="?האם אתה בטוח שאתה רוצה להתנתק";
 
 //Registred View
+"Category"="קטגוריה";
+
 "User Name"="שם משתמש";
 "Address"="כתובת";
 "Comment"="תגובה";

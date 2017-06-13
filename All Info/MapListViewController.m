@@ -683,7 +683,7 @@ bool isShowngif1 = false;
             
             imgMapTap=[[UIImageView alloc]initWithFrame:CGRectMake(10.0, 3.0, 70.0, 70.0)];
            // [imgMapTap sd_setImageWithURL:[NSURL URLWithString:srtImg] placeholderImage:[UIImage imageNamed:@"map_icon2@3x.png"]];
-            
+            ////
             NSString *imageToLoad = [BussnessDic objectForKey:@"product_image1"];
             NSString *imageToLoad2 = [BussnessDic objectForKey:@"product_image2"];
             NSString *imageToLoad3 = [BussnessDic objectForKey:@"product_image3"];

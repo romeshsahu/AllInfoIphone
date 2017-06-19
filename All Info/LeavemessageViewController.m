@@ -123,16 +123,16 @@
 
 - (IBAction)ActionOnsend:(id)sender {
     if (self.NameTextFiled.text.length==0){
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message: NSLocalizedString(@"Please  enter Name.",nil) delegate:nil cancelButtonTitle:@"Yes" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message: NSLocalizedString(@"Please  enter Name.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Yes",nil)  otherButtonTitles:nil];
         [alert show];
     }else if (self.EmailTextFiled.text.length==0){
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter email.",nil) delegate:nil cancelButtonTitle:@"Yes" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter email.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Yes",nil) otherButtonTitles:nil];
         [alert show];
     }else if (self.PhoneTextFiled.text.length==0){
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter a valid phone Number.",nil) delegate:nil cancelButtonTitle:@"Yes" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter a valid phone Number.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Yes",nil) otherButtonTitles:nil];
         [alert show];
     }else if (self.MessageTextview.text.length==0){
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter Message.",nil) delegate:nil cancelButtonTitle:@"Yes" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter Message.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Yes",nil) otherButtonTitles:nil];
             [alert show];
     }else{
         
@@ -157,7 +157,7 @@
     NSDictionary *responseDic=response;
     if ([response isKindOfClass:[NSDictionary class]]) {
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"send successfully.",nil) delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"send successfully.",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Yes",nil) otherButtonTitles:nil];
              alert.tag=1;
              [alert show];
         

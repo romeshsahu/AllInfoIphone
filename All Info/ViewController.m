@@ -151,27 +151,34 @@ bool isShown = false;
 }
 -(void)GetBusinesList:(id)response
 {
-    NSDictionary *responseDic=response;
-    if ([response isKindOfClass:[NSDictionary class]]) {
-        if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            NSArray *BusinessArr=[responseDic objectForKey:@"result"];
-            AllCatergryArr=[[NSMutableArray alloc]init];
-            for (int i=0; i<BusinessArr.count; i++) {
-                NSDictionary *BusinessDic=[BusinessArr objectAtIndex:i];
-                Allinfo *BusinessArrInfo=[[Allinfo alloc]init];
-                NSLog(@"BusinessDict = %@", [BusinessDic objectForKey:@"category_id"]);
-                BusinessArrInfo.category_id=[BusinessDic objectForKey:@"category_id"];
-                BusinessArrInfo.category_image=[BusinessDic objectForKey:@"category_image"];
-                BusinessArrInfo.category_name=[BusinessDic objectForKey:@"category_name"];
-                BusinessArrInfo.language_id=[BusinessDic objectForKey:@"language_id"];
-                FMDBManager *fm = [[FMDBManager alloc] init];
-                [fm openDataBase];
-                [fm saveallBusinss:BusinessDic];
+    @try {
+        NSDictionary *responseDic=response;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                NSArray *BusinessArr=[responseDic objectForKey:@"result"];
+                AllCatergryArr=[[NSMutableArray alloc]init];
+                for (int i=0; i<BusinessArr.count; i++) {
+                    NSDictionary *BusinessDic=[BusinessArr objectAtIndex:i];
+                    Allinfo *BusinessArrInfo=[[Allinfo alloc]init];
+                    NSLog(@"BusinessDict = %@", [BusinessDic objectForKey:@"category_id"]);
+                    BusinessArrInfo.category_id=[BusinessDic objectForKey:@"category_id"];
+                    BusinessArrInfo.category_image=[BusinessDic objectForKey:@"category_image"];
+                    BusinessArrInfo.category_name=[BusinessDic objectForKey:@"category_name"];
+                    BusinessArrInfo.language_id=[BusinessDic objectForKey:@"language_id"];
+                    FMDBManager *fm = [[FMDBManager alloc] init];
+                    [fm openDataBase];
+                    [fm saveallBusinss:BusinessDic];
+                    
+                }
                 
             }
-            
         }
+
+        
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
     }
+    
 }
 
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -194,7 +201,7 @@ bool isShown = false;
 {
     NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                               initWithTitle:NSLocalizedString(@"Error",nil) message:NSLocalizedString(@"Failed to Get Your Location",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
     [errorAlert show];
 }
 
@@ -299,57 +306,68 @@ bool isShown = false;
 
 -(void)Getcategory:(id)response
 {
-    NSDictionary *responseDic=response;
-    if ([response isKindOfClass:[NSDictionary class]]) {
-        if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            
-            //categrtArray=[responseDic objectForKey:@"result"];
-            NSArray *CategrArr=[responseDic objectForKey:@"result"];
-            AllCatergryArr=[[NSMutableArray alloc]init];
-            for (int i=0; i<CategrArr.count; i++) {
-                NSDictionary *CategrDic=[CategrArr objectAtIndex:i];
-                Allinfo *CategrArrInfo=[[Allinfo alloc]init];
-                CategrArrInfo.category_id=[CategrDic objectForKey:@"category_id"];
-                CategrArrInfo.category_image=[CategrDic objectForKey:@"category_image"];
-                CategrArrInfo.category_name=[CategrDic objectForKey:@"category_name"];
-                CategrArrInfo.language_id=[CategrDic objectForKey:@"language_id"];
+    @try {
+        NSDictionary *responseDic=response;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                
+                //categrtArray=[responseDic objectForKey:@"result"];
+                NSArray *CategrArr=[responseDic objectForKey:@"result"];
+                AllCatergryArr=[[NSMutableArray alloc]init];
+                for (int i=0; i<CategrArr.count; i++) {
+                    NSDictionary *CategrDic=[CategrArr objectAtIndex:i];
+                    Allinfo *CategrArrInfo=[[Allinfo alloc]init];
+                    CategrArrInfo.category_id=[CategrDic objectForKey:@"category_id"];
+                    CategrArrInfo.category_image=[CategrDic objectForKey:@"category_image"];
+                    CategrArrInfo.category_name=[CategrDic objectForKey:@"category_name"];
+                    CategrArrInfo.language_id=[CategrDic objectForKey:@"language_id"];
+                    FMDBManager *fm = [[FMDBManager alloc] init];
+                    [fm openDataBase];
+                    [fm saveallcatgery:CategrDic];
+                    
+                }
+                //if (CategrArr && CategrArr.count>0) {
                 FMDBManager *fm = [[FMDBManager alloc] init];
                 [fm openDataBase];
-                [fm saveallcatgery:CategrDic];
-              
+                categrtArray = [fm Categryarry];
+                // }
+                [self.HomeCollectionView reloadData];
+            }
         }
-            //if (CategrArr && CategrArr.count>0) {
-            FMDBManager *fm = [[FMDBManager alloc] init];
-            [fm openDataBase];
-            categrtArray = [fm Categryarry];
-           // }
-        [self.HomeCollectionView reloadData];
+
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
     }
-}
+    
 }
 -(void)GetSubcategory:(id)response
 {
-    NSDictionary *responseDic=response;
-    if ([response isKindOfClass:[NSDictionary class]]) {
-        if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            NSArray *SubCategrArr=[responseDic objectForKey:@"result"];
-            AllCatergryArr=[[NSMutableArray alloc]init];
-            for (int i=0; i<SubCategrArr.count; i++) {
-                NSDictionary *SubCategrDic=[SubCategrArr objectAtIndex:i];
-                Allinfo *CategrArrInfo=[[Allinfo alloc]init];
-                CategrArrInfo.category_id=[SubCategrDic objectForKey:@"category_id"];
-                CategrArrInfo.category_name=[SubCategrDic objectForKey:@"category_name"];
-                CategrArrInfo.create_date=[SubCategrDic objectForKey:@"create_date"];
-                CategrArrInfo.sub_cat_id=[SubCategrDic objectForKey:@"sub_cat_id"];
-                CategrArrInfo.sub_category_image=[SubCategrDic objectForKey:@"sub_category_image"];
-                CategrArrInfo.sub_category_name=[SubCategrDic objectForKey:@"sub_category_name"];
-                FMDBManager *fm = [[FMDBManager alloc] init];
-                [fm openDataBase];
-                [fm saveallSubcatgery:SubCategrDic];
-            
-        }
+    @try {
+        NSDictionary *responseDic=response;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                NSArray *SubCategrArr=[responseDic objectForKey:@"result"];
+                AllCatergryArr=[[NSMutableArray alloc]init];
+                for (int i=0; i<SubCategrArr.count; i++) {
+                    NSDictionary *SubCategrDic=[SubCategrArr objectAtIndex:i];
+                    Allinfo *CategrArrInfo=[[Allinfo alloc]init];
+                    CategrArrInfo.category_id=[SubCategrDic objectForKey:@"category_id"];
+                    CategrArrInfo.category_name=[SubCategrDic objectForKey:@"category_name"];
+                    CategrArrInfo.create_date=[SubCategrDic objectForKey:@"create_date"];
+                    CategrArrInfo.sub_cat_id=[SubCategrDic objectForKey:@"sub_cat_id"];
+                    CategrArrInfo.sub_category_image=[SubCategrDic objectForKey:@"sub_category_image"];
+                    CategrArrInfo.sub_category_name=[SubCategrDic objectForKey:@"sub_category_name"];
+                    FMDBManager *fm = [[FMDBManager alloc] init];
+                    [fm openDataBase];
+                    [fm saveallSubcatgery:SubCategrDic];
+                    
                 }
-}
+            }
+        }
+
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
+    }
 }
 
 #pragma mark UICollectionViewDataSource
@@ -590,11 +608,44 @@ bool isShown = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
             break;
+        case 7:
+        {
+            NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+            if (UserDict == nil) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                    LoginViewController *LoginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    LoginView.tabBarController.tabBar.hidden = YES;
+                    [self.navigationController pushViewController:LoginView animated:YES];
+                    
+                }];
+                UIAlertAction* CancelButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:yesButton];
+                [alert addAction:CancelButton];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+            else
+            {
+                IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
+              //  price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+               // price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:price1 animated:true completion:nil];
+            }
+        }
+            break;
+            
+
         default:
             break;
     }

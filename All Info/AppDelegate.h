@@ -11,13 +11,16 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <GoogleSignIn/GoogleSignIn.h>
+#import <UserNotifications/UserNotifications.h>
+#import "TWMessageBarManager.h"
 
 
 #define  kAppDelegate  ((AppDelegate *) [UIApplication sharedApplication].delegate)
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate,UNUserNotificationCenterDelegate>
 {
-    
+    NSSet *categories;
+
     CLLocationManager *locationManager;
     CLGeocoder *geocoder;
     CLPlacemark *placemark;

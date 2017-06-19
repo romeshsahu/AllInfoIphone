@@ -14,12 +14,9 @@
 @property NSString *flavours;
 @property NSString *iconType;
 @property NSString *selectedID;
-
--(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate andFlavours:(NSString *)flavours;
-
-//-(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate andFlavours:(NSString *)flavours AnnotationType:(NSString*)iconType selectedID:(NSString*)selectedID;
+@property NSString *subTitle1;
 
 -(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate andFlavours:(NSString *)flavours AnnotationType:(NSString*)iconType;
--(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate andFlavours:(NSString *)flavours SubTitle:(NSString*)subtitle selectedID:(NSString*)selectedID;
+-(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate andFlavours:(NSString *)flavours selectedID:(NSString*)selectedID subTitle1:(NSString*)subTitle1;
 
 @end

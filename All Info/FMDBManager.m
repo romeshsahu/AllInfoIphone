@@ -64,7 +64,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
     NSString *documentsDir = [paths objectAtIndex:0];
-    //NSLog(@"dbpath : %@",documentsDir);
+   // NSLog(@"dbpath : %@",documentsDir);
     return [documentsDir stringByAppendingPathComponent:@"Allinfo.sqlite"];
 }
 -(void)savefavrate :(NSDictionary *) favratedic {

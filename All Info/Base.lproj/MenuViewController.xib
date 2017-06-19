@@ -29,7 +29,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" id="79w-ps-flq">
-                            <rect key="frame" x="0.0" y="176" width="400" height="49"/>
+                            <rect key="frame" x="-1" y="176" width="400" height="49"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="C7f-WA-vEf">
@@ -45,15 +45,15 @@
                                         <action selector="ActionOnButtons:" destination="-1" eventType="touchUpInside" id="REh-A2-Pke"/>
                                     </connections>
                                 </button>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="167icon.png" id="Lm2-Fh-Eod">
-                                    <rect key="frame" x="364" y="12" width="25" height="25"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="167icon.png" id="Lm2-Fh-Eod">
+                                    <rect key="frame" x="366" y="9" width="23" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" red="0.082352941176470587" green="0.074509803921568626" blue="0.074509803921568626" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <view contentMode="scaleToFill" id="INP-MX-EhB">
-                            <rect key="frame" x="0.0" y="117" width="400" height="49"/>
+                            <rect key="frame" x="-1" y="116" width="400" height="49"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="pHG-we-8If">
@@ -70,14 +70,14 @@
                                     </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="help_40.png" id="KoO-hn-e8Y">
-                                    <rect key="frame" x="364" y="13" width="25" height="25"/>
+                                    <rect key="frame" x="364" y="13" width="26" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" red="0.08235294118" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <view contentMode="scaleToFill" id="qde-qP-OfB">
-                            <rect key="frame" x="0.0" y="59" width="400" height="49"/>
+                            <rect key="frame" x="-1" y="58" width="400" height="49"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ugt-lu-CZH">
@@ -94,18 +94,18 @@
                                     </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_icon.png" id="9eO-ba-d2P">
-                                    <rect key="frame" x="364" y="12" width="25" height="25"/>
+                                    <rect key="frame" x="364" y="12" width="26" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" red="0.08235294118" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <view contentMode="scaleToFill" id="l5y-wp-Gr8">
-                            <rect key="frame" x="0.0" y="2" width="400" height="49"/>
+                            <rect key="frame" x="-1" y="2" width="400" height="49"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="register_40.png" id="j2B-Gp-GdK">
-                                    <rect key="frame" x="364" y="13" width="25" height="25"/>
+                                    <rect key="frame" x="364" y="13" width="26" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lIr-Fs-nwg">
@@ -124,8 +124,32 @@
                             </subviews>
                             <color key="backgroundColor" red="0.08235294118" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
+                        <view contentMode="scaleToFill" misplaced="YES" id="Mzc-fJ-yG4">
+                            <rect key="frame" x="-1" y="238" width="400" height="49"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="s7n-hd-uvI">
+                                    <rect key="frame" x="0.0" y="0.0" width="354" height="49"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="0.1058823529" green="0.094117647060000004" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                    <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="CATEGORY">
+                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="ActionOnButtons:" destination="-1" eventType="touchUpInside" id="ysn-ah-pZc"/>
+                                    </connections>
+                                </button>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="slider_category.png" id="zh0-hL-Bq3">
+                                    <rect key="frame" x="366" y="14" width="22" height="22"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" red="0.08235294118" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </view>
                         <view contentMode="scaleToFill" misplaced="YES" id="xtd-4l-4ax">
-                            <rect key="frame" x="0.0" y="300" width="400" height="49"/>
+                            <rect key="frame" x="-1" y="300" width="400" height="49"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="UAl-Jt-vwQ">
@@ -142,28 +166,7 @@
                                     </connections>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logout_40.png" id="RF7-2E-fQI">
-                                    <rect key="frame" x="364" y="12" width="25" height="25"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" red="0.08235294118" green="0.074509803920000006" blue="0.074509803920000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </view>
-                        <view contentMode="scaleToFill" misplaced="YES" id="Mzc-fJ-yG4">
-                            <rect key="frame" x="0.0" y="238" width="400" height="49"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="s7n-hd-uvI">
-                                    <rect key="frame" x="0.0" y="0.0" width="354" height="49"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" red="0.1058823529" green="0.094117647060000004" blue="0.094117647060000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                    <inset key="titleEdgeInsets" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" title="CATEGORY">
-                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </state>
-                                </button>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="register_40.png" id="zh0-hL-Bq3">
-                                    <rect key="frame" x="364" y="12" width="25" height="25"/>
+                                    <rect key="frame" x="364" y="12" width="26" height="24"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 </imageView>
                             </subviews>
@@ -184,10 +187,11 @@
         <image name="login_icon.png" width="50" height="50"/>
         <image name="logout_40.png" width="40" height="40"/>
         <image name="register_40.png" width="40" height="40"/>
+        <image name="slider_category.png" width="40" height="40"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+        <simulatedScreenMetrics key="destination" type="retina4_0.fullscreen"/>
     </simulatedMetricsContainer>
 </document>

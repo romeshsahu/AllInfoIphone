@@ -46,6 +46,10 @@
     NSString *catname;
     NSString *setwsLat;
     NSString *setwsLong;
+    
+    NSString*strLink;
+    NSDictionary *UserDict;
+
 }
 
 @end
@@ -63,13 +67,36 @@ bool isbusiness = false;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+ 
+
     
+}
+-(void)Get_share_page:(id)response
+{
+    @try {
+        NSDictionary *responseDic=response;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                strLink=[responseDic objectForKey:@"url"];
+                NSLog(@"strLink in api.....%@",strLink);
+            }
+        }
+        
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
     [super viewWillAppear:YES];
+    
+    UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+
+  //  WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Get_share_page:)];
+  //  [ws share_page_user_id:[bdic objectForKey:@"user_id"]];
+    
     self.tabBarController.tabBar.hidden=NO;
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -81,8 +108,11 @@ bool isbusiness = false;
     self.tabBarController.tabBar.hidden=NO;
     bdic = [self.getBussnessDic mutableCopy];
     
+    WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Get_share_page:)];
+    [ws share_page_user_id:[bdic objectForKey:@"user_id"]];
     
     NSLog(@"bdic = %@", bdic);
+    NSLog(@"user_id = %@", [bdic objectForKey:@"user_id"]);
     
     Rating=[bdic objectForKey:@"rating"];
     value = [Rating intValue];
@@ -131,6 +161,18 @@ bool isbusiness = false;
     }else{
         self.OderBtnOut.hidden=NO;
     }
+    
+    if ([cat containsString:@"מסעדות"]) {
+        self.viewThreebtn.hidden=false;
+        _ViewWatchVideo.frame = CGRectMake( _ViewWatchVideo.frame.origin.x, _ViewWatchVideo.frame.origin.y, _ViewWatchVideo.frame.size.width, _ViewWatchVideo.frame.size.height);
+    }
+    else
+    {
+        self.viewThreebtn.hidden=true;
+        _ViewWatchVideo.frame = CGRectMake( _ViewWatchVideo.frame.origin.x, _ViewWatchVideo.frame.origin.y-self.viewThreebtn.frame.size.height, _ViewWatchVideo.frame.size.width, _ViewWatchVideo.frame.size.height);
+    }
+    
+
     
     [self setRatingView1];
     FMDBManager *fm = [[FMDBManager alloc] init];
@@ -332,7 +374,18 @@ bool isbusiness = false;
     NSString *Profile6 = [self.getBussnessDic objectForKey:@"product_image6"];
     [self.ProfileImage6 sd_setImageWithURL:[NSURL URLWithString:Profile6] placeholderImage:[UIImage imageNamed:@"index.png"]];
     
-        ImageArr = [[NSMutableArray alloc] init];
+    NSString *Profile7 = [self.getBussnessDic objectForKey:@"product_image7"];
+    [self.ProfileImage7 sd_setImageWithURL:[NSURL URLWithString:Profile7] placeholderImage:[UIImage imageNamed:@"index.png"]];
+    NSString *Profile8 = [self.getBussnessDic objectForKey:@"product_image8"];
+    [self.ProfileImage8 sd_setImageWithURL:[NSURL URLWithString:Profile8] placeholderImage:[UIImage imageNamed:@"index.png"]];
+    NSString *Profile9 = [self.getBussnessDic objectForKey:@"product_image9"];
+    [self.ProfileImage9 sd_setImageWithURL:[NSURL URLWithString:Profile9] placeholderImage:[UIImage imageNamed:@"index.png"]];
+    NSString *Profile10 = [self.getBussnessDic objectForKey:@"product_image10"];
+    [self.ProfileImage10 sd_setImageWithURL:[NSURL URLWithString:Profile10] placeholderImage:[UIImage imageNamed:@"index.png"]];
+
+    
+    
+    ImageArr = [[NSMutableArray alloc] init];
     
     if(Profile1.length > 0) {
         [ImageArr addObject:self.ProfileImage1];    // [NSMutableArray arrayWithObjects:self.ProfileImage1, nil];
@@ -386,9 +439,54 @@ bool isbusiness = false;
         [self.ProfileImage5 addGestureRecognizer:tapGesture5];
     }
     if(Profile6.length > 0) {
-            //     ImageArr=[NSMutableArray arrayWithObjects: self.ProfileImage6, nil];
+        [ImageArr addObject:self.ProfileImage6];
+        self.ProfileImage6.tag=5;
+        self.ProfileImage6.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapGesture5 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture5:)];
+        tapGesture5.numberOfTapsRequired = 1;
+        [tapGesture5 setDelegate:self];
+        [self.ProfileImage6 addGestureRecognizer:tapGesture5];
+    }
+    if(Profile7.length > 0) {
+        [ImageArr addObject:self.ProfileImage7];
+        self.ProfileImage7.tag=6;
+        self.ProfileImage7.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tapGesture3 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture3:)];
+        tapGesture3.numberOfTapsRequired = 1;
+        [tapGesture3 setDelegate:self];
+        [self.ProfileImage7 addGestureRecognizer:tapGesture3];
     }
     
+    if(Profile8.length > 0) {
+        [ImageArr addObject:self.ProfileImage8];
+        self.ProfileImage8.tag=7;
+        self.ProfileImage8.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tapGesture4 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture4:)];
+        tapGesture4.numberOfTapsRequired = 1;
+        [tapGesture4 setDelegate:self];
+        [self.ProfileImage8 addGestureRecognizer:tapGesture4];
+    }
+    if(Profile9.length > 0) {
+        [ImageArr addObject:self.ProfileImage9];
+        self.ProfileImage9.tag=8;
+        self.ProfileImage9.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapGesture5 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture5:)];
+        tapGesture5.numberOfTapsRequired = 1;
+        [tapGesture5 setDelegate:self];
+        [self.ProfileImage9 addGestureRecognizer:tapGesture5];
+    }
+    if(Profile10.length > 0) {
+        [ImageArr addObject:self.ProfileImage10];
+        self.ProfileImage10.tag=9;
+        self.ProfileImage10.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapGesture5 = [[UITapGestureRecognizer alloc] initWithTarget:self  action:@selector(tapGesture5:)];
+        tapGesture5.numberOfTapsRequired = 1;
+        [tapGesture5 setDelegate:self];
+        [self.ProfileImage10 addGestureRecognizer:tapGesture5];
+    }
+
     NSLog(@"array size is %lu", (unsigned long)ImageArr.count);
  
     if(ImageArr.count > 0) {
@@ -535,7 +633,7 @@ bool isbusiness = false;
         [[UIApplication sharedApplication] openURL:phoneUrl];
     } else
     {
-        calert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Call facility is not available!!!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+        calert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Alert" ,nil) message:NSLocalizedString(@"Call facility is not available!!!" ,nil) delegate:nil cancelButtonTitle:NSLocalizedString( @"OK" ,nil) otherButtonTitles:nil, nil];
         [calert show];
     }
 }
@@ -587,12 +685,9 @@ bool isbusiness = false;
 
 - (IBAction)ActionOnHome:(id)sender {
     
-    
     UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
                                                              bundle: nil];
-    UINavigationController *controller = (UINavigationController*)[MainStoryboard
-                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
-    
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
     
     UITabBarController *tabar = controller.viewControllers[0];
     [tabar setSelectedIndex:3];
@@ -600,12 +695,12 @@ bool isbusiness = false;
     [AppDelegate SharedInstance].window.rootViewController=controller;
     [[AppDelegate SharedInstance].window makeKeyAndVisible];
 }
+
 - (IBAction)ActiononFavirateBtn:(id)sender {
     
     NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
     dictBD = [bdic mutableCopy];
     [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
-    
     
     if ([sender isSelected]) {
          NSString*me=@"like";
@@ -680,18 +775,50 @@ bool isbusiness = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert" ,nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel" ,nil), nil];
             
             alert.tag=1;
             [alert show];
         }
             break;
+        case 7:
+        {
+            
+            if (UserDict == nil) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                    LoginViewController *LoginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    LoginView.tabBarController.tabBar.hidden = YES;
+                    [self.navigationController pushViewController:LoginView animated:YES];
+
+                }];
+                UIAlertAction* CancelButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+
+                [alert addAction:yesButton];
+                [alert addAction:CancelButton];
+
+                [self presentViewController:alert animated:YES completion:nil];
+  
+            }
+            else
+            {
+                IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
+               // price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+               // price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:price1 animated:true completion:nil];
+            }
+
+            
+        }
+            break;
+
         default:
             break;
     }
 }
-
-
 
 #pragma mark - CLLocationManagerDelegate
 
@@ -699,7 +826,7 @@ bool isbusiness = false;
 {
     NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                               initWithTitle:NSLocalizedString(@"Error" ,nil) message:NSLocalizedString(@"Failed to Get Your Location" ,nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
     [errorAlert show];
 }
 
@@ -1026,24 +1153,32 @@ bool isbusiness = false;
 }
 
 - (IBAction)btn_ShareImage:(id)sender {
-    NSString *textToShare = @"Share link using";
-    NSURL *myWebsite = [NSURL URLWithString:kAppDelegate.strShareLink];
-    //self.getBussnessDic[@"subcategory_image"]
-    NSArray *objectsToShare = @[textToShare, myWebsite];
+    NSString *textToShare = [NSString stringWithFormat: @"Share business detail using: \n%@",strLink];
     
-    UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-    
-    NSArray *excludeActivities = @[UIActivityTypeAirDrop,
-                                   UIActivityTypePrint,
-                                   UIActivityTypeAssignToContact,
-                                   UIActivityTypeSaveToCameraRoll,
-                                   UIActivityTypeAddToReadingList,
-                                   UIActivityTypePostToFlickr,
-                                   UIActivityTypePostToVimeo];
-    
-    activityVC.excludedActivityTypes = excludeActivities;
-    
-    [self presentViewController:activityVC animated:YES completion:nil];
+    if (strLink == nil) {
+       // strLink=@"";
+        
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Need to add business before sharing business",nil) preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            
+        }];
+        [alert addAction:yesButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+
+    }
+    else
+    {
+        NSURL *myWebsite = [NSURL URLWithString:strLink];
+        NSArray *objectsToShare = @[textToShare, myWebsite];
+        NSLog(@"objectsToShare....%@",objectsToShare);
+        
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+        NSArray *excludeActivities = @[];
+        activityVC.excludedActivityTypes = excludeActivities;
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
 }
 
 

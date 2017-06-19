@@ -58,7 +58,8 @@
 - (void)updatebusinessRegi:(NSString*)phone user_id:(NSString*)user_id address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6 Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status;
 -(void)GOOGLELogin_action:(NSString*)action social_id:(NSString*)social_id language_id:(NSString*)language_id email:(NSString*)email username:(NSString*)username profile_image:(NSString*)profile_image social_type:(NSString*)social_type;
 -(void)FBLogin_action:(NSString*)action social_id:(NSString*)social_id language_id:(NSString*)language_id email:(NSString*)email username:(NSString*)username profile_image:(NSString*)profile_image social_type:(NSString*)social_type;
-
+-(void)share_page_user_id:(NSString*)user_id;
+-(void)interest_category_login_id:(NSString*)login_id category_id:(NSString*)category_id device_id:(NSString*)device_id device_type:(NSString*)device_type;
 
 //http://allinfo.co.il/all_info/webservice/master.php?action=search&string=קונדיטוריה%20ממתקיי%20אלסראיא&latitude=31.725798&longitude=35.219639
 

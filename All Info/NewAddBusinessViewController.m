@@ -16,6 +16,8 @@
 #import "FMDBManager.h"
 #import "UIImageView+WebCache.h"
 #import "ContectUsViewController.h"
+#import "LoginViewController.h"
+
 @interface NewAddBusinessViewController ()<MenuViewControllerDelegates,MapViewControllerDelegates>
 {
     NSMutableArray *categrtArray, * arrCategory;
@@ -965,10 +967,10 @@ if (self.DescriptionTextView  == textView) {
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error"
-                               message:@"Failed to Get Your Location"
+                               initWithTitle:NSLocalizedString(@"Error",nil)
+                               message:NSLocalizedString(@"Failed to Get Your Location",nil)
                                delegate:nil
-                               cancelButtonTitle:@"OK"
+                               cancelButtonTitle:NSLocalizedString(@"OK",nil)
                                otherButtonTitles:nil];
     [errorAlert show];
 }
@@ -1278,11 +1280,7 @@ if (self.DescriptionTextView  == textView) {
                 
             }
             else{
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Camera Unavailable"
-                                                               message:@"Unable to find a camera on your device."
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Camera Unavailable",nil) message:NSLocalizedString(@"Unable to find a camera on your device.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil, nil];
                 [alert show];
                 alert = nil;
             }
@@ -1554,22 +1552,27 @@ if (self.DescriptionTextView  == textView) {
 
 -(void)Getcategory:(id)response
 {
-    NSDictionary *responseDic=response;
-    if ([response isKindOfClass:[NSDictionary class]]) {
-        if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            NSMutableArray * arrCat =[responseDic objectForKey:@"result"];
-            
-            
-            
-            for (int i = 0; i < arrCat.count; i++) {
-                NSMutableDictionary * dict = arrCat[i];
-                [dict setObject:@"0" forKey:@"isChecked"];
+    @try {
+        NSDictionary *responseDic=response;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                NSMutableArray * arrCat =[responseDic objectForKey:@"result"];
                 
-                [categrtArray addObject:dict];
+                
+                
+                for (int i = 0; i < arrCat.count; i++) {
+                    NSMutableDictionary * dict = arrCat[i];
+                    [dict setObject:@"0" forKey:@"isChecked"];
+                    
+                    [categrtArray addObject:dict];
+                }
+                
             }
-            
+            [self.CategoryTableView reloadData];
         }
-        [self.CategoryTableView reloadData];
+
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
     }
 }
 -(void)subcategiryList{
@@ -1807,47 +1810,48 @@ if (self.DescriptionTextView  == textView) {
 
 - (IBAction)ActionOnRegister:(id)sender {
     if (self.Bussinessemiltextfiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Email Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Email Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         
         [self.lbl_PEmail setHidden:NO];
         
     }else if (![self EmailCheck:self.Bussinessemiltextfiled.text]) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill valid Email Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill valid Email Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         
         [self.lbl_PEmail setHidden:NO];
         
      }else if (self.phonetextfiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Phone Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Phone Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
           [self.lbl_PPhone setHidden:NO];
       
          
     }else if (self.AddressTextFiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Address Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Address Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PAddress setHidden:NO];
         
     }else if (self.BussinesNameText.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Name  Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Name  Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PName setHidden:NO];
        
         
     }else if (self.CategeryTextFiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Category",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Category",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PCategory setHidden:NO];
         
         
     }else if (self.SubCategryTextfiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Sub Category",nil)message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Sub Category",nil)message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         
         [self.lbl_PSubCategory setHidden:NO];
-    }else{
-        
+    }
+
+    else{
         NSLog(@"_intBusinessHourStatus =  %d", self.intBusinessHourStatus);
         
         if (Bussines_id.length == 0) {
@@ -1858,26 +1862,77 @@ if (self.DescriptionTextView  == textView) {
             }
             
         }
-
         
-        if (self.iseditNew==YES) {
+        if (self.iseditNew==YES)
+        {
+            WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Register:)];
+            [ws updatebusinessRegi:self.phonetextfiled.text
+                            user_id:[self.editbusinesdic objectForKey:@"user_id"]
+                            address:self.AddressTextFiled.text
+                            latitude:_userlat
+                            longitude:_userlong
+                            business_name:self.BussinesNameText.text
+                            business_type_id:Bussines_id
+                            description:self.DescriptionTextView.text
+                            website_url:self.WeburlTextFiled.text
+                            sub_cat_id:sendId
+                            Addimg1:self.AddImg1.image
+                            Addimg2:self.AddImg2.image
+                            Addimg3:self.AddImg3.image
+                            Addimg4:self.AddImg4.image
+                            Addimg5:self.AddImg5.image
+                            Addimg6:self.AddImg6.image
+                            Addimg7:self.AddImg7.image
+                            Addimg8:self.AddImg8.image
+                            Addimg9:self.AddImg9.image
+                            Addimg10:self.AddImg10.image
+                            business_email:self.Bussinessemiltextfiled.text
+                            facebook_url:self.facebooktextfiled.text
+                            video_url:self.videourl.text
+                            language_id:@"2"
+                            start_time:self.BusinesHoursTextFiled.text
+                            end_time:@"0"
+                            MenuUrl:_tf_MenuUrl.text
+                            TableUrl:_tf_TblUrl.text
+                            BusinessHoursStatus:[NSString stringWithFormat:@"%d",
+                            self.intBusinessHourStatus]];
+        }
+        else
+        {
+            UIImage *secondImage = [UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"];
             WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Register:)];
             
-            
-            
-            
-            [ws updatebusinessRegi:self.phonetextfiled.text user_id:[self.editbusinesdic objectForKey:@"user_id"] address:self.AddressTextFiled.text latitude:_userlat longitude:_userlong business_name:self.BussinesNameText.text business_type_id:Bussines_id description:self.DescriptionTextView.text website_url:self.WeburlTextFiled.text sub_cat_id:sendId Addimg1:self.AddImg1.image Addimg2:self.AddImg2.image Addimg3:self.AddImg3.image Addimg4:self.AddImg4.image Addimg5:self.AddImg5.image Addimg6:self.AddImg6.image Addimg7:self.AddImg7.image Addimg8:self.AddImg8.image Addimg9:self.AddImg9.image Addimg10:self.AddImg10.image business_email:self.Bussinessemiltextfiled.text facebook_url:self.facebooktextfiled.text video_url:self.videourl.text language_id:@"2" start_time:self.BusinesHoursTextFiled.text end_time:@"0" MenuUrl:_tf_MenuUrl.text TableUrl:_tf_TblUrl.text BusinessHoursStatus:[NSString stringWithFormat:@"%d", self.intBusinessHourStatus]];
-        }else{
-            
-            UIImage *secondImage = [UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"];
-    WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Register:)];
-            
-            
-    [ws AddbusinessRegi:self.phonetextfiled.text login_id:[UserDict objectForKey:@"login_id"] address:self.AddressTextFiled.text latitude:_userlat longitude:_userlong business_name:self.BussinesNameText.text business_type_id:Bussines_id description:self.DescriptionTextView.text website_url:self.WeburlTextFiled.text sub_cat_id:sendId Addimg1:self.AddImg1.image Addimg2:self.AddImg2.image Addimg3:self.AddImg3.image Addimg4:self.AddImg4.image Addimg5:self.AddImg5.image Addimg6:self.AddImg6.image  Addimg7:self.AddImg7.image Addimg8:self.AddImg8.image Addimg9:self.AddImg9.image Addimg10:self.AddImg10.image business_email:self.Bussinessemiltextfiled.text facebook_url:self.facebooktextfiled.text video_url:self.videourl.text language_id:@"2" start_time:self.BusinesHoursTextFiled.text end_time:@"0" MenuUrl:_tf_MenuUrl.text TableUrl:_tf_TblUrl.text BusinessHoursStatus:[NSString stringWithFormat:@"%d", self.intBusinessHourStatus]];
+            [ws AddbusinessRegi:self.phonetextfiled.text
+                    login_id:[UserDict objectForKey:@"login_id"]
+                    address:self.AddressTextFiled.text
+                    latitude:_userlat
+                    longitude:_userlong
+                    business_name:self.BussinesNameText.text
+                    business_type_id:Bussines_id
+                    description:self.DescriptionTextView.text
+                    website_url:self.WeburlTextFiled.text
+                    sub_cat_id:sendId
+                    Addimg1:self.AddImg1.image
+                    Addimg2:self.AddImg2.image
+                    Addimg3:self.AddImg3.image
+                    Addimg4:self.AddImg4.image
+                    Addimg5:self.AddImg5.image
+                    Addimg6:self.AddImg6.image
+                    Addimg7:self.AddImg7.image
+                    Addimg8:self.AddImg8.image
+                    Addimg9:self.AddImg9.image
+                    Addimg10:self.AddImg10.image
+                    business_email:self.Bussinessemiltextfiled.text
+                    facebook_url:self.facebooktextfiled.text
+                    video_url:self.videourl.text
+                    language_id:@"2"
+                    start_time:self.BusinesHoursTextFiled.text
+                    end_time:@"0"
+                    MenuUrl:_tf_MenuUrl.text
+                    TableUrl:_tf_TblUrl.text
+                    BusinessHoursStatus:[NSString stringWithFormat:@"%d", self.intBusinessHourStatus]];
+        }
     }
-    }
-    
-    
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag==1) {
@@ -1924,12 +1979,46 @@ if (self.DescriptionTextView  == textView) {
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
             
             break;
+        case 7:
+        {
+            UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+            if (UserDict == nil) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                    LoginViewController *LoginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    LoginView.tabBarController.tabBar.hidden = YES;
+                    [self.navigationController pushViewController:LoginView animated:YES];
+                    
+                }];
+                UIAlertAction* CancelButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:yesButton];
+                [alert addAction:CancelButton];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+            else
+            {
+                IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
+               // price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+               // price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:price1 animated:true completion:nil];
+            }
+            
+        }
+            break;
+            
+
         default:
             break;
     }

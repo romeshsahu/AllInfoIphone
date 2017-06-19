@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "RateView.h"
 #import <CoreLocation/CoreLocation.h>
+#import "IntrestCatViewController.h"
 
 @interface BusinessdetailsViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIView *view_Images;
@@ -58,6 +59,7 @@
 - (IBAction)ActiononFavirateBtn:(id)sender;
 - (IBAction)ActionOnOpenapp:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *OderBtnOut;
+@property (weak, nonatomic) IBOutlet UIView *viewThreebtn;
 
 - (IBAction)ActionOnOderBtn:(id)sender;
 
@@ -73,6 +75,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *WrightLabel;
 @property (weak, nonatomic) IBOutlet UIButton *VisitBtn;
 @property (weak, nonatomic) IBOutlet UIButton *VideoBtn;
+@property (weak, nonatomic) IBOutlet UIView *ViewWatchVideo;
 
 - (IBAction)ReadBtnAction:(id)sender;
 
@@ -92,6 +95,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage2;
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage3;
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage4;
+
+@property (weak, nonatomic) IBOutlet UIImageView *ProfileImage7;
+@property (weak, nonatomic) IBOutlet UIImageView *ProfileImage8;
+@property (weak, nonatomic) IBOutlet UIImageView *ProfileImage9;
+@property (weak, nonatomic) IBOutlet UIImageView *ProfileImage10;
+
 
 
 @property (weak, nonatomic) IBOutlet UILabel *SubcategryLab;

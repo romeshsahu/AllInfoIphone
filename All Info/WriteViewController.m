@@ -225,10 +225,10 @@ bool isShownhistwrite = false;
 }
 - (IBAction)ActionOnAddComent:(id)sender {
     if (self.usertextfiled.text.length==0) {
-              UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message: NSLocalizedString(@"Fill Name Field",nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+              UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message: NSLocalizedString(@"Fill Name Field",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
     }else if (self.commenttextview.text.length==0){
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Fill Comment Field",nil) delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Fill Comment Field",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
     }
     else{
@@ -250,7 +250,7 @@ bool isShownhistwrite = false;
             kAppDelegate.flagIsShowAverageRating = YES;
             [self.navigationController popViewControllerAnimated:YES];
         } else {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"" message:@"לא ניתן להשאיר יותר מתגובה אחת" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"" message:@"לא ניתן להשאיר יותר מתגובה אחת" delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
             [alert show];
         }
     }
@@ -305,11 +305,44 @@ bool isShownhistwrite = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert" ,nil)message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
             break;
+        case 7:
+        {
+            NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+            if (UserDict == nil) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                    LoginViewController *LoginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    LoginView.tabBarController.tabBar.hidden = YES;
+                    [self.navigationController pushViewController:LoginView animated:YES];
+                    
+                }];
+                UIAlertAction* CancelButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:yesButton];
+                [alert addAction:CancelButton];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+            else
+            {
+                IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
+              //  price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:price1 animated:true completion:nil];
+            }
+        }
+            break;
+            
+
         default:
             break;
     }

@@ -26,7 +26,7 @@
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -54,7 +54,7 @@
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -79,7 +79,7 @@
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -109,7 +109,7 @@
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -135,7 +135,7 @@
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -161,7 +161,7 @@
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -190,7 +190,7 @@
     NSLog(@"strJsonArr = %@", strJsonArr);
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
       {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+          UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
       }else{
@@ -217,7 +217,7 @@
 -(void)get_subcategory:(NSString*)category_id{
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -242,7 +242,7 @@
     
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
       {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+          UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
       }else{
@@ -270,7 +270,7 @@
 -(void)contact_request:(NSString*)name email:(NSString*)email phone:(NSString*)phone subject:(NSString*)subject message:(NSString*)message {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -297,7 +297,7 @@
     
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -323,7 +323,7 @@
 
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -346,9 +346,11 @@
 
 -(void)serchBynewbusinesss:(NSString*)string latitude:(NSString*)latitude longitude:(NSString*)longitude{
     
+    
+    
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
 
 
@@ -373,7 +375,7 @@
 -(void)GatBusinesid:(NSString*)language {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -397,7 +399,7 @@
 -(void)searchBusiness:(NSString*)latitude longitude:(NSString*)longitude  {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -420,7 +422,7 @@
 -(void)SlectedbySubId:(NSString*)sub_cat_id language_id:(NSString*)language_id latitude:(NSString*)latitude longitude:(NSString*)longitude  {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -445,7 +447,7 @@
 -(void)Login:(NSString*)language_id email:(NSString*)email password:(NSString*)password  {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -472,7 +474,7 @@
 -(void)FBLogin_action:(NSString*)action social_id:(NSString*)social_id language_id:(NSString*)language_id email:(NSString*)email username:(NSString*)username profile_image:(NSString*)profile_image social_type:(NSString*)social_type {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -480,11 +482,11 @@
         
         [self showLoader];
         responseData=[[NSMutableData alloc]init];
-        NSString *body=[NSString stringWithFormat:@"action=%@&social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@",action,social_id,language_id,action,social_id,language_id,language_id];
+        NSString *body=[NSString stringWithFormat:@"social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@",social_id,language_id,email,username,profile_image,social_type];
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
         
         NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
-        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=login"]];
+        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=socialLogin"]];
         [request setHTTPMethod:@"POST"];
         [request setTimeoutInterval:120];
         [request setHTTPBody:data];
@@ -493,19 +495,11 @@
     }
     
 }
-/*
-("action", "socialLogin");
-("social_id", s_socail_id);
-("language_id", "2");
-("email", s_email);
-("username", s_name);
-("profile_image", s_user_profile);
-("social_type", social_type);  //fb=1, g=2*/
 
 -(void)GOOGLELogin_action:(NSString*)action social_id:(NSString*)social_id language_id:(NSString*)language_id email:(NSString*)email username:(NSString*)username profile_image:(NSString*)profile_image social_type:(NSString*)social_type {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -513,18 +507,19 @@
         
         [self showLoader];
         responseData=[[NSMutableData alloc]init];
-        NSString *body=[NSString stringWithFormat:@"action=%@&social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@",action,social_id,language_id,action,social_id,language_id,language_id];
+        NSString *body=[NSString stringWithFormat:@"social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@",social_id,language_id,email,username,profile_image,social_type];
+        
+        NSLog(@"google login body....%@",body);
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
         
         NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
-        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=login"]];
+        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=socialLogin"]];
         [request setHTTPMethod:@"POST"];
         [request setTimeoutInterval:120];
         [request setHTTPBody:data];
         [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
         conn=[[NSURLConnection alloc]initWithRequest:request delegate:self];
     }
-    
 }
 
 
@@ -533,7 +528,7 @@
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -1067,12 +1062,11 @@
 
 -(void)AddbusinessRegi:(NSString*)phone login_id:(NSString*)login_id address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6 Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status{
     
-    
     NSLog(@"sub_cat_id = %@", sub_cat_id);
-    
+
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -1533,7 +1527,7 @@
     
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Please check network connection." message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
@@ -2047,6 +2041,70 @@
 		}
 	}
 }
+
+/*
+action=interest_category
+login_id
+category_id :  comma seperated id
+device_id
+device_type : 0 - android / 1 - ios
+*/
+
+#pragma mark.....interest_category api
+-(void)interest_category_login_id:(NSString*)login_id category_id:(NSString*)category_id device_id:(NSString*)device_id device_type:(NSString*)device_type
+{
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
+    {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
+        [alert show];
+        
+    }else{
+        [self hideLoader];
+        
+        [self showLoader];
+        responseData=[[NSMutableData alloc]init];
+        NSString *body=[NSString stringWithFormat:@"login_id=%@&category_id=%@&device_id=%@&device_type=%@",login_id,category_id,device_id,device_type];
+        NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
+        
+        NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
+        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=interest_category"]];
+        [request setHTTPMethod:@"POST"];
+        [request setTimeoutInterval:120];
+        [request setHTTPBody:data];
+        [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+        conn=[[NSURLConnection alloc]initWithRequest:request delegate:self];
+    }
+    
+}
+
+-(void)share_page_user_id:(NSString*)user_id {
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
+    {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
+        [alert show];
+        
+    }else{
+        [self hideLoader];
+        
+        [self showLoader];
+        responseData=[[NSMutableData alloc]init];
+        NSString *body=[NSString stringWithFormat:@"user_id=%@",user_id];
+        NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
+        
+        NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
+        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=share_page"]];
+        [request setHTTPMethod:@"POST"];
+        [request setTimeoutInterval:120];
+        [request setHTTPBody:data];
+        [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+        conn=[[NSURLConnection alloc]initWithRequest:request delegate:self];
+    }
+    
+}
+
+
+
+
 -(void)showLoader{
     
     UIWindow *window = [[UIApplication sharedApplication] delegate].window;

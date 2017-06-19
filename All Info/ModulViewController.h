@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+
+#import "IntrestCatViewController.h"
+
+
 @interface ModulViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
 - (IBAction)ActionONBack:(id)sender;
 

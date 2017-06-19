@@ -22,7 +22,7 @@
 @interface ModulViewController ()<MenuViewControllerDelegates,CLLocationManagerDelegate,UITabBarControllerDelegate>
 {
     NSMutableArray *categrtArray;
-     NSMutableArray *SubcategrtArray;
+    NSMutableArray *SubcategrtArray;
     NSDictionary *categryDic;
     UINavigationController *nav;
     MenuViewController * sample;
@@ -45,7 +45,7 @@ bool isShownmodule = false;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tabBarController.delegate = self;
-
+    
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -54,7 +54,7 @@ bool isShownmodule = false;
         [locationManager requestWhenInUseAuthorization];
     }
     [locationManager startUpdatingLocation];
-
+    
     [sample.view removeFromSuperview];
     self.tabBarController.tabBar.hidden=NO;
     categrtArray = [[NSMutableArray alloc]init];
@@ -62,13 +62,13 @@ bool isShownmodule = false;
     SubcategrtArray= [[NSMutableArray alloc]init];
     
     
-        //  [self checkLastUpdate];
+    //  [self checkLastUpdate];
     [self GetcategoryList];
     [self GetSubcategoryList];
-  
+    
     la=userlat;
     lo=userlong;
-   // [self GetBusinessList];
+    // [self GetBusinessList];
     
     // Do any additional setup after loading the view.
 }
@@ -85,7 +85,7 @@ bool isShownmodule = false;
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
             
             
-                // kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
+            // kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
             
             NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
             
@@ -102,14 +102,14 @@ bool isShownmodule = false;
                     [defaults setObject:responseDic[@"subcat_last_update"] forKey:@"subcat_last_update"];
                     kAppDelegate.strSubCategoryDate = [defaults objectForKey:@"subcat_last_update"];//responseDic[@"subcat_last_update"];
                 } else {
-                        kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
+                    kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
                 }
             } else {
-                    ///Means first time these are nil
+                ///Means first time these are nil
                 [defaults setObject:responseDic[@"cat_last_update"] forKey:@"cat_last_update"];
                 [defaults setObject:responseDic[@"subcat_last_update"] forKey:@"subcat_last_update"];
-                    //  kAppDelegate.strCategoryDate = responseDic[@"cat_last_update"];
-                    // kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
+                //  kAppDelegate.strCategoryDate = responseDic[@"cat_last_update"];
+                // kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
             }
             
             [defaults synchronize];
@@ -125,10 +125,10 @@ bool isShownmodule = false;
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error"
-                               message:@"Failed to Get Your Location"
+                               initWithTitle:NSLocalizedString(@"Error" ,nil)
+                               message:NSLocalizedString(@"Failed to Get Your Location" ,nil)
                                delegate:nil
-                               cancelButtonTitle:@"OK"
+                               cancelButtonTitle:NSLocalizedString(@"OK" ,nil)
                                otherButtonTitles:nil];
     [errorAlert show];
 }
@@ -157,7 +157,7 @@ bool isShownmodule = false;
     //[self GetBusinessList];
 }
 - (void)viewWillAppear:(BOOL)animated {
-        //  [self.view setTransform:CGAffineTransformMakeScale(-1, 1)];
+    //  [self.view setTransform:CGAffineTransformMakeScale(-1, 1)];
     [self.HomeCollectionView setTransform:CGAffineTransformMakeScale(-1, 1)];
     
     
@@ -169,13 +169,13 @@ bool isShownmodule = false;
     self.tabBarController.tabBar.hidden=NO;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-
+    
     [self.searchFiled resignFirstResponder];
     return YES;
 }
 -(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-
+    
     CATransition *transition = [CATransition animation];
     transition.duration = 1;
     transition.type = kCATransitionReveal;
@@ -191,38 +191,38 @@ bool isShownmodule = false;
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"D cat date = %@, kAppDelegate.strCategoryDate = %@", [defaults objectForKey:@"cat_last_update"], kAppDelegate.strCategoryDate);
-     if(![[defaults objectForKey:@"cat_last_update"] isEqualToString:kAppDelegate.strCategoryDate]) {
-         WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Getcategory:)];
-         [ws Get_category:@"2"];
-    
-     } else {
-         
-         
-         
-         
-         FMDBManager *fm = [[FMDBManager alloc] init];
-         [fm openDataBase];
-         categrtArray = [fm Categryarry];
-         
-         
-         NSSortDescriptor * descriptor = [NSSortDescriptor sortDescriptorWithKey:@"show_date" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
-         NSArray * arrSorted = [NSArray arrayWithObject:descriptor];
-         
-         [categrtArray sortUsingDescriptors:arrSorted];
-         
-         
-         [self.HomeCollectionView reloadData];
-         
-     }
+    if(![[defaults objectForKey:@"cat_last_update"] isEqualToString:kAppDelegate.strCategoryDate]) {
+        WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Getcategory:)];
+        [ws Get_category:@"2"];
+        
+    } else {
+        
+        
+        
+        
+        FMDBManager *fm = [[FMDBManager alloc] init];
+        [fm openDataBase];
+        categrtArray = [fm Categryarry];
+        
+        
+        NSSortDescriptor * descriptor = [NSSortDescriptor sortDescriptorWithKey:@"show_date" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
+        NSArray * arrSorted = [NSArray arrayWithObject:descriptor];
+        
+        [categrtArray sortUsingDescriptors:arrSorted];
+        
+        
+        [self.HomeCollectionView reloadData];
+        
+    }
 }
 
 -(void)GetSubcategoryList{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"D sub cat date = %@, strSubCategoryDate = %@", [defaults objectForKey:@"subcat_last_update"], kAppDelegate.strSubCategoryDate);
     if(![[defaults objectForKey:@"subcat_last_update"] isEqualToString:kAppDelegate.strSubCategoryDate]) {
-    
-    WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(GetSubcategory:)];
-    [ws get_subcategory:@"2"];
+        
+        WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(GetSubcategory:)];
+        [ws get_subcategory:@"2"];
     } else {
         
     }
@@ -254,7 +254,7 @@ bool isShownmodule = false;
                 [fm saveallBusinss:BusinessDic];
                 
             }
-
+            
         }
     }
 }
@@ -266,16 +266,16 @@ bool isShownmodule = false;
             //categrtArray=[responseDic objectForKey:@"result"];
             
             
-           
             
-           
+            
+            
             NSArray *CategrArr=[responseDic objectForKey:@"result"];
             AllCatergryArr=[[NSMutableArray alloc]init];
             for (int i=0; i<CategrArr.count; i++) {
                 NSDictionary *CategrDic=[CategrArr objectAtIndex:i];
-                    // NSLog(@"CategrDic = %@", CategrDic);
+                // NSLog(@"CategrDic = %@", CategrDic);
                 Allinfo *CategrArrInfo=[[Allinfo alloc]init];
-                    //NSLog(@"CategoryId = %@", [CategrDic objectForKey:@"category_id"]);
+                //NSLog(@"CategoryId = %@", [CategrDic objectForKey:@"category_id"]);
                 CategrArrInfo.category_id=[CategrDic objectForKey:@"category_id"];
                 CategrArrInfo.category_image=[CategrDic objectForKey:@"category_image"];
                 CategrArrInfo.category_name=[CategrDic objectForKey:@"category_name"];
@@ -292,7 +292,7 @@ bool isShownmodule = false;
         [fm openDataBase];
         categrtArray = [fm Categryarry];
         
-            ///Means here to manage date sorting
+        ///Means here to manage date sorting
         NSLog(@"categrtArray = %d", (int)categrtArray.count);
         
         NSSortDescriptor * descriptor = [NSSortDescriptor sortDescriptorWithKey:@"show_date" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
@@ -300,8 +300,8 @@ bool isShownmodule = false;
         
         [categrtArray sortUsingDescriptors:arrSorted];
         
-            // [categrtArray removeAllObjects];
-            //[categrtArray addObjectsFromArray:arrSorted];
+        // [categrtArray removeAllObjects];
+        //[categrtArray addObjectsFromArray:arrSorted];
         
         
         
@@ -318,9 +318,9 @@ bool isShownmodule = false;
             AllCatergryArr=[[NSMutableArray alloc]init];
             for (int i=0; i<SubCategrArr.count; i++) {
                 NSDictionary *SubCategrDic=[SubCategrArr objectAtIndex:i];
-                    //   NSLog(@"SubCategory dict = %@", SubCategrDic);
+                //   NSLog(@"SubCategory dict = %@", SubCategrDic);
                 Allinfo *CategrArrInfo=[[Allinfo alloc]init];
-                    //NSLog(@"SubCategoryId = %@", [SubCategrDic objectForKey:@"category_id"]);
+                //NSLog(@"SubCategoryId = %@", [SubCategrDic objectForKey:@"category_id"]);
                 CategrArrInfo.category_id=[SubCategrDic objectForKey:@"category_id"];
                 CategrArrInfo.category_name=[SubCategrDic objectForKey:@"category_name"];
                 CategrArrInfo.create_date=[SubCategrDic objectForKey:@"create_date"];
@@ -427,7 +427,7 @@ bool isShownmodule = false;
     [cell.HomeImageView sd_setImageWithURL:[NSURL URLWithString:imageToLoad] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         // URL is as expected, but Image is wrong
     }];
-
+    
     
     
     return cell;
@@ -435,7 +435,20 @@ bool isShownmodule = false;
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath  {
     
     categryDic=[categrtArray objectAtIndex:indexPath.row];
-    
+    /*
+     NSString *category_name = [categryDic objectForKey:@"category_name"];
+     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+     
+     if ([category_name containsString:@"מסעדות"]) {
+     [userDefaults setObject:category_name forKey:@"category_name"];
+     }else{
+     [userDefaults setObject:@"" forKey:@"category_name"];
+     
+     }
+     [userDefaults synchronize];
+     
+     
+     */
     NSLog(@"categryDic = %@", categryDic);
     
     FMDBManager *fm = [[FMDBManager alloc] init];
@@ -457,14 +470,14 @@ bool isShownmodule = false;
         subcatgry.getsubArr=SubcategrtArray;
         subcatgry.catgeryName=catname;
     }
-//    }else if ([segue.identifier isEqualToString:@"search"]){
-//        GifFileViewController *gif=segue.destinationViewController;
-//        gif.serchname=self.searchFiled.text;
-//        gif.issearch=YES;
-//        [self.searchFiled resignFirstResponder];
-//        self.searchFiled.text=@"";
-//        //GifFileViewController
-//    }
+    //    }else if ([segue.identifier isEqualToString:@"search"]){
+    //        GifFileViewController *gif=segue.destinationViewController;
+    //        gif.serchname=self.searchFiled.text;
+    //        gif.issearch=YES;
+    //        [self.searchFiled resignFirstResponder];
+    //        self.searchFiled.text=@"";
+    //        //GifFileViewController
+    //    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -490,8 +503,6 @@ bool isShownmodule = false;
         isShownmodule = true;
         
     } else {
-        
-        
         CATransition *transition = [CATransition animation];
         transition.duration =0.5;
         transition.type = kCATransitionReveal;
@@ -557,7 +568,7 @@ bool isShownmodule = false;
                 [self.navigationController pushViewController:LoginView animated:YES];
             }
             
-
+            
             
         }
             
@@ -568,7 +579,7 @@ bool isShownmodule = false;
             HelpView.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:HelpView animated:YES];
         }
-
+            
             
             break;
         case 5:
@@ -577,15 +588,50 @@ bool isShownmodule = false;
             ContectUsView.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:ContectUsView animated:YES];
         }
-
+            
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert" ,nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel" ,nil), nil];
             alert.tag=1;
             [alert show];
         }
             break;
+            
+        case 7:
+        {
+            NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+            if (UserDict == nil) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                    LoginViewController *LoginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    LoginView.tabBarController.tabBar.hidden = YES;
+                    [self.navigationController pushViewController:LoginView animated:YES];
+                    
+                }];
+                UIAlertAction* CancelButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:yesButton];
+                [alert addAction:CancelButton];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+            else
+            {
+                IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
+                // price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                // price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:price1 animated:true completion:nil];
+                
+            }
+            
+        }
+            break;
+
         default:
             break;
     }
@@ -593,14 +639,14 @@ bool isShownmodule = false;
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 - (IBAction)ActionONBack:(id)sender {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Do you want to close the Allinfo",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
@@ -640,19 +686,19 @@ bool isShownmodule = false;
         
         
     }else if (alertView.tag==1) {
-            if (buttonIndex == 0){
-                
-                [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"login"];
-                
-                [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"userdata"];
-                
-                
-                //login
-                
-            }
+        if (buttonIndex == 0){
             
+            [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"login"];
+            
+            [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"userdata"];
+            
+            
+            //login
             
         }
+        
+        
+    }
     
 }
 
@@ -665,7 +711,7 @@ bool isShownmodule = false;
         [self.searchFiled resignFirstResponder];
         [self performSegueWithIdentifier:@"search" sender:self];
     }
-
+    
 }
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
     [[AppDelegate SharedInstance]getselectedTab:tabBarController.selectedIndex];

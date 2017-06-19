@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IntrestCatViewController.h"
 
 @interface RegistrationViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
 

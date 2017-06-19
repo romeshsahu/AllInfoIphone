@@ -155,23 +155,23 @@
 
 - (IBAction)ActionnSent:(id)sender {
     if (self.Nametextfiled.text.length==0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Name Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Name Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString( @"OK",nil) otherButtonTitles:nil];
         [alert show];
     }else if (self.EmailtextFiled.text.length==0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Email Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Email Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
         [alert show];
     }else if (![self EmailCheck:self.EmailtextFiled.text]) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill valid Email Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill valid Email Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
         
         [alert show];
     }else if (self.Subjecttextview.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Subject Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Subject Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
         [alert show];
     }else if (self.phoneNotextfiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Phone Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Phone Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
         [alert show];
     }else if (self.DescriptinTextView.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill message Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill message Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
         [alert show];
     }else{
     

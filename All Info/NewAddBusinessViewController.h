@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IntrestCatViewController.h"
+
+
 @protocol NewAddBusinessViewControllerDelegates <NSObject>
 
 -(void)callweb;
@@ -20,6 +23,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *lbl_PCategory;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_PSubCategory;
 
+@property (weak, nonatomic) IBOutlet UILabel *lbl_BussinetTypeTextfiled;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_WeburlTextFiled;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_Videourl;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_Facebooktextfiled;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_TfTblUrl;
+@property (weak, nonatomic) IBOutlet UILabel *lbl_TfMenuUrl;
 
 
 @property NSDictionary*editbusinesdic ;

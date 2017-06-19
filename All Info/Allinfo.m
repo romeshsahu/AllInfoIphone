@@ -28,6 +28,14 @@
     [encoder encodeObject:self.product_image4 forKey:@"product_image4"];
     [encoder encodeObject:self.product_image5 forKey:@"product_image5"];
     [encoder encodeObject:self.product_image6 forKey:@"product_image6"];
+    
+    [encoder encodeObject:self.product_image7 forKey:@"product_image7"];
+    [encoder encodeObject:self.product_image8 forKey:@"product_image8"];
+    [encoder encodeObject:self.product_image9 forKey:@"product_image9"];
+    [encoder encodeObject:self.product_image10 forKey:@"product_image10"];
+
+    
+    
     [encoder encodeObject:self.sub_category_name forKey:@"sub_category_name"];
     [encoder encodeObject:self.user_id forKey:@"user_id"];
     [encoder encodeObject:self.user_image forKey:@"user_image"];
@@ -70,6 +78,11 @@
     self.product_image5 = [decoder decodeObjectForKey:@"product_image5"];
     self.product_image6 = [decoder decodeObjectForKey:@"product_image6"];
   
+    self.product_image7 = [decoder decodeObjectForKey:@"product_image7"];
+    self.product_image8 = [decoder decodeObjectForKey:@"product_image8"];
+    self.product_image9 = [decoder decodeObjectForKey:@"product_image9"];
+    self.product_image10 = [decoder decodeObjectForKey:@"product_image10"];
+
     self.user_id = [decoder decodeObjectForKey:@"user_id"];
     self.user_image = [decoder decodeObjectForKey:@"user_image"];
     self.username = [decoder decodeObjectForKey:@"username"];

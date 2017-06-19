@@ -62,6 +62,7 @@
 "PROFILE IMAGE"="תמונת פרופיל";
 "ADD IMAGE"="הוספת תמונה";
 "send successfully."="הודעה נשלחה";
+"ADD IMAGES"="הוספת תמונה";
 
 "Business hours"="שעות פעילות";
 "Fill valid Email Field"="למלא שדה דוא ל תקף";
@@ -150,6 +151,8 @@
 ////new add business Add form
 "Address"="כתובת";
 "SelectCategory"="בחר קטגוריה";
+"Select Category"="בחר קטגוריה";
+
 "Business Email"="דוא ל עסקי";
 "Phone"="טלפון";
 "Business Name"="שם עסק";
@@ -175,4 +178,28 @@
 
 "Menu url" = "לינק לתפריט";
 "Table url" = "לינק הזמנת שולחן‎";
+
+
+"Please check network connection."="בדוק את חיבור הרשת.";
+"Cancel"="לְבַטֵל";
+"Alert"="עֵרָנִי";
+"Error"="שְׁגִיאָה";
+"Failed to Get Your Location"="קבלת המיקום שלך נכשלה";
+
+"Call facility is not available!!!"="מתקן התקשרות אינו זמין !!!";
+"Camera Unavailable"="מצלמה לא זמינה";
+"Unable to find a camera on your device."="לא ניתן למצוא מצלמה במכשיר שלך.";
+"submitted successfully"="נשלח בהצלחה";
+"Please login first"="בבקשה התחבר קודם";
+"Need to add business before sharing business"="צריך להוסיף עסקים לפני שיתוף העסק";
+""="";
+""="";
+""="";
+""="";
+
+
+
+
+
+
 

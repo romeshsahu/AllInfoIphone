@@ -39,14 +39,11 @@
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden=NO;
     UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
-    if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"upda"]isEqualToString:@"Yes"]) {
+    if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"upda"]isEqualToString:@"Yes"])
+    {
         pageNo = 1;
-       
        [self addbusinelist];
-        
     }
-    
-    //[self addbusinelist];
 }
 -(void)callweb{
        // [self addbusinelist];
@@ -59,7 +56,7 @@
     
     self.tabBarController.tabBar.hidden=NO;
     addbusinessarr=[[NSMutableArray alloc]init];
-     UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+    UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
     pageNo = 1;
     reloads_=-1;
     
@@ -181,138 +178,149 @@
 }
 -(void)addbusinelist{
     
-    
     if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"upda"]isEqualToString:@"Yes"]) {
-      NSString *pageNo1 = @"1";
+        NSString *pageNo1 = @"1";
         
         WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(blist:)];
         [ws addbusinessList:[UserDict objectForKey:@"login_id"] language_id:@"2" page_no:pageNo1 limit:@"10"];
         
-        
-        
-        
     }else{
-    WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(blist:)];
-    [ws addbusinessList:[UserDict objectForKey:@"login_id"] language_id:@"2" page_no:[NSString stringWithFormat:@"%li",(long)pageNo] limit:@"10"];
+        WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(blist:)];
+        [ws addbusinessList:[UserDict objectForKey:@"login_id"] language_id:@"2" page_no:[NSString stringWithFormat:@"%li",(long)pageNo] limit:@"10"];
     }
-    
 }
 -(void)blist:(id)response
 {
-    NSDictionary *responseDic=response;
-    if ([response isKindOfClass:[NSDictionary class]]) {
-        if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            if (![[responseDic objectForKey:@"result"] isKindOfClass:[NSNull class]]) {
-        
-                NSArray *responseArr = [responseDic objectForKey:@"result"];
-                
-                for (NSDictionary *dic in responseArr) {
+    
+    @try {
+        NSDictionary *responseDic=response;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                if (![[responseDic objectForKey:@"result"] isKindOfClass:[NSNull class]]) {
                     
-                    if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"upda"]isEqualToString:@"Yes"]) {
-                    addbusinessarr=[[NSMutableArray alloc]init];
-                    [addbusinessarr addObject:dic];
-                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"upda"];
-                    }else{
-                        [addbusinessarr addObject:dic];
+                    NSArray *responseArr = [responseDic objectForKey:@"result"];
+                    
+                    for (NSDictionary *dic in responseArr) {
+                        
+                        if ([[[NSUserDefaults standardUserDefaults]objectForKey:@"upda"]isEqualToString:@"Yes"]) {
+                            addbusinessarr=[[NSMutableArray alloc]init];
+                            [addbusinessarr addObject:dic];
+                            [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"upda"];
+                        }else{
+                            [addbusinessarr addObject:dic];
+                        }
                     }
+                    pageNo++;
+                    [self.addbusinestableview reloadData];
+                    
+                    
                 }
-                pageNo++;
-                [self.addbusinestableview reloadData];
+                [self reloadData];
                 
+            }else {
+                [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"upda"];
+                //            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"No data found",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                //            [alert show];
+                [self reloadData];
                 
             }
-            [self reloadData];
-
-        }else {
-            [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"upda"];
-            //            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"No data found",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            //            [alert show];
-            [self reloadData];
-            
         }
-}
+
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
+    }
 }
 
 #pragma mark - UITableView Delegates
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BussinesTableViewCell *cell = (BussinesTableViewCell *)[self.addbusinestableview dequeueReusableCellWithIdentifier:@"businesscell"];
-    BussnessDic = [addbusinessarr objectAtIndex:indexPath.row];
-    
-    
-    NSLog(@"bus dict = %@", BussnessDic);
-    
-    NSString *imageToLoad = [BussnessDic objectForKey:@"product_image1"];
-    NSString *imageToLoad2 = [BussnessDic objectForKey:@"product_image2"];
-    NSString *imageToLoad3 = [BussnessDic objectForKey:@"product_image3"];
-    NSString *imageToLoad4 = [BussnessDic objectForKey:@"product_image4"];
-    NSString *imageToLoad5 = [BussnessDic objectForKey:@"product_image5"];
-    NSString *imageToLoad6 = [BussnessDic objectForKey:@"product_image6"];
-    NSString *imageToLoad7 = [BussnessDic objectForKey:@"product_image7"];
-    NSString *imageToLoad8 = [BussnessDic objectForKey:@"product_image8"];
-    NSString *imageToLoad9 = [BussnessDic objectForKey:@"product_image9"];
-    NSString *imageToLoad10 = [BussnessDic objectForKey:@"product_image10"];
-    
-    
-    
-    
-  
-    if(imageToLoad.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad2.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad2] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad3.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad3] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad4.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad4] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad5.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad5] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad6.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad6] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad7.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad7] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad8.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad8] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad9.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad9] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else if(imageToLoad10.length > 0) {
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad10] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    } else {
+    @try {
         
-        FMDBManager *fm = [[FMDBManager alloc] init];
-        [fm openDataBase];
-        NSArray * arr = [fm SubCategryarry:BussnessDic[@"category_id"]];
-        NSDictionary * dict = arr[0];
-        kAppDelegate.strSubCategory = dict[@"sub_category_image"];
-        NSLog(@"kAppDelegate.strSubCategory = %@, b catid = %@", kAppDelegate.strSubCategory,   BussnessDic[@"category_id"]);
-        [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:kAppDelegate.strSubCategory] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-    }
-   
-    NSString* strUnicodeString=[NSString stringWithFormat:@"%@",[BussnessDic objectForKey:@"business_name"]];
-    
-    if ([strUnicodeString isEqual:[NSNull null]]) {
-        strUnicodeString=@"";
-    }else if ([strUnicodeString isEqual:@""]) {
-        strUnicodeString=@"";
-    }else if(strUnicodeString == nil){
-        strUnicodeString=@"";
-    }else{
-    if ([strUnicodeString canBeConvertedToEncoding:NSASCIIStringEncoding]){
-        NSData *data = [strUnicodeString dataUsingEncoding:NSUTF8StringEncoding];
-        NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-        cell.addnamelabel.text=[NSString stringWithFormat:@"%@",string];
+        BussinesTableViewCell *cell = (BussinesTableViewCell *)[self.addbusinestableview dequeueReusableCellWithIdentifier:@"businesscell"];
         
-    }else{
-        cell.addnamelabel.text=[NSString stringWithFormat:@"%@",strUnicodeString];
-    }
-    }
+        if (addbusinessarr.count>0) {
+            BussnessDic = [addbusinessarr objectAtIndex:indexPath.row];
+            NSLog(@"bus dict = %@", BussnessDic);
+            
+            NSString *imageToLoad = [BussnessDic objectForKey:@"product_image1"];
+            NSString *imageToLoad2 = [BussnessDic objectForKey:@"product_image2"];
+            NSString *imageToLoad3 = [BussnessDic objectForKey:@"product_image3"];
+            NSString *imageToLoad4 = [BussnessDic objectForKey:@"product_image4"];
+            NSString *imageToLoad5 = [BussnessDic objectForKey:@"product_image5"];
+            NSString *imageToLoad6 = [BussnessDic objectForKey:@"product_image6"];
+            NSString *imageToLoad7 = [BussnessDic objectForKey:@"product_image7"];
+            NSString *imageToLoad8 = [BussnessDic objectForKey:@"product_image8"];
+            NSString *imageToLoad9 = [BussnessDic objectForKey:@"product_image9"];
+            NSString *imageToLoad10 = [BussnessDic objectForKey:@"product_image10"];
+            
+            if(imageToLoad.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad2.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad2] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad3.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad3] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad4.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad4] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad5.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad5] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad6.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad6] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad7.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad7] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad8.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad8] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad9.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad9] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else if(imageToLoad10.length > 0) {
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:imageToLoad10] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            } else {
+                
+                FMDBManager *fm = [[FMDBManager alloc] init];
+                [fm openDataBase];
+                NSArray * arr = [fm SubCategryarry:BussnessDic[@"category_id"]];
+                
+                if (arr.count > 0) {
+                    
+                }
+                
+                NSDictionary * dict = arr[0];
+                kAppDelegate.strSubCategory = dict[@"sub_category_image"];
+                NSLog(@"kAppDelegate.strSubCategory = %@, b catid = %@", kAppDelegate.strSubCategory,   BussnessDic[@"category_id"]);
+                [cell.addimageview sd_setImageWithURL:[NSURL URLWithString:kAppDelegate.strSubCategory] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
+            }
+            
+            NSString* strUnicodeString=[NSString stringWithFormat:@"%@",[BussnessDic objectForKey:@"business_name"]];
+            
+            if ([strUnicodeString isEqual:[NSNull null]]) {
+                strUnicodeString=@"";
+            }else if ([strUnicodeString isEqual:@""]) {
+                strUnicodeString=@"";
+            }else if(strUnicodeString == nil){
+                strUnicodeString=@"";
+            }else{
+                if ([strUnicodeString canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                    NSData *data = [strUnicodeString dataUsingEncoding:NSUTF8StringEncoding];
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                    cell.addnamelabel.text=[NSString stringWithFormat:@"%@",string];
+                    
+                }else{
+                    cell.addnamelabel.text=[NSString stringWithFormat:@"%@",strUnicodeString];
+                }
+            }
 
+        }
+        
+        
+        
+        return  cell;
+        
+        
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
+    }
     
-    return  cell;
 }
-
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     BussnessDic = [addbusinessarr objectAtIndex:indexPath.row];
@@ -356,14 +364,23 @@
 }
 
 - (IBAction)actionOnbackBtn:(id)sender {
-    [self .navigationController popViewControllerAnimated:YES];
+    //[self .navigationController popViewControllerAnimated:YES];
+    
+    
+    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+    UITabBarController *tabar = controller.viewControllers[0];
+    [tabar setSelectedIndex:3];
+    
+    [AppDelegate SharedInstance].window.rootViewController=controller;
+    [[AppDelegate SharedInstance].window makeKeyAndVisible];
+    
+
 }
 
 - (IBAction)ActioNoNhome:(id)sender {
-    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
-                                                             bundle: nil];
-    UINavigationController *controller = (UINavigationController*)[MainStoryboard
-                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
     UITabBarController *tabar = controller.viewControllers[0];
     [tabar setSelectedIndex:3];
     

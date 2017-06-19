@@ -156,10 +156,10 @@ bool isShownreg = false;
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error"
-                               message:@"Failed to Get Your Location"
+                               initWithTitle:NSLocalizedString(@"Error",nil)
+                               message:NSLocalizedString(@"Failed to Get Your Location",nil)
                                delegate:nil
-                               cancelButtonTitle:@"OK"
+                               cancelButtonTitle:NSLocalizedString(@"OK",nil)
                                otherButtonTitles:nil];
     [errorAlert show];
 }
@@ -611,11 +611,7 @@ bool isShownreg = false;
                 
             }
             else{
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Camera Unavailable"
-                                                               message:@"Unable to find a camera on your device."
-                                                              delegate:nil
-                                                     cancelButtonTitle:@"OK"
-                                                     otherButtonTitles:nil, nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Camera Unavailable",nil) message:NSLocalizedString(@"Unable to find a camera on your device.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil, nil];
                 [alert show];
                 alert = nil;
             }
@@ -1106,15 +1102,15 @@ bool isShownreg = false;
 
 - (IBAction)ActionOnRegister:(id)sender {
     if (self.EmailtextFiled.text.length==0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Email Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Email Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PUserEmail setHidden:NO];
     } else if (self.PasswordTextfiled.text.length==0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Password Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Password Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PPassword setHidden:NO];
     } else if (self.Bussinessemiltextfiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Email Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Email Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         
         [self.lbl_PEmail setHidden:NO];
@@ -1126,30 +1122,30 @@ bool isShownreg = false;
         [self.lbl_PEmail setHidden:NO];
         
     }*/else if (self.phonetextfiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Phone Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Phone Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PPhone setHidden:NO];
         
         
     }else if (self.AddressTextFiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Address Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Address Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PAddress setHidden:NO];
         
     }else if (self.BussinesNameText.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Name  Field",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Name  Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PName setHidden:NO];
         
         
     }else if (self.CategeryTextFiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Category",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Category",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PCategory setHidden:NO];
         
         
     }else if (self.SubCategryTextfiled.text.length==0){
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Sub Category",nil)message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Sub Category",nil)message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         
         [self.lbl_PSubCategory setHidden:NO];
@@ -1232,11 +1228,45 @@ bool isShownreg = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert" ,nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
             break;
+        case 7:
+        {
+            NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+            if (UserDict == nil) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                    LoginViewController *LoginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    LoginView.tabBarController.tabBar.hidden = YES;
+                    [self.navigationController pushViewController:LoginView animated:YES];
+                    
+                }];
+                UIAlertAction* CancelButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:yesButton];
+                [alert addAction:CancelButton];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+            else
+            {
+                IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
+              //  price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+              //  price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:price1 animated:true completion:nil];
+            }
+            
+        }
+            break;
+            
+
         default:
             break;
     }
@@ -1274,7 +1304,7 @@ bool isShownreg = false;
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
             [self .navigationController popViewControllerAnimated:YES];
         }else{
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Email already exists",nil) message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Email already exists",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
             [alert show];
 
         }

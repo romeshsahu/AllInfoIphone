@@ -14,6 +14,7 @@
 #import "MNMBottomPullToRefreshView.h"
 #import "MNMBottomPullToRefreshManager.h"
 #import "MBProgressHUD.h"
+#import "IntrestCatViewController.h"
 
 @interface GifFileViewController : UIViewController<CLLocationManagerDelegate,MNMBottomPullToRefreshManagerClient,MBProgressHUDDelegate>
 

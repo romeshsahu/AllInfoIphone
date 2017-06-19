@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RateView.h"
+#import "IntrestCatViewController.h"
 
 @interface WriteViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextView *commenttextview;

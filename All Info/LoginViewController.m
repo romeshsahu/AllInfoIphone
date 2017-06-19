@@ -121,13 +121,13 @@
 }
 - (IBAction)ActiononLoginBtn:(id)sender {
     //
-   
+   //
     //
     if (self.UserNameTextFiled.text.length==0) {
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Please enter your User Name." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter your User Name.",nil)  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
         [alert show];
     }else if (self.PasswordTextFiled.text.length==0){
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"Please enter Password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter Password.",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
     }
     else{
@@ -225,10 +225,9 @@
 {
     [[GIDSignIn sharedInstance] signIn];
 
-    
-   // WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(login_Google:)];
-   // [ws GOOGLELogin_action:@"socialLogin" social_id:@"" language_id:@"2" email:@"" username:@"" profile_image:@"" social_type:@"2"];
 }
+
+
 - (IBAction)btn_Share:(id)sender {
     NSString *textToShare = @"Share link using";
     NSURL *myWebsite = [NSURL URLWithString:kAppDelegate.strShareLink];
@@ -277,6 +276,12 @@
             NSString*product_image5=[userDic objectForKey:@"product_image5"];
             NSString*product_image6=[userDic objectForKey:@"product_image6"];
             
+            NSString*product_image7=[userDic objectForKey:@"product_image7"];
+            NSString*product_image8=[userDic objectForKey:@"product_image8"];
+            NSString*product_image9=[userDic objectForKey:@"product_image9"];
+            NSString*product_image10=[userDic objectForKey:@"product_image10"];
+
+            
             if ([user_id isEqual:[NSNull null]]) {
                 user_id=@"";
             }else if ([user_id isEqual:@""]) {
@@ -382,6 +387,30 @@
                 product_image6=@"";
             }
             
+            /////////////
+            if ([product_image7 isEqual:[NSNull null]]) {
+                product_image7=@"";
+            }else if ([product_image7 isEqual:@""]) {
+                product_image7=@"";
+            }
+            if ([product_image8 isEqual:[NSNull null]]) {
+                product_image8=@"";
+            }else if ([product_image8 isEqual:@""]) {
+                product_image8=@"";
+            }
+            if ([product_image9 isEqual:[NSNull null]]) {
+                product_image9=@"";
+            }else if ([product_image9 isEqual:@""]) {
+                product_image9=@"";
+            }
+            if ([product_image10 isEqual:[NSNull null]]) {
+                product_image10=@"";
+            }else if ([product_image10 isEqual:@""]) {
+                product_image10=@"";
+            }
+
+            
+            
             NSMutableDictionary *MyUserDic=[[NSMutableDictionary alloc]init];
             [MyUserDic setObject:user_id forKey:@"user_id"];
             [MyUserDic setObject:login_id forKey:@"login_id"];
@@ -404,12 +433,20 @@
             [MyUserDic setObject:product_image4 forKey:@"product_image4"];
             [MyUserDic setObject:product_image5 forKey:@"product_image5"];
             [MyUserDic setObject:product_image6 forKey:@"product_image6"];
+            
+            [MyUserDic setObject:product_image7 forKey:@"product_image7"];
+            [MyUserDic setObject:product_image8 forKey:@"product_image8"];
+            [MyUserDic setObject:product_image9 forKey:@"product_image9"];
+            [MyUserDic setObject:product_image10 forKey:@"product_image10"];
+
             [[NSUserDefaults standardUserDefaults]setValue:MyUserDic forKey:@"userdata"];
+            
+            NSLog(@"MyUserDic_Normal...%@",MyUserDic);
             [[NSUserDefaults standardUserDefaults]setObject:@"Yes" forKey:@"login"];
             [self performSegueWithIdentifier:@"Bussinesaad" sender:self];
             
         }else{
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:[responseDic objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:[responseDic objectForKey:@"message"] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
             [alert show];
             
         }
@@ -443,6 +480,12 @@
             NSString*product_image5=[userDic objectForKey:@"product_image5"];
             NSString*product_image6=[userDic objectForKey:@"product_image6"];
             
+            NSString*product_image7=[userDic objectForKey:@"product_image7"];
+            NSString*product_image8=[userDic objectForKey:@"product_image8"];
+            NSString*product_image9=[userDic objectForKey:@"product_image9"];
+            NSString*product_image10=[userDic objectForKey:@"product_image10"];
+            
+
             if ([user_id isEqual:[NSNull null]]) {
                 user_id=@"";
             }else if ([user_id isEqual:@""]) {
@@ -547,7 +590,28 @@
             }else if ([product_image6 isEqual:@""]) {
                 product_image6=@"";
             }
-            
+            /////////////
+            if ([product_image7 isEqual:[NSNull null]]) {
+                product_image7=@"";
+            }else if ([product_image7 isEqual:@""]) {
+                product_image7=@"";
+            }
+            if ([product_image8 isEqual:[NSNull null]]) {
+                product_image8=@"";
+            }else if ([product_image8 isEqual:@""]) {
+                product_image8=@"";
+            }
+            if ([product_image9 isEqual:[NSNull null]]) {
+                product_image9=@"";
+            }else if ([product_image9 isEqual:@""]) {
+                product_image9=@"";
+            }
+            if ([product_image10 isEqual:[NSNull null]]) {
+                product_image10=@"";
+            }else if ([product_image10 isEqual:@""]) {
+                product_image10=@"";
+            }
+
             NSMutableDictionary *MyUserDic=[[NSMutableDictionary alloc]init];
             [MyUserDic setObject:user_id forKey:@"user_id"];
             [MyUserDic setObject:login_id forKey:@"login_id"];
@@ -570,12 +634,20 @@
             [MyUserDic setObject:product_image4 forKey:@"product_image4"];
             [MyUserDic setObject:product_image5 forKey:@"product_image5"];
             [MyUserDic setObject:product_image6 forKey:@"product_image6"];
+            
+            [MyUserDic setObject:product_image7 forKey:@"product_image7"];
+            [MyUserDic setObject:product_image8 forKey:@"product_image8"];
+            [MyUserDic setObject:product_image9 forKey:@"product_image9"];
+            [MyUserDic setObject:product_image10 forKey:@"product_image10"];
+
             [[NSUserDefaults standardUserDefaults]setValue:MyUserDic forKey:@"userdata"];
+            NSLog(@"MyUserDic_FB...%@",MyUserDic);
+
             [[NSUserDefaults standardUserDefaults]setObject:@"Yes" forKey:@"login"];
             [self performSegueWithIdentifier:@"Bussinesaad" sender:self];
             
         }else{
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:[responseDic objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:[responseDic objectForKey:@"message"] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
             [alert show];
             
         }
@@ -610,6 +682,11 @@
             NSString*product_image5=[userDic objectForKey:@"product_image5"];
             NSString*product_image6=[userDic objectForKey:@"product_image6"];
             
+            NSString*product_image7=[userDic objectForKey:@"product_image7"];
+            NSString*product_image8=[userDic objectForKey:@"product_image8"];
+            NSString*product_image9=[userDic objectForKey:@"product_image9"];
+            NSString*product_image10=[userDic objectForKey:@"product_image10"];
+            
             if ([user_id isEqual:[NSNull null]]) {
                 user_id=@"";
             }else if ([user_id isEqual:@""]) {
@@ -714,7 +791,28 @@
             }else if ([product_image6 isEqual:@""]) {
                 product_image6=@"";
             }
-            
+            /////////////
+            if ([product_image7 isEqual:[NSNull null]]) {
+                product_image7=@"";
+            }else if ([product_image7 isEqual:@""]) {
+                product_image7=@"";
+            }
+            if ([product_image8 isEqual:[NSNull null]]) {
+                product_image8=@"";
+            }else if ([product_image8 isEqual:@""]) {
+                product_image8=@"";
+            }
+            if ([product_image9 isEqual:[NSNull null]]) {
+                product_image9=@"";
+            }else if ([product_image9 isEqual:@""]) {
+                product_image9=@"";
+            }
+            if ([product_image10 isEqual:[NSNull null]]) {
+                product_image10=@"";
+            }else if ([product_image10 isEqual:@""]) {
+                product_image10=@"";
+            }
+
             NSMutableDictionary *MyUserDic=[[NSMutableDictionary alloc]init];
             [MyUserDic setObject:user_id forKey:@"user_id"];
             [MyUserDic setObject:login_id forKey:@"login_id"];
@@ -737,12 +835,21 @@
             [MyUserDic setObject:product_image4 forKey:@"product_image4"];
             [MyUserDic setObject:product_image5 forKey:@"product_image5"];
             [MyUserDic setObject:product_image6 forKey:@"product_image6"];
+            
+            [MyUserDic setObject:product_image7 forKey:@"product_image7"];
+            [MyUserDic setObject:product_image8 forKey:@"product_image8"];
+            [MyUserDic setObject:product_image9 forKey:@"product_image9"];
+            [MyUserDic setObject:product_image10 forKey:@"product_image10"];
+
+            
             [[NSUserDefaults standardUserDefaults]setValue:MyUserDic forKey:@"userdata"];
+            NSLog(@"MyUserDic_Google...%@",MyUserDic);
+
             [[NSUserDefaults standardUserDefaults]setObject:@"Yes" forKey:@"login"];
             [self performSegueWithIdentifier:@"Bussinesaad" sender:self];
     
         }else{
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:[responseDic objectForKey:@"message"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:[responseDic objectForKey:@"message"] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
             [alert show];
             
         }

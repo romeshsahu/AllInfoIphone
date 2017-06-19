@@ -13,6 +13,7 @@
 #import "BundleLocalization.h"
 #import "WSOperationInEDUApp.h"
 
+#define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 #define  kAppDelegate  ((AppDelegate *) [UIApplication sharedApplication].delegate)
 
@@ -87,8 +88,7 @@
     
     UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
                                                              bundle: nil];
-    UINavigationController *controller = (UINavigationController*)[MainStoryboard
-                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
     
     
     UITabBarController *tabar = controller.viewControllers[0];
@@ -104,8 +104,45 @@
     
     [GIDSignIn sharedInstance].clientID = @"658798455181-0ja0a73n7ubc4h0drp1spq0uedr57qrn.apps.googleusercontent.com";
     [GIDSignIn sharedInstance].allowsSignInWithBrowser=YES;
-    
+    [self registerForPushNotification];
+
     return YES;
+}
+- (void) registerForPushNotification
+{
+    if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0")){
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if(!error){
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            }
+        }];
+    }
+    else {
+        
+        
+        NSLog(@"registerForPushNotification 0000");
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0 //
+            NSLog(@"registerForPushNotification: For iOS >= 8.0");
+            
+            [[UIApplication sharedApplication] registerUserNotificationSettings:
+             [UIUserNotificationSettings settingsForTypes:
+              (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:categories]];
+            [[UIApplication sharedApplication] registerForRemoteNotifications];
+#endif
+        }
+        else
+        {
+            NSLog(@"registerForPushNotification: For iOS < 8.0");
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+             (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+        }
+        [[UIApplication sharedApplication]  setApplicationIconBadgeNumber: 0];
+    }
+    
 }
 
 - (void) checkLastUpdate {
@@ -115,39 +152,54 @@
 
 
 - (void) getLastUpdateData :(id)response {
-    NSMutableDictionary *responseDic=response;
-    NSLog(@"responseDic = %@", responseDic);
-    if ([response isKindOfClass:[NSDictionary class]]) {
-        if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            
-            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-            
-            if([defaults objectForKey:@"cat_last_update"] != nil && [defaults objectForKey:@"subcat_last_update"] != nil){
+    
+    @try {
+        NSMutableDictionary *responseDic=response;
+        NSLog(@"responseDic = %@", responseDic);
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
                 
-                if(![[defaults objectForKey:@"cat_last_update"] isEqualToString:responseDic[@"cat_last_update"]]) {
-                    [defaults setObject:responseDic[@"cat_last_update"] forKey:@"cat_last_update"];
-                    kAppDelegate.strCategoryDate = [defaults objectForKey:@"cat_last_update"];//responseDic[@"cat_last_update"];
-                } else {
-                    kAppDelegate.strCategoryDate = responseDic[@"cat_last_update"];
-                }
+                NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
                 
-                if(![[defaults objectForKey:@"subcat_last_update"] isEqualToString:responseDic[@"subcat_last_update"]]) {
-                    [defaults setObject:responseDic[@"subcat_last_update"] forKey:@"subcat_last_update"];
-                    kAppDelegate.strSubCategoryDate = [defaults objectForKey:@"subcat_last_update"];//responseDic[@"subcat_last_update"];
+                if([defaults objectForKey:@"cat_last_update"] != nil && [defaults objectForKey:@"subcat_last_update"] != nil){
+                    
+                    if(![[defaults objectForKey:@"cat_last_update"] isEqualToString:responseDic[@"cat_last_update"]]) {
+                        [defaults setObject:responseDic[@"cat_last_update"] forKey:@"cat_last_update"];
+                        kAppDelegate.strCategoryDate = [defaults objectForKey:@"cat_last_update"];//responseDic[@"cat_last_update"];
+                    } else {
+                        kAppDelegate.strCategoryDate = responseDic[@"cat_last_update"];
+                    }
+                    
+                    if(![[defaults objectForKey:@"subcat_last_update"] isEqualToString:responseDic[@"subcat_last_update"]]) {
+                        [defaults setObject:responseDic[@"subcat_last_update"] forKey:@"subcat_last_update"];
+                        kAppDelegate.strSubCategoryDate = [defaults objectForKey:@"subcat_last_update"];//responseDic[@"subcat_last_update"];
+                    } else {
+                        kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
+                    }
                 } else {
-                    kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
-                }
-            } else {
                     ///Means first time these are nil
-                [defaults setObject:responseDic[@"cat_last_update"] forKey:@"cat_last_update"];
-                [defaults setObject:responseDic[@"subcat_last_update"] forKey:@"subcat_last_update"];
+                    [defaults setObject:responseDic[@"cat_last_update"] forKey:@"cat_last_update"];
+                    [defaults setObject:responseDic[@"subcat_last_update"] forKey:@"subcat_last_update"];
                     //  kAppDelegate.strCategoryDate = responseDic[@"cat_last_update"];
                     // kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
+                }
+                
+                [defaults synchronize];
+                
+                
+                UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                                         bundle: nil];
+                UINavigationController *controller = (UINavigationController*)[MainStoryboard
+                                                                               instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+                
+                
+                UITabBarController *tabar = controller.viewControllers[0];
+                [tabar setSelectedIndex:3];
+                
+                self.window.rootViewController=controller;
+                
             }
-            
-            [defaults synchronize];
-            
-            
+        } else {
             UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
                                                                      bundle: nil];
             UINavigationController *controller = (UINavigationController*)[MainStoryboard
@@ -158,29 +210,18 @@
             [tabar setSelectedIndex:3];
             
             self.window.rootViewController=controller;
-            
         }
-    } else {
-        UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
-                                                                 bundle: nil];
-        UINavigationController *controller = (UINavigationController*)[MainStoryboard
-                                                                       instantiateViewControllerWithIdentifier: @"RootNavigationController"];
-        
-        
-        UITabBarController *tabar = controller.viewControllers[0];
-        [tabar setSelectedIndex:3];
-        
-        self.window.rootViewController=controller;
+
+    } @catch (NSException *exception) {
+        NSLog(@"exception....%@",exception);
     }
+    
 }
 
 -(void)getselectedTab:(NSInteger)selectedTabIndex{
     
-    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
-                                                             bundle: nil];
-    UINavigationController *controller = (UINavigationController*)[MainStoryboard
-                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
-    
+    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
     
     UITabBarController *tabar = controller.viewControllers[0];
     [tabar setSelectedIndex:selectedTabIndex];
@@ -191,23 +232,8 @@
 +(AppDelegate*)SharedInstance{
     return (AppDelegate*)[UIApplication sharedApplication].delegate;
 }
-- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
-{
-     deviceid = [[[[deviceToken description]
-                            stringByReplacingOccurrencesOfString: @"<" withString: @""]
-                           stringByReplacingOccurrencesOfString: @">" withString: @""]
-                          stringByReplacingOccurrencesOfString: @" " withString: @""];
-    [self Getnotifiction];
-    
-    //NSLog(@"My token is: %@", deviceid);
-    //UIAlertView *Alert=[[UIAlertView alloc]initWithTitle:@"Device token" message:deviceid delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    //[Alert show];
-    [[NSUserDefaults standardUserDefaults]setValue:deviceid forKey:@"DevieceId"];
-}
 
 -(void)Getnotifiction{
-    
-    
     
     [self.connection cancel];
     
@@ -247,7 +273,94 @@
 }
 
 
+///////////////
+// New in iOS 8
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    [application registerForRemoteNotifications];
+}
 
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    
+    NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSLog(@"deviceToken:::::   %@",deviceToken);
+    NSLog(@"token:::::   %@",token);
+    [[NSUserDefaults standardUserDefaults]setValue:token forKey:@"DevieceId"];
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    // failed to register push
+    NSString *str = [NSString stringWithFormat: @"Error: %@", error];
+    NSLog(@"Error:::::   %@",str);
+    
+}
+
+#pragma mark- xcode8 method
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
+    NSLog(@"User Info : %@",response.notification.request.content.userInfo);
+    
+    NSMutableArray *arrAPS=[[NSMutableArray alloc]init];
+    arrAPS=[response.notification.request.content.userInfo objectForKey:@"aps"];
+    NSString *message = [NSString stringWithFormat:@"%@",[arrAPS valueForKey:@"alert"]];
+
+    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+    UITabBarController *tabar = controller.viewControllers[0];
+    [tabar setSelectedIndex:3];
+    
+    [AppDelegate SharedInstance].window.rootViewController=controller;
+    [[AppDelegate SharedInstance].window makeKeyAndVisible];
+    
+    
+    
+    
+    
+    completionHandler();
+}
+#pragma mark- below xcode8 method
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    NSLog(@"recieved notification 1111");
+    completionHandler(UIBackgroundFetchResultNoData);
+    
+    NSMutableArray *arrAPS=[[NSMutableArray alloc]init];
+    arrAPS=[userInfo objectForKey:@"aps"];
+    NSString *alert = [NSString stringWithFormat:@"%@",[arrAPS valueForKey:@"alert"]];
+
+    
+    if ([application applicationState] == UIApplicationStateInactive || [application applicationState] == UIApplicationStateBackground)
+    {
+        UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+        UITabBarController *tabar = controller.viewControllers[0];
+        [tabar setSelectedIndex:3];
+        
+        [AppDelegate SharedInstance].window.rootViewController=controller;
+        [[AppDelegate SharedInstance].window makeKeyAndVisible];
+  
+    }
+    else
+    {
+        NSLog(@"userInfo:::::%@",userInfo);
+        [[TWMessageBarManager sharedInstance] hideAll];
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Notification" description:alert type:TWMessageBarMessageTypeInfo callback:^{
+            
+            UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+            UITabBarController *tabar = controller.viewControllers[0];
+            [tabar setSelectedIndex:3];
+            
+            [AppDelegate SharedInstance].window.rootViewController=controller;
+            [[AppDelegate SharedInstance].window makeKeyAndVisible];
+        }];
+    }
+}
+
+//////////////
 
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
@@ -302,18 +415,46 @@
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey: @"badge"] intValue];
-    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
-                                                             bundle: nil];
-    UINavigationController *controller = (UINavigationController*)[MainStoryboard
-                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
-    
+   /* [UIApplication sharedApplication].applicationIconBadgeNumber = [[[userInfo objectForKey:@"aps"] objectForKey: @"badge"] intValue];
+    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
     
     UITabBarController *tabar = controller.viewControllers[0];
     [tabar setSelectedIndex:3];
     
-    self.window.rootViewController=controller;
+    self.window.rootViewController=controller;*/
     
+    NSMutableArray *arrAPS=[[NSMutableArray alloc]init];
+    arrAPS=[userInfo objectForKey:@"aps"];
+    
+    NSString *alert = [NSString stringWithFormat:@"%@",[arrAPS valueForKey:@"alert"]];
+    
+    if ([application applicationState] == UIApplicationStateInactive || [application applicationState] == UIApplicationStateBackground)
+    {
+        UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+        UITabBarController *tabar = controller.viewControllers[0];
+        [tabar setSelectedIndex:3];
+        
+        [AppDelegate SharedInstance].window.rootViewController=controller;
+        [[AppDelegate SharedInstance].window makeKeyAndVisible];
+        
+    }
+    else
+    {
+        NSLog(@"userInfo:::::%@",userInfo);
+        [[TWMessageBarManager sharedInstance] hideAll];
+        [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Notification" description:alert type:TWMessageBarMessageTypeInfo callback:^{
+            
+            UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+            UITabBarController *tabar = controller.viewControllers[0];
+            [tabar setSelectedIndex:3];
+            
+            [AppDelegate SharedInstance].window.rootViewController=controller;
+            [[AppDelegate SharedInstance].window makeKeyAndVisible];
+        }];
+    }
     
 }
 

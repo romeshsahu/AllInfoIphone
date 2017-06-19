@@ -31,13 +31,13 @@
 
 }
 
--(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate andFlavours:(NSString *)flavours SubTitle:(NSString*)subtitle selectedID:(NSString*)selectedID{
+-(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D)coordinate andFlavours:(NSString *)flavours selectedID:(NSString*)selectedID subTitle1:(NSString*)subTitle1{
     self=[super init];
     self->title=title;
     self->coordinate=coordinate;
     self->flavours=flavours;
-    self->iconType=iconType;
     self->selectedID=selectedID;
+    self->_subTitle1=subTitle1;
     
     return self;
     

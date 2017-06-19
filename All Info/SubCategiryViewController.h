@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IntrestCatViewController.h"
 
 @interface SubCategiryViewController : UIViewController<UICollectionViewDataSource, UICollectionViewDelegate>
 @property NSMutableArray *getsubArr;

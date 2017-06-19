@@ -62,16 +62,6 @@ bool isShowngif1 = false;
 
     viewSearch.hidden=YES;
 
-    
-    [viewMapTap removeFromSuperview];
-    [btnMapTap removeFromSuperview];
-    [lblMapTap removeFromSuperview];
-    [imgMapTap removeFromSuperview];
-    
-    for (UITapGestureRecognizer *recognizer in self.view.gestureRecognizers) {
-        [self.view removeGestureRecognizer:recognizer];
-    }
-
     HistoryInfo=[[Allinfo alloc]init];
     [sample.view removeFromSuperview];
     
@@ -124,7 +114,7 @@ bool isShowngif1 = false;
 {
     NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                               initWithTitle:NSLocalizedString(@"Error",nil) message:NSLocalizedString(@"Failed to Get Your Location",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
     [errorAlert show];
 }
 
@@ -280,20 +270,6 @@ bool isShowngif1 = false;
 - (IBAction)BackBtn:(id)sender {
     [self .navigationController popViewControllerAnimated:YES];
 }
-- (IBAction)ActionOnHome:(id)sender {
-    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
-                                                             bundle: nil];
-    UINavigationController *controller = (UINavigationController*)[MainStoryboard
-                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
-    
-    
-    UITabBarController *tabar = controller.viewControllers[0];
-    [tabar setSelectedIndex:3];
-    
-    [AppDelegate SharedInstance].window.rootViewController=controller;
-    [[AppDelegate SharedInstance].window makeKeyAndVisible];
-    //[self.navigationController popToRootViewControllerAnimated:YES];
-}
 
 - (IBAction)ActionOnmenu:(id)sender {
     if (!isShowngif1) {
@@ -319,7 +295,7 @@ bool isShowngif1 = false;
         
         CATransition *transition = [CATransition animation];
         transition.duration =0.5;
-        transition.type = kCATransitionReveal;
+        transition.type = kCATransitionPush;
         transition.subtype = kCATransitionFromRight;
         [transition setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut]];
         [sample.view.layer addAnimation:transition forKey:nil];
@@ -360,6 +336,19 @@ bool isShowngif1 = false;
         [textSearch resignFirstResponder];
         [self performSegueWithIdentifier:@"search" sender:self];
     }
+}
+- (IBAction)ActionOnHome:(id)sender {
+    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                             bundle: nil];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard
+                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+    
+    
+    UITabBarController *tabar = controller.viewControllers[0];
+    [tabar setSelectedIndex:3];
+    
+    [AppDelegate SharedInstance].window.rootViewController=controller;
+    [[AppDelegate SharedInstance].window makeKeyAndVisible];
 }
 
 
@@ -415,11 +404,44 @@ bool isShowngif1 = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Alert" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
             break;
+        case 7:
+        {
+            NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
+            if (UserDict == nil) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                    
+                    LoginViewController *LoginView = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                    LoginView.tabBarController.tabBar.hidden = YES;
+                    [self.navigationController pushViewController:LoginView animated:YES];
+                    
+                }];
+                UIAlertAction* CancelButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                }];
+                
+                [alert addAction:yesButton];
+                [alert addAction:CancelButton];
+                
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+            else
+            {
+                IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
+               // price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+               // price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentViewController:price1 animated:true completion:nil];
+            }
+            
+        }
+            break;
+            
+
         default:
             break;
     }
@@ -457,7 +479,7 @@ bool isShowngif1 = false;
     //initialize url that is going to be fetched.
     //NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=%@&language_id=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",[self.getSubcategryDic objectForKey:@"sub_cat_id"] ,@"2",lat,latonh,@"1",[NSString stringWithFormat:@"%li",(long)pageNo]];
     
-    NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=search&string=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",self.serchByName ,Userlat,Userlong,[NSString stringWithFormat:@"%li",(long)1],@"10"];
+    NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=search&string=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",self.serchByName ,Userlat,Userlong,[NSString stringWithFormat:@"%li",(long)1],@"100"];
     
     //passcode
     
@@ -493,12 +515,13 @@ bool isShowngif1 = false;
     HUD.delegate = self;
     HUD.labelText = @"Loading";
     [HUD show:NO];
+   
+    //pp here
     /// dynamic
-    NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=%@&language_id=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",[self.getSubcategryDic objectForKey:@"sub_cat_id"] ,@"2",Userlat,Userlong,[NSString stringWithFormat:@"%li",(long)1],@"10"];
-    // http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=98&latitude=33.02519&longitude=35.25392&language_id=2&page_no=1&limit=10
+    NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=%@&language_id=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",[self.getSubcategryDic objectForKey:@"sub_cat_id"] ,@"2",Userlat,Userlong,[NSString stringWithFormat:@"%li",(long)1],@"100"];
+
     ///Static
-    
-    //   NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=%@&language_id=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",[self.getSubcategryDic objectForKey:@"sub_cat_id"] ,@"2", @"31.789520", @"35.185456", [NSString stringWithFormat:@"%li",(long)pageNo],@"10"];
+    //   NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=%@&language_id=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",[self.getSubcategryDic objectForKey:@"sub_cat_id"] ,@"2", @"31.789520", @"35.185456", [NSString stringWithFormat:@"%li",(long)1],@"100"];
     
     NSLog(@"urlStr = %@", urlStr);
     
@@ -553,7 +576,7 @@ bool isShowngif1 = false;
              NSLog(@"Geocode failed with error::::: %@", error);
              return;
          }
-         CLPlacemark *placemark = [placemarks objectAtIndex:0];
+         //CLPlacemark *placemark = [placemarks objectAtIndex:0];
          //         _strAddress = [NSString stringWithFormat:@"%@ %@, %@ %@, %@",
          //                          placemark.subThoroughfare, placemark.thoroughfare,
          //                          placemark.postalCode, placemark.locality,
@@ -562,8 +585,8 @@ bool isShowngif1 = false;
          //         NSArray *lines = placemark.addressDictionary[ @"FormattedAddressLines"];
          //         _strAddress = [lines componentsJoinedByString:@", "];
          
-         NSString *strCountry = placemark.country;
-         NSString *strCity = placemark.locality;
+         // NSString *strCountry = placemark.country;
+         // NSString *strCity = placemark.locality;
          
      }];
     
@@ -583,42 +606,85 @@ bool isShowngif1 = false;
 -(void)map_pinAnnotation
 {
     @try {
-        
+
         [self removeAllAnnotations];
         cord_Current=CLLocationCoordinate2DMake(latitude,longitude);
         mapView.delegate=self;
         
-        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(cord_Current, 100000, 1000000);
+        MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(cord_Current, 10000, 100000);
         MKCoordinateRegion adjustedRegion = [self.mapView regionThatFits:viewRegion];
         [self.mapView setRegion:adjustedRegion animated:YES];
         self.mapView.showsUserLocation = YES;
-        
+
         //  MKCoordinateRegion region=MKCoordinateRegionMakeWithDistance(cord_Current,100,100);
         //  [mapView setRegion:region animated:true];
         
         // arrUser_detail=[arrAdsList valueForKey:@"user_detail"];
         
         
-        NSMutableArray *arr_lat=[[NSMutableArray alloc]init];//WithObjects:@"22.1196",@"22.0196",@"21.7196", nil];
-        NSMutableArray *arr_long=[[NSMutableArray alloc]init];//WithObjects:@"75.0577",@"75.0577",@"74.8577", nil];
-        NSMutableArray *arr_AnnoText=[[NSMutableArray alloc]init];//WithObjects:@"22.7196",@"22.0196",@"21.7196", nil];
+        NSMutableArray *arr_lat=[[NSMutableArray alloc]init];
+        NSMutableArray *arr_long=[[NSMutableArray alloc]init];
+        NSMutableArray *arr_AnnoText=[[NSMutableArray alloc]init];
         NSMutableArray *arr_AnnoPrice=[[NSMutableArray alloc]init];
-        
-        
+
         arr_lat=[serchListArr valueForKey:@"latitude"];
         arr_long=[serchListArr valueForKey:@"longitude"];
-        arr_AnnoText=[serchListArr valueForKey:@"category_"];
+        arr_AnnoText=[serchListArr valueForKey:@"business_name"];
         arr_AnnoPrice=[serchListArr valueForKey:@"phone"];
-        
-        NSLog(@"arrAdsList.count.....%lu",(unsigned long)arr_lat.count);
+
+        NSLog(@"arr_AnnoText....%@",arr_AnnoText);
         
         for (int i=0; i<arr_lat.count; i++)
         {
-            CLLocationCoordinate2D cord1=CLLocationCoordinate2DMake([arr_lat[i] floatValue],[arr_long[i] floatValue]);
-            shop1=[[mapClass alloc]initWithTitle:arr_AnnoPrice[i] andCoordinate:cord1 andFlavours: @"Name" SubTitle:arr_AnnoText[i] selectedID:[NSString stringWithFormat:@"%d",i]];
-            [mapView addAnnotation:shop1];
             
+            NSString *imageToLoad = [serchListArr[i] objectForKey:@"product_image1"];
+            NSString *imageToLoad2 = [serchListArr[i] objectForKey:@"product_image2"];
+            NSString *imageToLoad3 = [serchListArr[i] objectForKey:@"product_image3"];
+            NSString *imageToLoad4 = [serchListArr[i] objectForKey:@"product_image4"];
+            NSString *imageToLoad5 = [serchListArr[i] objectForKey:@"product_image5"];
+            NSString *imageToLoad6 = [serchListArr[i] objectForKey:@"product_image6"];
+            NSString *imageToLoad7 = [serchListArr[i] objectForKey:@"product_image7"];
+            NSString *imageToLoad8 = [serchListArr[i] objectForKey:@"product_image8"];
+            NSString *imageToLoad9 = [serchListArr[i] objectForKey:@"product_image9"];
+            NSString *imageToLoad10 = [serchListArr[i] objectForKey:@"product_image10"];
+            
+
+            NSString *strImgUrl;
+            if(imageToLoad.length > 0) {
+                strImgUrl=imageToLoad;
+            } else if(imageToLoad2.length > 0) {
+                strImgUrl=imageToLoad2;
+            } else if(imageToLoad3.length > 0) {
+                strImgUrl=imageToLoad3;
+            } else if(imageToLoad4.length > 0) {
+                strImgUrl=imageToLoad4;
+            } else if(imageToLoad5.length > 0) {
+                strImgUrl=imageToLoad5;
+            } else if(imageToLoad6.length > 0) {
+                strImgUrl=imageToLoad6;
+            } else if(imageToLoad7.length > 0) {
+                strImgUrl=imageToLoad7;
+            } else if(imageToLoad8.length > 0) {
+                strImgUrl=imageToLoad8;
+            } else if(imageToLoad9.length > 0) {
+                strImgUrl=imageToLoad9;
+            } else if(imageToLoad10.length > 0) {
+                strImgUrl=imageToLoad10;
+            } else {
+                strImgUrl=kAppDelegate.strSubCategory;
+            }
+
+
+            CLLocationCoordinate2D cord1=CLLocationCoordinate2DMake([arr_lat[i] floatValue],[arr_long[i] floatValue]);
+            shop1=[[mapClass alloc]initWithTitle:@"                  "
+                    andCoordinate:cord1
+                    andFlavours: strImgUrl
+                    selectedID:[NSString stringWithFormat:@"%d",i]
+                    subTitle1:[classUnicode StringToConvert:arr_AnnoText[i]]
+                   ];
+            [mapView addAnnotation:shop1];
         }
+        
     }
     @catch (NSException *exception)
     {
@@ -628,13 +694,7 @@ bool isShowngif1 = false;
 
 
 #pragma mark mapView Delegates
-/*
- - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
- {
- NSLog(@"didFailWithError: %@", error);
- }*/
 
-//if user location is updated
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [self.locationManager stopUpdatingLocation];
@@ -646,143 +706,12 @@ bool isShowngif1 = false;
     NSLog(@"dLongitude :::: %f", longitude);
     NSLog(@"dLatitude :::: %f", latitude);
     
-    
-    
-    
-    //   if ([StrLogUsertype isEqualToString:@"3"]||StrLogUsertype == NULL)//User
-    //   {
-    //   [self getAddressFromLatLon:manager.location];
-    //   }
 }
-
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
-{
-    NSLog(@"didSelectAnnotationView.....%@",view);
-    
-    [viewMapTap removeFromSuperview];
-    [btnMapTap removeFromSuperview];
-    [lblMapTap removeFromSuperview];
-    [imgMapTap removeFromSuperview];
-
-    for (UITapGestureRecognizer *recognizer in self.view.gestureRecognizers) {
-        [view removeGestureRecognizer:recognizer];
-    }
-
-    NSString *selectedSelected = [NSString stringWithFormat:@"%@",view.annotation.title];
-    
-    for (int i=0; i<serchListArr.count; i++)
-    {
-        BussnessDic = [serchListArr objectAtIndex:i];
-        NSString *srtIn=[[serchListArr objectAtIndex:i] valueForKey:@"phone"];
-        if ([srtIn isEqualToString:selectedSelected])
-        {
-
-            viewMapTap=[[UIView alloc]initWithFrame:CGRectMake(-90.0, -90.0, 90.0, 100.0)];
-            [viewMapTap setBackgroundColor:[UIColor whiteColor]];
-            [view addSubview:viewMapTap];
-            
-            imgMapTap=[[UIImageView alloc]initWithFrame:CGRectMake(10.0, 3.0, 70.0, 70.0)];
-           // [imgMapTap sd_setImageWithURL:[NSURL URLWithString:srtImg] placeholderImage:[UIImage imageNamed:@"map_icon2@3x.png"]];
-            ////
-            NSString *imageToLoad = [BussnessDic objectForKey:@"product_image1"];
-            NSString *imageToLoad2 = [BussnessDic objectForKey:@"product_image2"];
-            NSString *imageToLoad3 = [BussnessDic objectForKey:@"product_image3"];
-            NSString *imageToLoad4 = [BussnessDic objectForKey:@"product_image4"];
-            NSString *imageToLoad5 = [BussnessDic objectForKey:@"product_image5"];
-            NSString *imageToLoad6 = [BussnessDic objectForKey:@"product_image6"];
-            NSString *imageToLoad7 = [BussnessDic objectForKey:@"product_image7"];
-            NSString *imageToLoad8 = [BussnessDic objectForKey:@"product_image8"];
-            NSString *imageToLoad9 = [BussnessDic objectForKey:@"product_image9"];
-            NSString *imageToLoad10 = [BussnessDic objectForKey:@"product_image10"];
-            
-            NSLog(@"imageToLoad = %@", imageToLoad);
-            NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
-            if(imageToLoad.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad2.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad2] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad3.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad3] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad4.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad4] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad5.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad5] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad6.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad6] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad7.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad7] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad8.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad8] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad9.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad9] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else if(imageToLoad10.length > 0) {
-                [imgMapTap sd_setImageWithURL:[NSURL URLWithString:imageToLoad10] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-            } else {
-                if (self.issearch==NO) {
-                    [imgMapTap sd_setImageWithURL:[NSURL URLWithString:kAppDelegate.strSubCategory] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-                }else {
-                    kAppDelegate.strSubCategory = @"";
-                    FMDBManager *fm = [[FMDBManager alloc] init];
-                    [fm openDataBase];
-                    NSArray * arr = [fm SubCategryarry:BussnessDic[@"category_id"]];
-                    if(arr.count > 0){
-                        NSDictionary * dict = arr[0];
-                        kAppDelegate.strSubCategory = dict[@"sub_category_image"];
-                        NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
-                        [imgMapTap sd_setImageWithURL:[NSURL URLWithString:kAppDelegate.strSubCategory] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
-                    }
-                }
-            }
-            
-            [viewMapTap addSubview:imgMapTap];
-
-            NSString *srtLbl=[classUnicode StringToConvert:[[serchListArr objectAtIndex:i] valueForKey:@"business_name"]];
-            lblMapTap=[[UILabel alloc]initWithFrame:CGRectMake(0.0, 70.0, 90.0, 30.0)];
-            lblMapTap.text=srtLbl;
-            lblMapTap.numberOfLines=2;
-            [lblMapTap setFont:[UIFont systemFontOfSize:9.0]];
-            [viewMapTap addSubview:lblMapTap];
-            
-            btnMapTap = [UIButton buttonWithType:UIButtonTypeSystem];
-            btnMapTap.frame = CGRectMake(0.0, 0.0, 90.0, 100.0);
-            btnMapTap.tag=i;
-            [viewMapTap addSubview:btnMapTap];
-            
-            btnMapTap.userInteractionEnabled = YES;
-            UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
-            [self.view addGestureRecognizer:singleFingerTap];
-
-            break;
-        }
-    }
-}
-
-
-//The event handling method
-- (void)handleSingleTap:(UITapGestureRecognizer *)recognizer
-{
-    @try {
-        BussnessDic = [serchListArr objectAtIndex:[btnMapTap tag]];
-        NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
-        dictBD = [BussnessDic mutableCopy];
-        [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
-        
-        self.isserchsetview=true;
-        FMDBManager *fm = [[FMDBManager alloc] init];
-        [fm openDataBase];
-        [fm saveTude:[dictBD mutableCopy]];
-        [self performSegueWithIdentifier:@"Details" sender:self];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"exception.....%@",exception);
-    }
-}
-
 
 -(MKAnnotationView *)mapView:(MKMapView *)mV viewForAnnotation:(id <MKAnnotation>)annotation
 {
     @try {
-        
+        mapClass *m=(mapClass*)annotation;
         MKAnnotationView *pinView = nil;
         if(annotation != mapView.userLocation)
         {
@@ -792,23 +721,54 @@ bool isShowngif1 = false;
             {
                 pinView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:defaultPinID];
             }
+
             pinView.canShowCallout = YES;
-            
             pinView.image = [UIImage imageNamed:@"map2.png"];
+            viewMapTap=[[UIView alloc]initWithFrame:CGRectMake(0.0, 0.0, 125.0, 90.0)];
+            [viewMapTap setBackgroundColor:[UIColor whiteColor]];
+
+            imgMapTap=[[UIImageView alloc]initWithFrame:CGRectMake(0.0, -20.0, 115.0, 90.0)];
+            [imgMapTap sd_setImageWithURL:[NSURL URLWithString:m.flavours] placeholderImage:[UIImage imageNamed:@"map_icon2@3x.png"]];
+            [viewMapTap addSubview:imgMapTap];
+            
+            lblMapTap=[[UILabel alloc]initWithFrame:CGRectMake(0.0, 70.0, 125.0, 30.0)];
+            lblMapTap.text=m.subTitle1;
+            lblMapTap.numberOfLines=2;
+            lblMapTap.textAlignment=NSTextAlignmentCenter;
+            [lblMapTap setFont:[UIFont systemFontOfSize:10.0]];
+            [viewMapTap addSubview:lblMapTap];
             
             
+            pinView.detailCalloutAccessoryView = viewMapTap;
             
+            NSLayoutConstraint *width = [NSLayoutConstraint
+                  constraintWithItem:viewMapTap
+                  attribute:NSLayoutAttributeWidth
+                  relatedBy:NSLayoutRelationLessThanOrEqual
+                  toItem:nil
+                  attribute:NSLayoutAttributeNotAnAttribute
+                  multiplier:1
+                  constant:80];
+            
+            NSLayoutConstraint *height = [NSLayoutConstraint
+                  constraintWithItem:viewMapTap
+                  attribute:NSLayoutAttributeHeight
+                  relatedBy:NSLayoutRelationGreaterThanOrEqual
+                  toItem:nil
+                  attribute:NSLayoutAttributeNotAnAttribute
+                  multiplier:1
+                  constant:90];
+            
+             [viewMapTap addConstraint:width];
+             [viewMapTap addConstraint:height];
+             viewMapTap.backgroundColor = [UIColor clearColor];
+            pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            pinView.canShowCallout = YES;
+
         }
         else {
             [mapView.userLocation setTitle:@"Current Location"];
         }
-        
-        
-        
-        
-        pinView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        pinView.canShowCallout = NO;
-        
         
         return pinView;
         
@@ -816,6 +776,37 @@ bool isShowngif1 = false;
     @catch (NSException *exception) {
         NSLog(@"exception pin.....%@",exception);
         
+    }
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    NSLog(@"calloutAccessoryControlTapped.....");
+    
+    @try {
+        
+        NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
+        for (mapClass *annotationView in selectedAnnotations)
+        {
+            [self.mapView deselectAnnotation:annotationView animated:YES];
+            
+            BussnessDic = [serchListArr objectAtIndex:[annotationView.selectedID integerValue]];
+            NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
+            dictBD = [BussnessDic mutableCopy];
+            [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
+            
+            self.isserchsetview=true;
+            FMDBManager *fm = [[FMDBManager alloc] init];
+            [fm openDataBase];
+            [fm saveTude:[dictBD mutableCopy]];
+            [self performSegueWithIdentifier:@"Details" sender:self];
+            //break;
+        }
+        
+        
+    }
+    @catch (NSException *exception) {
+        NSLog(@"exception.....%@",exception);
     }
 }
 
@@ -852,71 +843,6 @@ bool isShowngif1 = false;
             break;
     }
 }
-
-/*- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
-{
-    NSLog(@"calloutAccessoryControlTapped.....");
-    
-    @try {
-        NSLog(@"didSelectAnnotationView.....%@",view);
-        NSArray *selectedAnnotations = self.mapView.selectedAnnotations;
-        for (mapClass *annotationView in selectedAnnotations)
-        {
-            [self.mapView deselectAnnotation:annotationView animated:YES];
-            
-            NSMutableArray *arrSelectedAdsList=[[NSMutableArray alloc]init];
-            //  arrSelectedAdsList=[arrAdsList objectAtIndex:[[annotationView selectedID] integerValue]];
-            //  userDefaults = [NSUserDefaults standardUserDefaults];
-            //  [userDefaults setObject:arrSelectedAdsList  forKey:@"arrSelectedAdsList"];
-            //  [userDefaults synchronize];
-            
-            //  AdsDetailViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"AdsDetailViewController"];
-            //  [self presentViewController:price1 animated:true completion:nil];
-            
-            NSLog(@"selectedAnnotations.....%@",selectedAnnotations);
-        }
-        
-    }
-    @catch (NSException *exception) {
-        NSLog(@"exception.....%@",exception);
-    }
-}*/
-
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
-{
-    NSLog(@"calloutAccessoryControlTapped.....");
-    
-    @try {
-        NSLog(@"view.annotation.title...%@",view.annotation.title);
-        NSString *selectedSelected = [NSString stringWithFormat:@"%@",view.annotation.title];
-        
-        for (int i=0; i<serchListArr.count; i++)
-        {
-            BussnessDic = [serchListArr objectAtIndex:i];
-            NSString *srtIn=[[serchListArr objectAtIndex:i] valueForKey:@"phone"];
-            if ([srtIn isEqualToString:selectedSelected])
-            {
-                NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
-                dictBD = [BussnessDic mutableCopy];
-                [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
-                
-                self.isserchsetview=true;
-                FMDBManager *fm = [[FMDBManager alloc] init];
-                [fm openDataBase];
-                [fm saveTude:[dictBD mutableCopy]];
-                [self performSegueWithIdentifier:@"Details" sender:self];
-                break;
-            }
-        }
-        
-    }
-    @catch (NSException *exception) {
-        NSLog(@"exception.....%@",exception);
-    }
-}
-
-
-
 
 
 

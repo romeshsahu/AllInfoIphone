@@ -20,13 +20,13 @@
 
 @implementation FMDBManager
 -(void)openDataBase {
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"CheckTudeNew" ofType:@"sqlite"];
-//    
-//    FMDatabase *database = [FMDatabase databaseWithPath:path];
-//    
-//    [database setLogsErrors:TRUE];
-//    
-//    [database open];
+    //    NSString *path = [[NSBundle mainBundle] pathForResource:@"CheckTudeNew" ofType:@"sqlite"];
+    //
+    //    FMDatabase *database = [FMDatabase databaseWithPath:path];
+    //
+    //    [database setLogsErrors:TRUE];
+    //
+    //    [database open];
     
     [self copyDatabaseIfNeeded];
     self.db = [FMDatabase databaseWithPath:[self getDBPath]];
@@ -64,7 +64,7 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES);
     NSString *documentsDir = [paths objectAtIndex:0];
-   // NSLog(@"dbpath : %@",documentsDir);
+    // NSLog(@"dbpath : %@",documentsDir);
     return [documentsDir stringByAppendingPathComponent:@"Allinfo.sqlite"];
 }
 -(void)savefavrate :(NSDictionary *) favratedic {
@@ -76,10 +76,10 @@
     }
     
     if (isfIds == NO) {
-    BOOL success = [self.db executeUpdate:@"INSERT INTO favirateTabel (address, business_name, business_type,business_type_id,category_id, category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,rating,start_time,user_id,user_image,username,video_url,website_url,like, is_open, subcategory_image) VALUES (:address, :business_name,:business_type,:business_type_id,:category_id, :category_name,:create_date,:description,:distance,:email,:end_time,:facebook_url,:language_id,:latitude,:longitude,:phone,:product_image1,:product_image2,:product_image3,:product_image4,:product_image5,:product_image6,:rating,:start_time,:user_id,:user_image,:username,:video_url,:website_url,:like, :is_open, :subcategory_image)" withParameterDictionary:favratedic];
-    if (!success) {
-        NSLog(@"error = %@", [self.db lastErrorMessage]);
-    }
+        BOOL success = [self.db executeUpdate:@"INSERT INTO favirateTabel (address, business_name, business_type,business_type_id,category_id, category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,product_image7,product_image8,product_image9,product_image10,rating,start_time,user_id,user_image,username,video_url,website_url,like, is_open, subcategory_image) VALUES (:address, :business_name,:business_type,:business_type_id,:category_id, :category_name,:create_date,:description,:distance,:email,:end_time,:facebook_url,:language_id,:latitude,:longitude,:phone,:product_image1,:product_image2,:product_image3,:product_image4,:product_image5,:product_image6,:product_image7,:product_image8,:product_image9,:product_image10,:rating,:start_time,:user_id,:user_image,:username,:video_url,:website_url,:like, :is_open, :subcategory_image)" withParameterDictionary:favratedic];
+        if (!success) {
+            NSLog(@"error = %@", [self.db lastErrorMessage]);
+        }
     }
     
     
@@ -93,13 +93,13 @@
     }
     
     if (isId == NO) {
-    
-   
+        
+        
         BOOL success = [self.db executeUpdate:@"INSERT INTO AlldataTable (category_id, category_image, category_name, language_id, show_date) VALUES (:category_id, :category_image, :category_name, :language_id, :show_date)" withParameterDictionary:Categrydic];
         if (!success) {
             NSLog(@"error = %@", [self.db lastErrorMessage]);
         }
-    
+        
     }
 }
 
@@ -115,9 +115,7 @@
         if (!success) {
             NSLog(@"error = %@", [self.db lastErrorMessage]);
         }
-        
     }
-    
 }
 -(NSMutableArray *)getfavirate {
     NSMutableArray *favrarr = [[NSMutableArray alloc] init];
@@ -144,6 +142,12 @@
         NSString *product_image4 = [s stringForColumn:@"product_image4"];
         NSString *product_image5 = [s stringForColumn:@"product_image5"];
         NSString *product_image6 = [s stringForColumn:@"product_image6"];
+        
+        NSString *product_image7 = [s stringForColumn:@"product_image7"];
+        NSString *product_image8 = [s stringForColumn:@"product_image8"];
+        NSString *product_image9 = [s stringForColumn:@"product_image9"];
+        NSString *product_image10 = [s stringForColumn:@"product_image10"];
+        
         NSString *rating = [s stringForColumn:@"rating"];
         NSString *start_time = [s stringForColumn:@"start_time"];
         NSString *user_id = [s stringForColumn:@"user_id"];
@@ -233,6 +237,11 @@
         [dict setObject:product_image5 forKey:@"product_image5"];
         [dict setObject:product_image6 forKey:@"product_image6"];
         
+        [dict setObject:product_image7 forKey:@"product_image7"];
+        [dict setObject:product_image8 forKey:@"product_image8"];
+        [dict setObject:product_image9 forKey:@"product_image9"];
+        [dict setObject:product_image10 forKey:@"product_image10"];
+        
         [dict setObject:user_id forKey:@"user_id"];
         [dict setObject:user_image forKey:@"user_image"];
         if(username != nil) {
@@ -293,7 +302,7 @@
         [dict setObject:category_name forKey:@"category_name"];
         [dict setObject:language_id forKey:@"language_id"];
         [dict setObject:showDate forKey:@"show_date"];
-                //[dict setObject:rating forKey:@"rating"];
+        //[dict setObject:rating forKey:@"rating"];
         [favrarr addObject:dict];
     }
     return favrarr;
@@ -302,11 +311,11 @@
     
     FMResultSet *s = [self.db executeQuery:@"SELECT * from favirateTabel WHERE user_id= ?",lilke];
     while ([s next]) {
-       
-    lilke = [s stringForColumn:@"like"];
-            
-        }
         
+        lilke = [s stringForColumn:@"like"];
+        
+    }
+    
     return lilke;
 }
 -(NSMutableArray *)SubCategryarry:(NSString *) catgeryId{
@@ -321,7 +330,7 @@
         NSString *sub_category_image = [s stringForColumn:@"sub_category_image"];
         NSString *sub_category_name = [s stringForColumn:@"sub_category_name"];
         NSString *showDate = [s stringForColumn:@"show_date"];
-       
+        
         if ([showDate isEqual:[NSNull null]]) {
             showDate=@"";
         }else if ([showDate isEqual:@""]) {
@@ -333,7 +342,7 @@
         }else if ([category_id isEqual:@""]) {
             category_id=@"";
         }
-       
+        
         if ([category_name isEqual:[NSNull null]]) {
             category_name=@"";
         }else if ([category_name isEqual:@""]) {
@@ -359,8 +368,8 @@
         }else if ([sub_category_name isEqual:@""]) {
             sub_category_name=@"";
         }
-
-
+        
+        
         
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setObject:category_id forKey:@"category_id"];
@@ -387,7 +396,7 @@
 }
 
 
--(void)updatehistory:(NSString*)user_id  address:(NSString*)address business_name:(NSString*)business_name  business_type:(NSString*)business_type business_type_id:(NSString*)business_type_id category_id:(NSString*)category_id category_name:(NSString*)category_name  create_date:(NSString*)create_date description:(NSString*)description distance:(NSString*)distance email:(NSString*)email  end_time:(NSString*)end_time facebook_url:(NSString*)facebook_url language_id:(NSString*)language_id latitude:(NSString*)latitude  longitude:(NSString*)longitude phone:(NSString*)phone product_image1:(NSString*)product_image1 product_image2:(NSString*)product_image2 product_image3:(NSString*)product_image3 product_image4:(NSString*)product_image4 product_image5:(NSString*)product_image5 product_image6:(NSString*)product_image6 rating:(NSString*)rating start_time:(NSString*)start_time user_image:(NSString*)user_image username:(NSString*)username website_url:(NSString*)website_url video_url:(NSString*)video_url{
+-(void)updatehistory:(NSString *)user_id address:(NSString *)address business_name:(NSString *)business_name business_type:(NSString *)business_type business_type_id:(NSString *)business_type_id category_id:(NSString *)category_id category_name:(NSString *)category_name create_date:(NSString *)create_date description:(NSString *)description distance:(NSString *)distance email:(NSString *)email end_time:(NSString *)end_time facebook_url:(NSString *)facebook_url language_id:(NSString *)language_id latitude:(NSString *)latitude longitude:(NSString *)longitude phone:(NSString *)phone product_image1:(NSString *)product_image1 product_image2:(NSString *)product_image2 product_image3:(NSString *)product_image3 product_image4:(NSString *)product_image4 product_image5:(NSString *)product_image5 product_image6:(NSString *)product_image6 product_image7:(NSString *)product_image7 product_image8:(NSString *)product_image8 product_image9:(NSString *)product_image9 product_image10:(NSString *)product_image10 rating:(NSString *)rating start_time:(NSString *)start_time user_image:(NSString *)user_image username:(NSString *)username website_url:(NSString *)website_url video_url:(NSString *)video_url{
     
     NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docsPath = [paths objectAtIndex:0];
@@ -395,12 +404,12 @@
     
     FMDatabase *database = [FMDatabase databaseWithPath:dbPath];
     [database open];
-    NSString *insertQuery = [NSString stringWithFormat:@"UPDATE history_Table SET address = '%@',business_name = '%@',business_type = '%@',business_type_id = '%@',category_id = '%@',category_name = '%@',create_date = '%@',description = '%@',email = '%@',end_time = '%@',facebook_url = '%@',language_id = '%@',latitude = '%@',longitude = '%@',phone = '%@',product_image1 = '%@',product_image2 = '%@',product_image3 = '%@',product_image4 = '%@',product_image5 = '%@',product_image6 = '%@',rating = '%@',start_time = '%@', username = '%@',website_url = '%@',video_url = '%@' WHERE user_id = '%@' ", address,business_name,business_type,business_type_id,category_id,category_name,create_date,description,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,rating,start_time,username,website_url,video_url,user_id ];
+    NSString *insertQuery = [NSString stringWithFormat:@"UPDATE history_Table SET address = '%@',business_name = '%@',business_type = '%@',business_type_id = '%@',category_id = '%@',category_name = '%@',create_date = '%@',description = '%@',email = '%@',end_time = '%@',facebook_url = '%@',language_id = '%@',latitude = '%@',longitude = '%@',phone = '%@',product_image1 = '%@',product_image2 = '%@',product_image3 = '%@',product_image4 = '%@',product_image5 = '%@',product_image6 = '%@',product_image7 = '%@',product_image8 = '%@',product_image9 = '%@',product_image10 = '%@',rating = '%@',start_time = '%@', username = '%@',website_url = '%@',video_url = '%@' WHERE user_id = '%@' ", address,business_name,business_type,business_type_id,category_id,category_name,create_date,description,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,product_image7,product_image8,product_image9,product_image10,rating,start_time,username,website_url,video_url,user_id ];
     [database executeUpdate:insertQuery];
     [database close];
-
+    
 }
--(void)updateFave:(NSString*)user_id  address:(NSString*)address business_name:(NSString*)business_name  business_type:(NSString*)business_type business_type_id:(NSString*)business_type_id category_id:(NSString*)category_id category_name:(NSString*)category_name  create_date:(NSString*)create_date description:(NSString*)description distance:(NSString*)distance email:(NSString*)email  end_time:(NSString*)end_time facebook_url:(NSString*)facebook_url language_id:(NSString*)language_id latitude:(NSString*)latitude  longitude:(NSString*)longitude phone:(NSString*)phone product_image1:(NSString*)product_image1 product_image2:(NSString*)product_image2 product_image3:(NSString*)product_image3 product_image4:(NSString*)product_image4 product_image5:(NSString*)product_image5 product_image6:(NSString*)product_image6 rating:(NSString*)rating start_time:(NSString*)start_time user_image:(NSString*)user_image username:(NSString*)username website_url:(NSString*)website_url video_url:(NSString*)video_url{
+-(void)updateFave:(NSString *)user_id address:(NSString *)address business_name:(NSString *)business_name business_type:(NSString *)business_type business_type_id:(NSString *)business_type_id category_id:(NSString *)category_id category_name:(NSString *)category_name create_date:(NSString *)create_date description:(NSString *)description distance:(NSString *)distance email:(NSString *)email end_time:(NSString *)end_time facebook_url:(NSString *)facebook_url language_id:(NSString *)language_id latitude:(NSString *)latitude longitude:(NSString *)longitude phone:(NSString *)phone product_image1:(NSString *)product_image1 product_image2:(NSString *)product_image2 product_image3:(NSString *)product_image3 product_image4:(NSString *)product_image4 product_image5:(NSString *)product_image5 product_image6:(NSString *)product_image6 product_image7:(NSString *)product_image7 product_image8:(NSString *)product_image8 product_image9:(NSString *)product_image9 product_image10:(NSString *)product_image10 rating:(NSString *)rating start_time:(NSString *)start_time user_image:(NSString *)user_image username:(NSString *)username website_url:(NSString *)website_url video_url:(NSString *)video_url{
     
     NSArray  *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *docsPath = [paths objectAtIndex:0];
@@ -408,7 +417,8 @@
     
     FMDatabase *database = [FMDatabase databaseWithPath:dbPath];
     [database open];
-    NSString *insertQuery = [NSString stringWithFormat:@"UPDATE favirateTabel SET address = '%@',business_name = '%@',business_type = '%@',business_type_id = '%@',category_id = '%@',category_name = '%@',create_date = '%@',description = '%@',email = '%@',end_time = '%@',facebook_url = '%@',language_id = '%@',latitude = '%@',longitude = '%@',phone = '%@',product_image1 = '%@',product_image2 = '%@',product_image3 = '%@',product_image4 = '%@',product_image5 = '%@',product_image6 = '%@',rating = '%@',start_time = '%@', username = '%@',website_url = '%@',video_url = '%@' WHERE user_id = '%@' ", address,business_name,business_type,business_type_id,category_id,category_name,create_date,description,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,rating,start_time,username,website_url,video_url,user_id ];
+    NSString *insertQuery = [NSString stringWithFormat:@"UPDATE favirateTabel SET address = '%@',business_name = '%@',business_type = '%@',business_type_id = '%@',category_id = '%@',category_name = '%@',create_date = '%@',description = '%@',email = '%@',end_time = '%@',facebook_url = '%@',language_id = '%@',latitude = '%@',longitude = '%@',phone = '%@',product_image1 = '%@',product_image2 = '%@',product_image3 = '%@',product_image4 = '%@', product_image5 = '%@', product_image6 = '%@', product_image7 = '%@', product_image8 = '%@', product_image9 = '%@',product_image10 = '%@',rating = '%@',start_time = '%@', username = '%@',website_url = '%@',video_url = '%@' WHERE user_id = '%@' ", address,business_name,business_type,business_type_id,category_id,category_name,create_date,description,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,product_image7,product_image8,product_image9,product_image10,rating,start_time,username,website_url,video_url,user_id ];
+    
     [database executeUpdate:insertQuery];
     [database close];
     
@@ -423,8 +433,8 @@
     }
     
     if (isId == NO) {
-        BOOL success = [self.db executeUpdate:@"INSERT INTO history_Table (address, business_name, business_type,business_type_id,category_id, category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,rating,start_time,user_id,user_image,username,video_url,website_url, is_open, subcategory_image) VALUES (:address, :business_name,:business_type,:business_type_id,:category_id, :category_name,:create_date,:description,:distance,:email,:end_time,:facebook_url,:language_id,:latitude,:longitude,:phone,:product_image1,:product_image2,:product_image3,:product_image4,:product_image5,:product_image6,:rating,:start_time,:user_id,:user_image,:username,:video_url,:website_url,:is_open, :subcategory_image)" withParameterDictionary:Busnesdic];
-       
+        BOOL success = [self.db executeUpdate:@"INSERT INTO history_Table (address, business_name, business_type,business_type_id,category_id, category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,product_image7,product_image8,product_image9,product_image10,rating,start_time,user_id,user_image,username,video_url,website_url, is_open, subcategory_image) VALUES (:address, :business_name,:business_type,:business_type_id,:category_id, :category_name,:create_date,:description,:distance,:email,:end_time,:facebook_url,:language_id,:latitude,:longitude,:phone,:product_image1,:product_image2,:product_image3,:product_image4,:product_image5,:product_image6,:product_image7,:product_image8,:product_image9,:product_image10,:rating,:start_time,:user_id,:user_image,:username,:video_url,:website_url,:is_open, :subcategory_image)" withParameterDictionary:Busnesdic];
+        
         if (!success) {
             NSLog(@"error = %@", [self.db lastErrorMessage]);
         }
@@ -457,6 +467,13 @@
         NSString *product_image4 = [s stringForColumn:@"product_image4"];
         NSString *product_image5 = [s stringForColumn:@"product_image5"];
         NSString *product_image6 = [s stringForColumn:@"product_image6"];
+        
+        NSString *product_image7 = [s stringForColumn:@"product_image7"];
+        NSString *product_image8 = [s stringForColumn:@"product_image8"];
+        NSString *product_image9 = [s stringForColumn:@"product_image9"];
+        NSString *product_image10 = [s stringForColumn:@"product_image10"];
+        
+        
         NSString *rating = [s stringForColumn:@"rating"];
         NSString *start_time = [s stringForColumn:@"start_time"];
         NSString *user_id = [s stringForColumn:@"user_id"];
@@ -484,7 +501,7 @@
         }else if ([address isEqual:@""]) {
             address=@"";
         }else if(address == nil){
-          address=@"";
+            address=@"";
         }
         if ([business_name isEqual:[NSNull null]]) {
             business_name=@"";
@@ -620,6 +637,40 @@
         }else if(product_image6 == nil){
             product_image6=@"";
         }
+        
+        if ([product_image7 isEqual:[NSNull null]]) {
+            product_image7=@"";
+        }else if ([product_image7 isEqual:@""]) {
+            product_image7=@"";
+        }else if(product_image7 == nil){
+            product_image7=@"";
+        }
+        
+        if ([product_image8 isEqual:[NSNull null]]) {
+            product_image8=@"";
+        }else if ([product_image8 isEqual:@""]) {
+            product_image8=@"";
+        }else if(product_image8 == nil){
+            product_image8=@"";
+        }
+        
+        if ([product_image9 isEqual:[NSNull null]]) {
+            product_image9=@"";
+        }else if ([product_image9 isEqual:@""]) {
+            product_image9=@"";
+        }else if(product_image9 == nil){
+            product_image9=@"";
+        }
+        
+        if ([product_image10 isEqual:[NSNull null]]) {
+            product_image10=@"";
+        }else if ([product_image10 isEqual:@""]) {
+            product_image10=@"";
+        }else if(product_image10 == nil){
+            product_image10=@"";
+        }
+        
+        
         if ([rating isEqual:[NSNull null]]) {
             rating=@"";
         }else if ([rating isEqual:@""]) {
@@ -687,9 +738,9 @@
         }else if(language_id == nil){
             language_id=@"";
         }
-
         
-
+        
+        
         
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setObject:address forKey:@"address"];
@@ -715,7 +766,12 @@
         [dict setObject:product_image4 forKey:@"product_image4"];
         [dict setObject:product_image5 forKey:@"product_image5"];
         [dict setObject:product_image6 forKey:@"product_image6"];
-       
+        
+        [dict setObject:product_image7 forKey:@"product_image7"];
+        [dict setObject:product_image8 forKey:@"product_image8"];
+        [dict setObject:product_image9 forKey:@"product_image9"];
+        [dict setObject:product_image10 forKey:@"product_image10"];
+        
         [dict setObject:is_open forKey:@"is_open"];
         [dict setObject:subcategory_image forKey:@"subcategory_image"];
         [dict setObject:user_id forKey:@"user_id"];
@@ -751,6 +807,11 @@
     NSString *product_image5=[Busnesdic objectForKey:@"product_image5"];
     NSString *product_image6=[Busnesdic objectForKey:@"product_image6"];
     
+    NSString *product_image7=[Busnesdic objectForKey:@"product_image7"];
+    NSString *product_image8=[Busnesdic objectForKey:@"product_image8"];
+    NSString *product_image9=[Busnesdic objectForKey:@"product_image9"];
+    NSString *product_image10=[Busnesdic objectForKey:@"product_image10"];
+    
     NSString *rating=[Busnesdic objectForKey:@"rating"];
     NSString *user_image=[Busnesdic objectForKey:@"user_image"];
     NSString *username=[Busnesdic objectForKey:@"username"];
@@ -768,8 +829,8 @@
     
     FMDatabase *database = [FMDatabase databaseWithPath:dbPath];
     [database open];
-   
-    NSString *insertQuery = [NSString stringWithFormat:@"UPDATE AllBusinesslistTable SET address = '%@',business_name = '%@',business_type = '%@',business_type_id = '%@',category_id = '%@',category_name = '%@',create_date = '%@',description = '%@',distance = '%@' ,email = '%@',end_time = '%@',facebook_url = '%@',language_id = '%@',latitude = '%@',longitude = '%@',phone = '%@',product_image1 = '%@',product_image2 = '%@',product_image3 = '%@',product_image4 = '%@',product_image5 = '%@',product_image6 = '%@',rating = '%@',user_image = '%@',username = '%@',video_url = '%@',website_url = '%@',start_time = '%@' WHERE user_id = '%@' ", address,business_name,business_type,business_type_id,category_id,category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,rating,user_image,username,video_url,website_url,start_time,user_id ];
+    
+    NSString *insertQuery = [NSString stringWithFormat:@"UPDATE AllBusinesslistTable SET address = '%@',business_name = '%@',business_type = '%@',business_type_id = '%@',category_id = '%@',category_name = '%@',create_date = '%@',description = '%@',distance = '%@' ,email = '%@',end_time = '%@',facebook_url = '%@',language_id = '%@',latitude = '%@',longitude = '%@',phone = '%@',product_image1 = '%@',product_image2 = '%@',product_image3 = '%@',product_image4 = '%@',product_image5 = '%@',product_image6 = '%@',product_image7 = '%@',product_image8 = '%@',product_image9 = '%@',product_image10 = '%@',rating = '%@',user_image = '%@',username = '%@',video_url = '%@',website_url = '%@',start_time = '%@' WHERE user_id = '%@' ", address,business_name,business_type,business_type_id,category_id,category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,product_image7,product_image8,product_image9,product_image10,   rating,user_image,username,video_url,website_url,start_time,user_id ];
     [database executeUpdate:insertQuery];
     [database close];
     
@@ -788,7 +849,7 @@
     }
     
     if (isId == NO) {
-        BOOL success = [self.db executeUpdate:@"INSERT INTO AllBusinesslistTable (address, business_name, business_type, business_type_id,category_id,category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,rating,user_id,user_image,username,video_url,website_url,start_time) VALUES (:address, :business_name, :business_type,:business_type_id,:category_id,:category_name, :create_date, :description,:distance,:email,:end_time,:facebook_url, :language_id,:latitude, :longitude ,:phone ,:product_image1 ,:product_image2 ,:product_image3 ,:product_image4 ,:product_image5 ,:product_image6,:rating, :user_id,:user_image, :username,:video_url, :website_url, :start_time)" withParameterDictionary:Busnesdic];
+        BOOL success = [self.db executeUpdate:@"INSERT INTO AllBusinesslistTable (address, business_name, business_type, business_type_id,category_id,category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,product_image7,product_image8,product_image9,product_image10,rating,user_id,user_image,username,video_url,website_url,start_time) VALUES (:address, :business_name, :business_type,:business_type_id,:category_id,:category_name, :create_date, :description,:distance,:email,:end_time,:facebook_url, :language_id,:latitude, :longitude ,:phone ,:product_image1 ,:product_image2 ,:product_image3 ,:product_image4 ,:product_image5 ,:product_image6,:product_image7,:product_image8,:product_image9,:product_image10, :rating, :user_id,:user_image, :username,:video_url, :website_url, :start_time)" withParameterDictionary:Busnesdic];
         
         if (!success) {
             NSLog(@"error = %@", [self.db lastErrorMessage]);
@@ -805,11 +866,11 @@
     while ([s next]) {
         NSString *address = [s stringForColumn:@"address"];
         NSString *business_name1 = [s stringForColumn:@"business_name"];
-       
+        
         if ([business_name1 canBeConvertedToEncoding:NSASCIIStringEncoding]){
             NSData *data = [business_name1 dataUsingEncoding:NSUTF8StringEncoding];
             NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-          business_name=[NSString stringWithFormat:@"%@",string];
+            business_name=[NSString stringWithFormat:@"%@",string];
             
         }else{
             business_name=[NSString stringWithFormat:@"%@",business_name1];
@@ -834,6 +895,13 @@
         NSString *product_image4 = [s stringForColumn:@"product_image4"];
         NSString *product_image5 = [s stringForColumn:@"product_image5"];
         NSString *product_image6 = [s stringForColumn:@"product_image6"];
+        
+        NSString *product_image7 = [s stringForColumn:@"product_image7"];
+        NSString *product_image8 = [s stringForColumn:@"product_image8"];
+        NSString *product_image9 = [s stringForColumn:@"product_image9"];
+        NSString *product_image10 = [s stringForColumn:@"product_image10"];
+        
+        
         NSString *sub_category_name = [s stringForColumn:@"sub_category_name"];
         NSString *user_id = [s stringForColumn:@"user_id"];
         NSString *user_image = [s stringForColumn:@"user_image"];
@@ -984,6 +1052,42 @@
         }else if(product_image6 == nil){
             product_image6=@"";
         }
+        
+        if ([product_image7 isEqual:[NSNull null]]) {
+            product_image7=@"";
+        }else if ([product_image7 isEqual:@""]) {
+            product_image7=@"";
+        }else if(product_image7 == nil){
+            product_image7=@"";
+        }
+        
+        if ([product_image8 isEqual:[NSNull null]]) {
+            product_image8=@"";
+        }else if ([product_image8 isEqual:@""]) {
+            product_image8=@"";
+        }else if(product_image8 == nil){
+            product_image8=@"";
+        }
+        
+        if ([product_image9 isEqual:[NSNull null]]) {
+            product_image9=@"";
+        }else if ([product_image9 isEqual:@""]) {
+            product_image9=@"";
+        }else if(product_image9 == nil){
+            product_image9=@"";
+        }
+        
+        if ([product_image10 isEqual:[NSNull null]]) {
+            product_image10=@"";
+        }else if ([product_image10 isEqual:@""]) {
+            product_image10=@"";
+        }else if(product_image10 == nil){
+            product_image10=@"";
+        }
+        
+        
+        
+        
         if ([rating isEqual:[NSNull null]]) {
             rating=@"";
         }else if ([rating isEqual:@""]) {
@@ -1086,9 +1190,9 @@
         [dict setObject:create_date forKey:@"create_date"];
         [dict setObject:start_time forKey:@"start_time"];
         [dict setObject:end_time forKey:@"end_time"];
-       // [dict setObject:priority forKey:@"priority"];
+        // [dict setObject:priority forKey:@"priority"];
         
-    
+        
         [dict setObject:create_date forKey:@"create_date"];
         [dict setObject:description forKey:@"description"];
         [dict setObject:distance forKey:@"distance"];
@@ -1102,6 +1206,14 @@
         [dict setObject:product_image4 forKey:@"product_image4"];
         [dict setObject:product_image5 forKey:@"product_image5"];
         [dict setObject:product_image6 forKey:@"product_image6"];
+        
+        [dict setObject:product_image7 forKey:@"product_image7"];
+        [dict setObject:product_image8 forKey:@"product_image8"];
+        [dict setObject:product_image9 forKey:@"product_image9"];
+        [dict setObject:product_image10 forKey:@"product_image10"];
+        
+        
+        
         // [dict setObject:sub_category_name forKey:@"sub_category_name"];
         [dict setObject:user_id forKey:@"user_id"];
         [dict setObject:user_image forKey:@"user_image"];

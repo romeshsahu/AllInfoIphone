@@ -29,7 +29,7 @@
     NSMutableArray *addcontent, * arrAddCategory, *arrCatId, * arrCatName;
     
     NSMutableArray *sendIdarr;
-     NSMutableArray *sendsubname;
+    NSMutableArray *sendsubname;
     NSString *Bussines_id;
     NSString *SubCateId_id, * strCatId;
     NSString *SubCatename, * strCatName;
@@ -115,7 +115,7 @@ bool isShownaddbusines;
     [super viewDidLoad];
     [self.scrollView_Images setContentSize:CGSizeMake(414, 170)];
     [ self.NewScVicw setContentSize:CGSizeMake(320, 1420)];
-
+    
     UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
     [keyboardDoneButtonView sizeToFit];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
@@ -140,7 +140,7 @@ bool isShownaddbusines;
     
 #pragma mark - Edit:
     
-        /// For Edit
+    /// For Edit
     if (self.iseditNew==YES) {
         categrtArray = [[NSMutableArray alloc]init];
         SubcategrtArray = [[NSMutableArray alloc]init];
@@ -154,7 +154,7 @@ bool isShownaddbusines;
         flagIsOpen = ! flagIsOpen;
         
         if([self.editbusinesdic[@"is_open"] intValue] == 1) {
-           [_btn_Status setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+            [_btn_Status setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
             self.intBusinessHourStatus = 1;
         } else if ([self.editbusinesdic[@"is_open"] intValue] == 2) {
             [_btn_Status setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
@@ -200,8 +200,8 @@ bool isShownaddbusines;
                 self.userlong=[NSString stringWithFormat:@"%@",userlong1];
             }
         }
-
-
+        
+        
         NSString* strUnicodeString=[self.editbusinesdic objectForKey:@"category_name"];
         if ([strUnicodeString isEqual:[NSNull null]]) {
             strUnicodeString=@"";
@@ -210,18 +210,18 @@ bool isShownaddbusines;
         }else if(strUnicodeString == nil){
             strUnicodeString=@"";
         }else{
-
-        if ([strUnicodeString canBeConvertedToEncoding:NSASCIIStringEncoding]){
-            NSData *data = [strUnicodeString dataUsingEncoding:NSUTF8StringEncoding];
-            NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-            self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",string];
             
-        }else{
-            self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",strUnicodeString];
+            if ([strUnicodeString canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                NSData *data = [strUnicodeString dataUsingEncoding:NSUTF8StringEncoding];
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",string];
+                
+            }else{
+                self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",strUnicodeString];
+            }
         }
-        }
-
-            // Catigry_id=[self.editbusinesdic objectForKey:@"category_id"];
+        
+        // Catigry_id=[self.editbusinesdic objectForKey:@"category_id"];
         
         NSArray * arrCateList = [self.editbusinesdic objectForKey:@"category_list"];
         arrCatId = [[NSMutableArray alloc] init];
@@ -244,7 +244,7 @@ bool isShownaddbusines;
                     NSData *data = [strUnicodeString dataUsingEncoding:NSUTF8StringEncoding];
                     NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
                     [arrCatName addObject:string];
-                        //self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",string];
+                    //self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",string];
                     
                 }else{
                     [arrCatName addObject:strUnicodeString];
@@ -298,7 +298,7 @@ bool isShownaddbusines;
             
             
             [SubcategrtArray addObjectsFromArray:arrSC];
-                //[SubcategrtArray arrayByAddingObjectsFromArray:arrSC];
+            //[SubcategrtArray arrayByAddingObjectsFromArray:arrSC];
             
             NSLog(@"SubcategrtArray.count in loop = %d", (int) SubcategrtArray.count);
         }
@@ -315,8 +315,8 @@ bool isShownaddbusines;
         SubcategrtArray = arrSC;
         NSLog(@"SubcategrtArray = %@", SubcategrtArray);
         [self.SubcategoryTableview reloadData];
-            // SubcategrtArray = [fm SubCategryarry:[self.editbusinesdic objectForKey:@"category_id"]];
-            // [self.SubcategoryTableview reloadData];
+        // SubcategrtArray = [fm SubCategryarry:[self.editbusinesdic objectForKey:@"category_id"]];
+        // [self.SubcategoryTableview reloadData];
         // [self subcategiryList];
         self.CategeryShowView.hidden=YES;
         self.BusinessView.hidden=YES;
@@ -326,7 +326,7 @@ bool isShownaddbusines;
         NSMutableArray *subname=[[NSMutableArray alloc]init];
         for (int i=0; i<updatesubcat.count; i++) {
             NSMutableArray *dataarr=[[NSMutableArray alloc]init];
-           
+            
             NSMutableDictionary *savendic=[[NSMutableDictionary alloc]init];
             savendic=[updatesubcat objectAtIndex:i];
             NSString *subid=[savendic objectForKey:@"sub_cat_id"];
@@ -361,19 +361,19 @@ bool isShownaddbusines;
         }else if(subn == nil){
             subn=@"";
         }else{
-        if ([subn canBeConvertedToEncoding:NSASCIIStringEncoding]){
-            NSData *data = [subn dataUsingEncoding:NSUTF8StringEncoding];
-            NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-            self.SubCategryTextfiled.text =[NSString stringWithFormat:@"%@",string];
-            
-        }else{
-            self.SubCategryTextfiled.text =[NSString stringWithFormat:@"%@",subn];
+            if ([subn canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                NSData *data = [subn dataUsingEncoding:NSUTF8StringEncoding];
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                self.SubCategryTextfiled.text =[NSString stringWithFormat:@"%@",string];
+                
+            }else{
+                self.SubCategryTextfiled.text =[NSString stringWithFormat:@"%@",subn];
+            }
         }
-        }
-      
-//        self.SubCategryTextfiled.text = [subname componentsJoinedByString:@","];
-
-               
+        
+        //        self.SubCategryTextfiled.text = [subname componentsJoinedByString:@","];
+        
+        
         NSString* Bussinessemilt=[self.editbusinesdic objectForKey:@"business_email"];
         if ([Bussinessemilt isEqual:[NSNull null]]) {
             Bussinessemilt=@"";
@@ -382,17 +382,17 @@ bool isShownaddbusines;
         }else if(Bussinessemilt == nil){
             Bussinessemilt=@"";
         }else{
-        if ([Bussinessemilt canBeConvertedToEncoding:NSASCIIStringEncoding]){
-            NSData *data = [Bussinessemilt dataUsingEncoding:NSUTF8StringEncoding];
-            NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-            self.Bussinessemiltextfiled.text =[NSString stringWithFormat:@"%@",string];
-            
-        }else{
-            self.Bussinessemiltextfiled.text =[NSString stringWithFormat:@"%@",Bussinessemilt];
+            if ([Bussinessemilt canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                NSData *data = [Bussinessemilt dataUsingEncoding:NSUTF8StringEncoding];
+                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                self.Bussinessemiltextfiled.text =[NSString stringWithFormat:@"%@",string];
+                
+            }else{
+                self.Bussinessemiltextfiled.text =[NSString stringWithFormat:@"%@",Bussinessemilt];
+            }
         }
-        }
-
-            /// Set the value for menu url
+        
+        /// Set the value for menu url
         NSString * strMenuUrl = [self.editbusinesdic objectForKey:@"menu_url"];
         if ([strMenuUrl isEqual:[NSNull null]]) {
             strMenuUrl=@"";
@@ -405,19 +405,19 @@ bool isShownaddbusines;
                 strMenuUrl=@"";
             } else {
                 [strMenuUrl stringByReplacingOccurrencesOfString:@""
-                                                     withString:@""];
+                                                      withString:@""];
                 if ([strMenuUrl canBeConvertedToEncoding:NSASCIIStringEncoding]){
                     NSData *data = [strMenuUrl dataUsingEncoding:NSUTF8StringEncoding];
                     NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
                     self.tf_MenuUrl.text=[NSString stringWithFormat:@"%@",string];
                     
                 }else{
-                                      self.tf_MenuUrl.text=[NSString stringWithFormat:@"%@",strMenuUrl];
+                    self.tf_MenuUrl.text=[NSString stringWithFormat:@"%@",strMenuUrl];
                 }
             }
         }
         
-            /// Sety the value of table Url
+        /// Sety the value of table Url
         NSString * strTableUrll = [self.editbusinesdic objectForKey:@"table_reservation_url"];
         if ([strTableUrll isEqual:[NSNull null]]) {
             strTableUrll=@"";
@@ -430,18 +430,18 @@ bool isShownaddbusines;
                 strTableUrll=@"";
             } else {
                 [strTableUrll stringByReplacingOccurrencesOfString:@""
-                                                      withString:@""];
+                                                        withString:@""];
                 if ([strTableUrll canBeConvertedToEncoding:NSASCIIStringEncoding]){
                     NSData *data = [strTableUrll dataUsingEncoding:NSUTF8StringEncoding];
                     NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
                     self.tf_TblUrl.text=[NSString stringWithFormat:@"%@",string];
                     
                 }else{
-                                       self.tf_TblUrl.text=[NSString stringWithFormat:@"%@",strTableUrll];
+                    self.tf_TblUrl.text=[NSString stringWithFormat:@"%@",strTableUrll];
                 }
             }
         }
-       
+        
         NSString *phonetext=[self.editbusinesdic objectForKey:@"phone"];
         if ([phonetext isEqual:[NSNull null]]) {
             phonetext=@"";
@@ -454,7 +454,7 @@ bool isShownaddbusines;
             }else{
                 
                 [phonetext stringByReplacingOccurrencesOfString:@""
-                                                       withString:@""];
+                                                     withString:@""];
                 if ([phonetext canBeConvertedToEncoding:NSASCIIStringEncoding]){
                     NSData *data = [phonetext dataUsingEncoding:NSUTF8StringEncoding];
                     NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
@@ -475,23 +475,23 @@ bool isShownaddbusines;
         }else if(BussinesNam == nil){
             BussinesNam=@"";
         }else{
-        if ([BussinesNam isEqualToString:@""]) {
-        }else{
-            
-            [BussinesNam stringByReplacingOccurrencesOfString:@""
-                                              withString:@""];
-            if ([BussinesNam canBeConvertedToEncoding:NSASCIIStringEncoding]){
-                NSData *data = [BussinesNam dataUsingEncoding:NSUTF8StringEncoding];
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-                self.BussinesNameText.text=[NSString stringWithFormat:@"%@",string];
-                
+            if ([BussinesNam isEqualToString:@""]) {
             }else{
-                ;
-                self.BussinesNameText.text=[NSString stringWithFormat:@"%@",BussinesNam];
+                
+                [BussinesNam stringByReplacingOccurrencesOfString:@""
+                                                       withString:@""];
+                if ([BussinesNam canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                    NSData *data = [BussinesNam dataUsingEncoding:NSUTF8StringEncoding];
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                    self.BussinesNameText.text=[NSString stringWithFormat:@"%@",string];
+                    
+                }else{
+                    ;
+                    self.BussinesNameText.text=[NSString stringWithFormat:@"%@",BussinesNam];
+                }
             }
         }
-        }
-
+        
         
         NSString *Weburl=[self.editbusinesdic objectForKey:@"website_url"];
         if ([Weburl isEqual:[NSNull null]]) {
@@ -501,22 +501,22 @@ bool isShownaddbusines;
         }else if(Weburl == nil){
             Weburl=@"";
         }else{
-        if ([Weburl isEqualToString:@""]) {
-        }else{
-            
-            [Weburl stringByReplacingOccurrencesOfString:@""
-                                                withString:@""];
-            if ([Weburl canBeConvertedToEncoding:NSASCIIStringEncoding]){
-                NSData *data = [Weburl dataUsingEncoding:NSUTF8StringEncoding];
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-                self.WeburlTextFiled.text=[NSString stringWithFormat:@"%@",string];
-                
+            if ([Weburl isEqualToString:@""]) {
             }else{
-                ;
-                self.WeburlTextFiled.text=[NSString stringWithFormat:@"%@",Weburl];
+                
+                [Weburl stringByReplacingOccurrencesOfString:@""
+                                                  withString:@""];
+                if ([Weburl canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                    NSData *data = [Weburl dataUsingEncoding:NSUTF8StringEncoding];
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                    self.WeburlTextFiled.text=[NSString stringWithFormat:@"%@",string];
+                    
+                }else{
+                    ;
+                    self.WeburlTextFiled.text=[NSString stringWithFormat:@"%@",Weburl];
+                }
             }
         }
-    }
         NSLog(@"b type = %@", [self.editbusinesdic objectForKey:@"business_type"]);
         
         NSString *businessType=[self.editbusinesdic objectForKey:@"business_type"];
@@ -527,11 +527,11 @@ bool isShownaddbusines;
         }else if(businessType == nil){
             businessType=@"";
         } else {
-                self.BussinetTypeTextfiled.text=[self.editbusinesdic objectForKey:@"business_type"];
+            self.BussinetTypeTextfiled.text=[self.editbusinesdic objectForKey:@"business_type"];
         }
         
         
-       
+        
         NSString *videourl=[self.editbusinesdic objectForKey:@"video_url"];
         if ([videourl isEqual:[NSNull null]]) {
             videourl=@"";
@@ -540,22 +540,22 @@ bool isShownaddbusines;
         }else if(videourl == nil){
             videourl=@"";
         }else{
-        if ([videourl isEqualToString:@""]) {
-        }else{
-            
-            [videourl stringByReplacingOccurrencesOfString:@""
-                                             withString:@""];
-            if ([videourl canBeConvertedToEncoding:NSASCIIStringEncoding]){
-                NSData *data = [videourl dataUsingEncoding:NSUTF8StringEncoding];
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-                self.videourl.text=[NSString stringWithFormat:@"%@",string];
-                
+            if ([videourl isEqualToString:@""]) {
             }else{
-                ;
-                self.videourl.text=[NSString stringWithFormat:@"%@",videourl];
+                
+                [videourl stringByReplacingOccurrencesOfString:@""
+                                                    withString:@""];
+                if ([videourl canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                    NSData *data = [videourl dataUsingEncoding:NSUTF8StringEncoding];
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                    self.videourl.text=[NSString stringWithFormat:@"%@",string];
+                    
+                }else{
+                    ;
+                    self.videourl.text=[NSString stringWithFormat:@"%@",videourl];
+                }
             }
         }
-    }
         
         NSString *fburl=[self.editbusinesdic objectForKey:@"facebook_url"];
         if ([fburl isEqual:[NSNull null]]) {
@@ -565,23 +565,23 @@ bool isShownaddbusines;
         }else if(fburl == nil){
             fburl=@"";
         }else{
-        if ([fburl isEqualToString:@""]) {
-        }else{
-            
-            [fburl stringByReplacingOccurrencesOfString:@""
-                                              withString:@""];
-            if ([fburl canBeConvertedToEncoding:NSASCIIStringEncoding]){
-                NSData *data = [fburl dataUsingEncoding:NSUTF8StringEncoding];
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-                self.facebooktextfiled.text=[NSString stringWithFormat:@"%@",string];
-                
+            if ([fburl isEqualToString:@""]) {
             }else{
-                ;
-                self.facebooktextfiled.text=[NSString stringWithFormat:@"%@",fburl];
+                
+                [fburl stringByReplacingOccurrencesOfString:@""
+                                                 withString:@""];
+                if ([fburl canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                    NSData *data = [fburl dataUsingEncoding:NSUTF8StringEncoding];
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                    self.facebooktextfiled.text=[NSString stringWithFormat:@"%@",string];
+                    
+                }else{
+                    ;
+                    self.facebooktextfiled.text=[NSString stringWithFormat:@"%@",fburl];
+                }
             }
         }
-        }
-
+        
         NSString *businessTypeId=[self.editbusinesdic objectForKey:@"business_type_id"];
         if ([businessTypeId isEqual:[NSNull null]]) {
             businessTypeId=@"";
@@ -590,8 +590,8 @@ bool isShownaddbusines;
         }else if(businessTypeId == nil){
             businessTypeId=@"";
         } else {
-        
-        Bussines_id=[self.editbusinesdic objectForKey:@"business_type_id"];
+            
+            Bussines_id=[self.editbusinesdic objectForKey:@"business_type_id"];
         }
         NSString *bstime=[self.editbusinesdic objectForKey:@"start_time"];
         if ([bstime isEqual:[NSNull null]]) {
@@ -604,31 +604,31 @@ bool isShownaddbusines;
             bstime=@"";
             self.PlacehoderHoures.hidden=NO;
         }else{
-        if ([bstime isEqualToString:@""]) {
+            if ([bstime isEqualToString:@""]) {
             }else{
-            
-            [bstime stringByReplacingOccurrencesOfString:@""
-                                               withString:@""];
-            if ([bstime canBeConvertedToEncoding:NSASCIIStringEncoding]){
-                NSData *data = [bstime dataUsingEncoding:NSUTF8StringEncoding];
-                NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-                self.BusinesHoursTextFiled.text=[NSString stringWithFormat:@"%@",string];
-                self.PlacehoderHoures.hidden=YES;
-            
-            }else{
-               ;
-               self.BusinesHoursTextFiled.text=[NSString stringWithFormat:@"%@",bstime];
-                 self.PlacehoderHoures.hidden=YES;
+                
+                [bstime stringByReplacingOccurrencesOfString:@""
+                                                  withString:@""];
+                if ([bstime canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                    NSData *data = [bstime dataUsingEncoding:NSUTF8StringEncoding];
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                    self.BusinesHoursTextFiled.text=[NSString stringWithFormat:@"%@",string];
+                    self.PlacehoderHoures.hidden=YES;
+                    
+                }else{
+                    ;
+                    self.BusinesHoursTextFiled.text=[NSString stringWithFormat:@"%@",bstime];
+                    self.PlacehoderHoures.hidden=YES;
+                }
             }
-        }
-        
+            
         }
         
         
         NSString *newReplacedString=[NSString stringWithFormat:@"%@",[self.editbusinesdic objectForKey:@"description"]];
         NSString * showdescription = [newReplacedString stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"];
         if ([showdescription isEqualToString:@""]) {
-               self.Placeholder.hidden=NO;
+            self.Placeholder.hidden=NO;
         }else{
             
             self.Placeholder.hidden=YES;
@@ -644,7 +644,7 @@ bool isShownaddbusines;
                 self.DescriptionTextView.text=[NSString stringWithFormat:@"%@",showdescription];
             }
         }
-       
+        
         NSString *showadd=[NSString stringWithFormat:@"%@",[self.editbusinesdic objectForKey:@"address"]];
         if ([showadd isEqual:[NSNull null]]) {
             showadd=@"";
@@ -653,24 +653,24 @@ bool isShownaddbusines;
         }else if(showadd == nil){
             showadd=@"";
         }else{
-
-        if ([showadd isEqualToString:@""]) {
-                self.placeAddreslable.hidden=NO;
-                }else{
-                    
-      [showadd stringByReplacingOccurrencesOfString:@""
-                                                   withString:@""];
-        if ([showadd canBeConvertedToEncoding:NSASCIIStringEncoding]){
-            NSData *data = [showadd dataUsingEncoding:NSUTF8StringEncoding];
-            NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-            self.AddressTextFiled.text=[NSString stringWithFormat:@"%@",string];
-            self.placeAddreslable.hidden=YES;
             
-        }else{
-            self.placeAddreslable.hidden=YES;
-            self.AddressTextFiled.text=[NSString stringWithFormat:@"%@",showadd];
-        }
+            if ([showadd isEqualToString:@""]) {
+                self.placeAddreslable.hidden=NO;
+            }else{
+                
+                [showadd stringByReplacingOccurrencesOfString:@""
+                                                   withString:@""];
+                if ([showadd canBeConvertedToEncoding:NSASCIIStringEncoding]){
+                    NSData *data = [showadd dataUsingEncoding:NSUTF8StringEncoding];
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+                    self.AddressTextFiled.text=[NSString stringWithFormat:@"%@",string];
+                    self.placeAddreslable.hidden=YES;
+                    
+                }else{
+                    self.placeAddreslable.hidden=YES;
+                    self.AddressTextFiled.text=[NSString stringWithFormat:@"%@",showadd];
                 }
+            }
             
         }
         imageToLoad1 = [self.editbusinesdic objectForKey:@"product_image1"];
@@ -689,7 +689,7 @@ bool isShownaddbusines;
         [self.AddImg4 sd_setImageWithURL:[NSURL URLWithString:imageToLoad4] placeholderImage:[UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             // URL is as expected, but Image is wrong
         }];
-       imageToLoad5= [self.editbusinesdic objectForKey:@"product_image5"];
+        imageToLoad5= [self.editbusinesdic objectForKey:@"product_image5"];
         [self.AddImg5 sd_setImageWithURL:[NSURL URLWithString:imageToLoad5] placeholderImage:[UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             // URL is as expected, but Image is wrong
         }];
@@ -700,25 +700,25 @@ bool isShownaddbusines;
         
         imageToLoad7= [self.editbusinesdic objectForKey:@"product_image7"];
         [self.AddImg7 sd_setImageWithURL:[NSURL URLWithString:imageToLoad7] placeholderImage:[UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                // URL is as expected, but Image is wrong
+            // URL is as expected, but Image is wrong
         }];
         
         imageToLoad8= [self.editbusinesdic objectForKey:@"product_image8"];
         [self.AddImg8 sd_setImageWithURL:[NSURL URLWithString:imageToLoad8] placeholderImage:[UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                // URL is as expected, but Image is wrong
+            // URL is as expected, but Image is wrong
         }];
         
         imageToLoad9= [self.editbusinesdic objectForKey:@"product_image9"];
         [self.AddImg9 sd_setImageWithURL:[NSURL URLWithString:imageToLoad9] placeholderImage:[UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                // URL is as expected, but Image is wrong
+            // URL is as expected, but Image is wrong
         }];
         
         imageToLoad10= [self.editbusinesdic objectForKey:@"product_image10"];
         [self.AddImg10 sd_setImageWithURL:[NSURL URLWithString:imageToLoad10] placeholderImage:[UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                // URL is as expected, but Image is wrong
+            // URL is as expected, but Image is wrong
         }];
-
-
+        
+        
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -740,14 +740,14 @@ bool isShownaddbusines;
             self.videourl.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"Video Url",nil) attributes:@{NSForegroundColorAttributeName: color}];
             self.facebooktextfiled.attributedPlaceholder = [[NSAttributedString alloc] initWithString: NSLocalizedString(@"facebook Url",nil) attributes:@{NSForegroundColorAttributeName: color}];
             self.Placeholder.text=NSLocalizedString(@"Description of Business",nil);
-//            [self.Addimgebtn1 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn2 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn3 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn4 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn5 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn6 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn1 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn2 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn3 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn4 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn5 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn6 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
             [self.SentBtnOut setTitle:NSLocalizedString(@"Save",nil) forState:UIControlStateNormal];
-           
+            
             self.placeAddreslable.text=NSLocalizedString(@"Address",nil);
             self.PlacehoderHoures.text=NSLocalizedString(@"Business hours",nil);
             
@@ -755,10 +755,10 @@ bool isShownaddbusines;
             self.CategoryTableView .tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
             [self.SubcategoryTableview setSeparatorInset:UIEdgeInsetsZero];
             self.SubcategoryTableview .tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-//            UITapGestureRecognizer *Business =
-//            [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                    action:@selector(BusinesshandleSingleTap:)];
-           // [self.NewScVicw addGestureRecognizer:Business];
+            //            UITapGestureRecognizer *Business =
+            //            [[UITapGestureRecognizer alloc] initWithTarget:self
+            //                                                    action:@selector(BusinesshandleSingleTap:)];
+            // [self.NewScVicw addGestureRecognizer:Business];
             self.BusinessView.layer.masksToBounds = NO;
             self.BusinessView.layer.shadowColor = [UIColor blackColor].CGColor;
             self.BusinessView.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
@@ -767,7 +767,7 @@ bool isShownaddbusines;
             self.SubcategoryshowView.layer.shadowColor = [UIColor blackColor].CGColor;
             self.SubcategoryshowView.layer.shadowOffset = CGSizeMake(0.0f, 1.0f);
             self.SubcategoryshowView.layer.shadowOpacity = 0.8f;
-           
+            
             
         }
     }else{
@@ -797,16 +797,16 @@ bool isShownaddbusines;
             self.tf_TblUrl.attributedPlaceholder = [[NSAttributedString alloc] initWithString: NSLocalizedString(@"Table url",nil) attributes:@{NSForegroundColorAttributeName: color}];
             self.Placeholder.text=NSLocalizedString(@"Description of Business",nil);
             
-//            [self.Addimgebtn1 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn2 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn3 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn4 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn5 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
-//            [self.Addimgebtn6 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn1 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn2 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn3 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn4 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn5 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
+            //            [self.Addimgebtn6 setTitle:NSLocalizedString(@"ADD IMAGE",nil) forState:UIControlStateNormal];
             [self.SentBtnOut setTitle:NSLocalizedString(@"Send",nil) forState:UIControlStateNormal];
             self.PlacehoderHoures.text=NSLocalizedString(@"Business hours",nil);
             self.placeAddreslable.text=NSLocalizedString(@"Address",nil);
-             self.lbl_AddPictures.text=NSLocalizedString(@"Add Pictures To Gallery",nil);
+            self.lbl_AddPictures.text=NSLocalizedString(@"Add Pictures To Gallery",nil);
             categrtArray = [[NSMutableArray alloc]init];
             SubcategrtArray = [[NSMutableArray alloc]init];
             BusinessArray =[[NSMutableArray alloc]init];
@@ -814,10 +814,10 @@ bool isShownaddbusines;
             self.CategoryTableView .tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
             [self.SubcategoryTableview setSeparatorInset:UIEdgeInsetsZero];
             self.SubcategoryTableview .tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-//            UITapGestureRecognizer *Business =
-//            [[UITapGestureRecognizer alloc] initWithTarget:self
-//                                                    action:@selector(BusinesshandleSingleTap:)];
-//            [self.NewScVicw addGestureRecognizer:Business];
+            //            UITapGestureRecognizer *Business =
+            //            [[UITapGestureRecognizer alloc] initWithTarget:self
+            //                                                    action:@selector(BusinesshandleSingleTap:)];
+            //            [self.NewScVicw addGestureRecognizer:Business];
             
             self.BusinessView.layer.masksToBounds = NO;
             self.BusinessView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -835,14 +835,14 @@ bool isShownaddbusines;
             [self get_busineList];
             
         }
-
-    
+        
+        
     }
     
     
     
     
-
+    
     // Do any additional setup after loading the view.
 }
 #pragma mark - Address map delegates
@@ -864,93 +864,93 @@ bool isShownaddbusines;
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     
-if (self.DescriptionTextView  == textView) {
-    NSMutableString *newString=[[NSMutableString alloc]initWithString:self.DescriptionTextView.text];
-       if ([text isEqualToString: @""])
-    {
-        
-        if (newString.length==0) {
+    if (self.DescriptionTextView  == textView) {
+        NSMutableString *newString=[[NSMutableString alloc]initWithString:self.DescriptionTextView.text];
+        if ([text isEqualToString: @""])
+        {
             
+            if (newString.length==0) {
+                
+            }else{
+                
+                NSRange ran=NSMakeRange(0, newString.length-1);
+                
+                NSString *str=[newString stringByReplacingCharactersInRange:ran withString:@""];
+                
+                NSRange NewRan=[newString rangeOfString:str];
+                
+                
+                
+                newString=[newString stringByReplacingCharactersInRange:NewRan withString:@""];
+            }
         }else{
-            
-            NSRange ran=NSMakeRange(0, newString.length-1);
-            
-            NSString *str=[newString stringByReplacingCharactersInRange:ran withString:@""];
-            
-            NSRange NewRan=[newString rangeOfString:str];
-            
-            
-            
-            newString=[newString stringByReplacingCharactersInRange:NewRan withString:@""];
+            [newString appendString:text];
         }
-    }else{
-        [newString appendString:text];
-    }
-    
-    
-    
-    if ([newString isEqualToString:@""]) {
-        self.Placeholder.hidden = NO;
-           }else if(newString.length>0){
-        self.Placeholder.hidden = YES;
-       
-    }
-}else  if (self.AddressTextFiled==textView) {
-    NSMutableString *newString2=[[NSMutableString alloc]initWithString:self.AddressTextFiled.text];
-
-    if ([text isEqualToString: @""])
-    {
         
-        if (newString2.length==0) {
+        
+        
+        if ([newString isEqualToString:@""]) {
+            self.Placeholder.hidden = NO;
+        }else if(newString.length>0){
+            self.Placeholder.hidden = YES;
             
-        }else{
-            
-            NSRange ran=NSMakeRange(0, newString2.length-1);
-            
-            NSString *str=[newString2 stringByReplacingCharactersInRange:ran withString:@""];
-            
-            NSRange NewRan=[newString2 rangeOfString:str];
-            
-            
-            
-            newString2=[newString2 stringByReplacingCharactersInRange:NewRan withString:@""];
         }
-    }else{
-        [newString2 appendString:text];
-    }
-
-    
-    if ([newString2 isEqualToString:@""]) {
-       
-        self.placeAddreslable.hidden = NO;
-    }else if(newString2.length>0){
-        self.PlacehoderHoures.hidden = YES;
-    }
+    }else  if (self.AddressTextFiled==textView) {
+        NSMutableString *newString2=[[NSMutableString alloc]initWithString:self.AddressTextFiled.text];
+        
+        if ([text isEqualToString: @""])
+        {
+            
+            if (newString2.length==0) {
+                
+            }else{
+                
+                NSRange ran=NSMakeRange(0, newString2.length-1);
+                
+                NSString *str=[newString2 stringByReplacingCharactersInRange:ran withString:@""];
+                
+                NSRange NewRan=[newString2 rangeOfString:str];
+                
+                
+                
+                newString2=[newString2 stringByReplacingCharactersInRange:NewRan withString:@""];
+            }
+        }else{
+            [newString2 appendString:text];
+        }
+        
+        
+        if ([newString2 isEqualToString:@""]) {
+            
+            self.placeAddreslable.hidden = NO;
+        }else if(newString2.length>0){
+            self.PlacehoderHoures.hidden = YES;
+        }
     }else if (self.BusinesHoursTextFiled==textView) {
-
-    NSMutableString *newString3=[[NSMutableString alloc]initWithString:self.BusinesHoursTextFiled.text];
-    
-    if ([text isEqualToString: @""])
-    {
         
-        if (newString3.length==0) {
+        NSMutableString *newString3=[[NSMutableString alloc]initWithString:self.BusinesHoursTextFiled.text];
+        
+        if ([text isEqualToString: @""])
+        {
             
+            if (newString3.length==0) {
+                
+            }else{
+                NSRange ran=NSMakeRange(0, newString3.length-1);
+                NSString *str=[newString3 stringByReplacingCharactersInRange:ran withString:@""];
+                NSRange NewRan=[newString3 rangeOfString:str];
+                
+                newString3=[newString3 stringByReplacingCharactersInRange:NewRan withString:@""];
+            }
         }else{
-            NSRange ran=NSMakeRange(0, newString3.length-1);
-            NSString *str=[newString3 stringByReplacingCharactersInRange:ran withString:@""];
-            NSRange NewRan=[newString3 rangeOfString:str];
-            
-            newString3=[newString3 stringByReplacingCharactersInRange:NewRan withString:@""];
+            [newString3 appendString:text];
         }
-    }else{
-        [newString3 appendString:text];
-    }
-    
-    if ([newString3 isEqualToString:@""]) {
-        self.PlacehoderHoures.hidden = NO;
-    }else if(newString3.length>0){
-        self.PlacehoderHoures.hidden = YES;
-    }
+        
+        if ([newString3 isEqualToString:@""]) {
+            self.PlacehoderHoures.hidden = NO;
+        }else if(newString3.length>0){
+            self.PlacehoderHoures.hidden = YES;
+        }
     }
     
     
@@ -992,7 +992,7 @@ if (self.DescriptionTextView  == textView) {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init] ;
     CLLocationCoordinate2D coordinate = [self getLocation];
     //self.userlat = [NSString stringWithFormat:@"%f", coordinate.latitude];
-   // self.userlong = [NSString stringWithFormat:@"%f", coordinate.longitude];
+    // self.userlong = [NSString stringWithFormat:@"%f", coordinate.longitude];
 }
 
 
@@ -1003,7 +1003,7 @@ if (self.DescriptionTextView  == textView) {
 
 - (void) textFieldDidBeginEditing:(UITextField *)textField
 {
-   
+    
 }
 
 - (void) textFieldDidEndEditing:(UITextField *)textField
@@ -1035,7 +1035,7 @@ if (self.DescriptionTextView  == textView) {
         }
     }
     
-        return YES;
+    return YES;
 }
 
 #pragma mark - UITableView DataSource
@@ -1058,10 +1058,10 @@ if (self.DescriptionTextView  == textView) {
     if (tableView==self.CategoryTableView) {
         static NSString *reuseIdentifier=@"SubcatgrryCell";
         
-//        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-//        if (!cell) {
-//            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-//        }
+        //        UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+        //        if (!cell) {
+        //            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
+        //        }
         
         SubcatTableViewCell *cell=[self.SubcategoryTableview dequeueReusableCellWithIdentifier:reuseIdentifier];
         if (!cell) {
@@ -1073,9 +1073,9 @@ if (self.DescriptionTextView  == textView) {
         cell.textLabel.textColor = [UIColor whiteColor];
         
         
-//        cell.textLabel.text=[categrDic objectForKey:@"category_name"];
-//        cell.textLabel.textAlignment = NSTextAlignmentLeft;
-//        
+        //        cell.textLabel.text=[categrDic objectForKey:@"category_name"];
+        //        cell.textLabel.textAlignment = NSTextAlignmentLeft;
+        //
         cell.backgroundColor = [UIColor darkGrayColor];
         cell.titallabel.text=[categrDic objectForKey:@"category_name"];
         cell.titallabel.textColor = [UIColor whiteColor];
@@ -1090,11 +1090,11 @@ if (self.DescriptionTextView  == textView) {
         
         
         /*if ([arrAddCategory containsObject:indexPath]) {
-                //cell.images.image=[UIImage imageNamed:@"Login_03.png"];
-            cell.images.image=[UIImage imageNamed:@"Login_03"];
+         //cell.images.image=[UIImage imageNamed:@"Login_03.png"];
+         cell.images.image=[UIImage imageNamed:@"Login_03"];
          } else {
-                 //cell.images.image=[UIImage imageNamed:@"Login_05.png"];
-             cell.images.image=[UIImage imageNamed:@"Login_05"];
+         //cell.images.image=[UIImage imageNamed:@"Login_05.png"];
+         cell.images.image=[UIImage imageNamed:@"Login_05"];
          } */
         
         if (self.iseditNew==YES) { }
@@ -1110,7 +1110,7 @@ if (self.DescriptionTextView  == textView) {
             cell=[[SubcatTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
         }
         SubcategrtDic=[SubcategrtArray objectAtIndex:indexPath.row];
-            //NSLog(@"SubcategrtDic = %@", SubcategrtDic);
+        //NSLog(@"SubcategrtDic = %@", SubcategrtDic);
         cell.backgroundColor = [UIColor darkGrayColor];
         cell.titallabel.text=[SubcategrtDic objectForKey:@"sub_category_name"];
         cell.titallabel.textColor = [UIColor whiteColor];
@@ -1123,15 +1123,15 @@ if (self.DescriptionTextView  == textView) {
         }
         
         
-//        if ([addcontent containsObject:indexPath])
-//        {
-//            cell.images.image=[UIImage imageNamed:@"Login_03.png"];
-//            
-//        }else
-//        {
-//           cell.images.image=[UIImage imageNamed:@"Login_05.png"];
-//            
-//        }
+        //        if ([addcontent containsObject:indexPath])
+        //        {
+        //            cell.images.image=[UIImage imageNamed:@"Login_03.png"];
+        //
+        //        }else
+        //        {
+        //           cell.images.image=[UIImage imageNamed:@"Login_05.png"];
+        //
+        //        }
         return cell;
     }else if (tableView==self.BusinessTableView) {
         static NSString *reuseIdentifier=@"BusinessCell";
@@ -1186,12 +1186,12 @@ if (self.DescriptionTextView  == textView) {
             [arrAddCategory removeObject:indexPath];
             [arrCatId removeObject:strCatId];
             [arrCatName removeObject:strCatName];
-          } else {
+        } else {
             [arrAddCategory addObject:indexPath];
             [arrCatId addObject:strCatId];
             [arrCatName addObject:strCatName];
-              
-          }
+            
+        }
         
         [self.CategoryTableView reloadData];
     }else if(tableView==self.SubcategoryTableview){
@@ -1211,7 +1211,7 @@ if (self.DescriptionTextView  == textView) {
         
         [SubcategrtArray replaceObjectAtIndex:indexPath.row withObject:dict];
         
-            //   NSLog(@"SubcategrtArray setted = %@", SubcategrtArray[indexPath.row]);
+        //   NSLog(@"SubcategrtArray setted = %@", SubcategrtArray[indexPath.row]);
         
         if ([addcontent containsObject:indexPath]) {
             [addcontent removeObject:indexPath];
@@ -1219,19 +1219,19 @@ if (self.DescriptionTextView  == textView) {
             [sendIdarr removeObject:SubCateId_id];
             [sendsubname removeObject:SubCatename];
         } else {
-
+            
             [addcontent addObject:indexPath];
             [sendIdarr addObject:SubCateId_id];
             [sendsubname addObject:SubCatename];
         }
-
+        
         [self.SubcategoryTableview reloadData];
         
-//        SubcategrtDic=[SubcategrtArray objectAtIndex:indexPath.row];
-//        self.SubCategryTextfiled.text=[SubcategrtDic objectForKey:@"sub_category_name"];
-//        
-//        SubCateId_id=[categrDic objectForKey:@"sub_cat_id"];
-
+        //        SubcategrtDic=[SubcategrtArray objectAtIndex:indexPath.row];
+        //        self.SubCategryTextfiled.text=[SubcategrtDic objectForKey:@"sub_category_name"];
+        //
+        //        SubCateId_id=[categrDic objectForKey:@"sub_cat_id"];
+        
         
     }else if(tableView==self.BusinessTableView){
         businessDic=[BusinessArray objectAtIndex:indexPath.row];
@@ -1345,40 +1345,40 @@ if (self.DescriptionTextView  == textView) {
     [self.WeburlTextFiled resignFirstResponder];
     [self.videourl resignFirstResponder];
     [self.facebooktextfiled resignFirstResponder];
-     [self.videourl resignFirstResponder ];
+    [self.videourl resignFirstResponder ];
 }
 - (IBAction)ActionOnSubcategory:(id)sender {
-        //  if ([sender isSelected]) {
-        //      [sender setSelected: NO];
-        
-        self.CategeryShowView.hidden=YES;
-        self.SubcategoryshowView.hidden=NO;
-        self.BusinessView.hidden=YES;
-        [self.phonetextfiled resignFirstResponder];
-        [self.AddressTextFiled resignFirstResponder];
-        [self.BussinetTypeTextfiled resignFirstResponder];
-        [self.BussinesNameText resignFirstResponder];
-         [self.videourl resignFirstResponder ];
-        [self.DescriptionTextView resignFirstResponder];
-        [self.WeburlTextFiled resignFirstResponder];
-        [self.videourl resignFirstResponder];
-        [self.facebooktextfiled resignFirstResponder];
-   /* } else {
-        [sender setSelected: YES];
-        sendId = [sendIdarr componentsJoinedByString:@","];
-        self.SubCategryTextfiled.text = [sendsubname componentsJoinedByString:@","];
-        self.CategeryShowView.hidden=YES;
-        self.SubcategoryshowView.hidden=YES;
-        self.BusinessView.hidden=YES;
-        [self.AddressTextFiled resignFirstResponder];
-        [self.BussinetTypeTextfiled resignFirstResponder];
-        [self.phonetextfiled resignFirstResponder];
-        [self.BussinesNameText resignFirstResponder];
-        [self.DescriptionTextView resignFirstResponder];
-        [self.WeburlTextFiled resignFirstResponder];
-        [self.videourl resignFirstResponder];
-        [self.facebooktextfiled resignFirstResponder];
-    } */
+    //  if ([sender isSelected]) {
+    //      [sender setSelected: NO];
+    
+    self.CategeryShowView.hidden=YES;
+    self.SubcategoryshowView.hidden=NO;
+    self.BusinessView.hidden=YES;
+    [self.phonetextfiled resignFirstResponder];
+    [self.AddressTextFiled resignFirstResponder];
+    [self.BussinetTypeTextfiled resignFirstResponder];
+    [self.BussinesNameText resignFirstResponder];
+    [self.videourl resignFirstResponder ];
+    [self.DescriptionTextView resignFirstResponder];
+    [self.WeburlTextFiled resignFirstResponder];
+    [self.videourl resignFirstResponder];
+    [self.facebooktextfiled resignFirstResponder];
+    /* } else {
+     [sender setSelected: YES];
+     sendId = [sendIdarr componentsJoinedByString:@","];
+     self.SubCategryTextfiled.text = [sendsubname componentsJoinedByString:@","];
+     self.CategeryShowView.hidden=YES;
+     self.SubcategoryshowView.hidden=YES;
+     self.BusinessView.hidden=YES;
+     [self.AddressTextFiled resignFirstResponder];
+     [self.BussinetTypeTextfiled resignFirstResponder];
+     [self.phonetextfiled resignFirstResponder];
+     [self.BussinesNameText resignFirstResponder];
+     [self.DescriptionTextView resignFirstResponder];
+     [self.WeburlTextFiled resignFirstResponder];
+     [self.videourl resignFirstResponder];
+     [self.facebooktextfiled resignFirstResponder];
+     } */
     
     
 }
@@ -1535,7 +1535,7 @@ if (self.DescriptionTextView  == textView) {
 -(void)GetcategoryList{
     FMDBManager *fms = [[FMDBManager alloc] init];
     [fms openDataBase];
-        //   categrtArray
+    //   categrtArray
     
     NSMutableArray * arrCat = [fms Categryarry];
     
@@ -1570,7 +1570,7 @@ if (self.DescriptionTextView  == textView) {
             }
             [self.CategoryTableView reloadData];
         }
-
+        
     } @catch (NSException *exception) {
         NSLog(@"exception....%@",exception);
     }
@@ -1587,7 +1587,7 @@ if (self.DescriptionTextView  == textView) {
     NSDictionary *responseDic=response;
     if ([response isKindOfClass:[NSDictionary class]]) {
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-          NSMutableArray * arrSubCat  =[responseDic objectForKey:@"result"];
+            NSMutableArray * arrSubCat  =[responseDic objectForKey:@"result"];
             
             for (int i = 0; i < arrSubCat.count; i++) {
                 NSMutableDictionary * dict = arrSubCat[i];
@@ -1602,8 +1602,8 @@ if (self.DescriptionTextView  == textView) {
 }
 -(void)get_busineList{
     WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(getbusinesstype:)];
-     [ws GatBusinesid:@"2"];
-
+    [ws GatBusinesid:@"2"];
+    
     //FMDBManager *fm = [[FMDBManager alloc] init];
     //[fm openDataBase];
     //BusinessArray = [fm getBusinessarr];
@@ -1669,29 +1669,29 @@ if (self.DescriptionTextView  == textView) {
         [arrCategory addObject:dict];
     }
     NSLog(@"arrCategory = %@", arrCategory);
-     WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(getSubCategories:)];
-         [ws getMultipleSubCategoriesfromCatId:arrCategory andLanguage:@"2"];
+    WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(getSubCategories:)];
+    [ws getMultipleSubCategoriesfromCatId:arrCategory andLanguage:@"2"];
     
-        //[self getMSD:arrCategory andLang:@"2"];
+    //[self getMSD:arrCategory andLang:@"2"];
     
     /*
-    FMDBManager *fm = [[FMDBManager alloc] init];
-    [fm openDataBase];
-    
-    
-    SubcategrtArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i < arrCatId.count; i++) {
-         NSMutableArray * arrSubCat =     [fm SubCategryarry:arrCatId[i]];
-        
-        for (int i = 0; i < arrSubCat.count; i++) {
-            NSMutableDictionary * dict = arrSubCat[i];
-            [dict setObject:@"0" forKey:@"isChecked"];
-            
-            [SubcategrtArray addObject:dict];
-        }
-        */
-            // [SubcategrtArray addObjectsFromArray:arrSubCat];
-            // }
+     FMDBManager *fm = [[FMDBManager alloc] init];
+     [fm openDataBase];
+     
+     
+     SubcategrtArray = [[NSMutableArray alloc] init];
+     for (int i = 0; i < arrCatId.count; i++) {
+     NSMutableArray * arrSubCat =     [fm SubCategryarry:arrCatId[i]];
+     
+     for (int i = 0; i < arrSubCat.count; i++) {
+     NSMutableDictionary * dict = arrSubCat[i];
+     [dict setObject:@"0" forKey:@"isChecked"];
+     
+     [SubcategrtArray addObject:dict];
+     }
+     */
+    // [SubcategrtArray addObjectsFromArray:arrSubCat];
+    // }
     
     [self.SubcategoryTableview reloadData];
     
@@ -1717,7 +1717,7 @@ if (self.DescriptionTextView  == textView) {
                 
                 [SubcategrtArray addObject:dict];
             }
-             [self.SubcategoryTableview reloadData];
+            [self.SubcategoryTableview reloadData];
         }
     }
 }
@@ -1735,7 +1735,7 @@ if (self.DescriptionTextView  == textView) {
                 
                 [SubcategrtArray addObject:dict];
             }
-
+            
             NSMutableArray *updatesubcat=[[NSMutableArray alloc]init];
             updatesubcat=[self.editbusinesdic objectForKey:@"sub_category_list"];
             NSMutableArray *subidarr=[[NSMutableArray alloc]init];
@@ -1753,10 +1753,10 @@ if (self.DescriptionTextView  == textView) {
                     
                     SubCatename=[datedic objectForKey:@"sub_category_name"];
                     SubCateId_id=[datedic objectForKey:@"sub_cat_id"];
-                        // NSLog(@"%@ SubCatename", SubCateId_id)
+                    // NSLog(@"%@ SubCatename", SubCateId_id)
                     if ([SubCateId_id isEqualToString:subid]) {
                         iseual=YES;
-                            //[dataarr addObject:datedic];
+                        //[dataarr addObject:datedic];
                         [subidarr addObject:[datedic objectForKey:@"sub_cat_id"]];
                         [subname addObject:[datedic objectForKey:@"sub_category_name"]];
                         [datedic setObject:@"1" forKey:@"isChecked"];
@@ -1778,16 +1778,16 @@ if (self.DescriptionTextView  == textView) {
 - (IBAction)btn_OkSubCategoryView:(id)sender {
     NSLog(@"sendIdarr = %d", (int)sendIdarr.count);
     sendId = [sendIdarr componentsJoinedByString:@","];
-
+    
     self.SubCategryTextfiled.text = [sendsubname componentsJoinedByString:@","];
     if(self.SubCategryTextfiled.text.length > 0) {
         [self.lbl_PSubCategory setHidden:YES];
     }
-     self.SubcategoryshowView.hidden=YES;
+    self.SubcategoryshowView.hidden=YES;
 }
 
 - (IBAction)btn_CancelSubCategoryView:(id)sender {
-     self.SubcategoryshowView.hidden=YES;
+    self.SubcategoryshowView.hidden=YES;
 }
 
 -(NSMutableAttributedString *)setColorForText:(NSString*) textToFind originalText:(NSString *)originalString withColor:(UIColor*)color {
@@ -1804,7 +1804,7 @@ if (self.DescriptionTextView  == textView) {
     
     NSLog(@"attstr - %@", [NSString stringWithFormat:@"%@", attString.string]);
     return attString;
-
+    
 }
 
 
@@ -1821,12 +1821,12 @@ if (self.DescriptionTextView  == textView) {
         
         [self.lbl_PEmail setHidden:NO];
         
-     }else if (self.phonetextfiled.text.length==0){
+    }else if (self.phonetextfiled.text.length==0){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Phone Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
-          [self.lbl_PPhone setHidden:NO];
-      
-         
+        [self.lbl_PPhone setHidden:NO];
+        
+        
     }else if (self.AddressTextFiled.text.length==0){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Address Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
@@ -1836,7 +1836,7 @@ if (self.DescriptionTextView  == textView) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Fill Business Name  Field",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
         [alert show];
         [self.lbl_PName setHidden:NO];
-       
+        
         
     }else if (self.CategeryTextFiled.text.length==0){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Select Category",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
@@ -1850,7 +1850,7 @@ if (self.DescriptionTextView  == textView) {
         
         [self.lbl_PSubCategory setHidden:NO];
     }
-
+    
     else{
         NSLog(@"_intBusinessHourStatus =  %d", self.intBusinessHourStatus);
         
@@ -1867,35 +1867,35 @@ if (self.DescriptionTextView  == textView) {
         {
             WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Register:)];
             [ws updatebusinessRegi:self.phonetextfiled.text
-                            user_id:[self.editbusinesdic objectForKey:@"user_id"]
-                            address:self.AddressTextFiled.text
-                            latitude:_userlat
-                            longitude:_userlong
-                            business_name:self.BussinesNameText.text
-                            business_type_id:Bussines_id
-                            description:self.DescriptionTextView.text
-                            website_url:self.WeburlTextFiled.text
-                            sub_cat_id:sendId
-                            Addimg1:self.AddImg1.image
-                            Addimg2:self.AddImg2.image
-                            Addimg3:self.AddImg3.image
-                            Addimg4:self.AddImg4.image
-                            Addimg5:self.AddImg5.image
-                            Addimg6:self.AddImg6.image
-                            Addimg7:self.AddImg7.image
-                            Addimg8:self.AddImg8.image
-                            Addimg9:self.AddImg9.image
-                            Addimg10:self.AddImg10.image
-                            business_email:self.Bussinessemiltextfiled.text
-                            facebook_url:self.facebooktextfiled.text
-                            video_url:self.videourl.text
-                            language_id:@"2"
-                            start_time:self.BusinesHoursTextFiled.text
-                            end_time:@"0"
-                            MenuUrl:_tf_MenuUrl.text
-                            TableUrl:_tf_TblUrl.text
-                            BusinessHoursStatus:[NSString stringWithFormat:@"%d",
-                            self.intBusinessHourStatus]];
+                           user_id:[self.editbusinesdic objectForKey:@"user_id"]
+                           address:self.AddressTextFiled.text
+                          latitude:_userlat
+                         longitude:_userlong
+                     business_name:self.BussinesNameText.text
+                  business_type_id:Bussines_id
+                       description:self.DescriptionTextView.text
+                       website_url:self.WeburlTextFiled.text
+                        sub_cat_id:sendId
+                           Addimg1:self.AddImg1.image
+                           Addimg2:self.AddImg2.image
+                           Addimg3:self.AddImg3.image
+                           Addimg4:self.AddImg4.image
+                           Addimg5:self.AddImg5.image
+                           Addimg6:self.AddImg6.image
+                           Addimg7:self.AddImg7.image
+                           Addimg8:self.AddImg8.image
+                           Addimg9:self.AddImg9.image
+                          Addimg10:self.AddImg10.image
+                    business_email:self.Bussinessemiltextfiled.text
+                      facebook_url:self.facebooktextfiled.text
+                         video_url:self.videourl.text
+                       language_id:@"2"
+                        start_time:self.BusinesHoursTextFiled.text
+                          end_time:@"0"
+                           MenuUrl:_tf_MenuUrl.text
+                          TableUrl:_tf_TblUrl.text
+               BusinessHoursStatus:[NSString stringWithFormat:@"%d",
+                                    self.intBusinessHourStatus]];
         }
         else
         {
@@ -1903,34 +1903,34 @@ if (self.DescriptionTextView  == textView) {
             WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Register:)];
             
             [ws AddbusinessRegi:self.phonetextfiled.text
-                    login_id:[UserDict objectForKey:@"login_id"]
-                    address:self.AddressTextFiled.text
-                    latitude:_userlat
-                    longitude:_userlong
-                    business_name:self.BussinesNameText.text
-                    business_type_id:Bussines_id
+                       login_id:[UserDict objectForKey:@"login_id"]
+                        address:self.AddressTextFiled.text
+                       latitude:_userlat
+                      longitude:_userlong
+                  business_name:self.BussinesNameText.text
+               business_type_id:Bussines_id
                     description:self.DescriptionTextView.text
                     website_url:self.WeburlTextFiled.text
-                    sub_cat_id:sendId
-                    Addimg1:self.AddImg1.image
-                    Addimg2:self.AddImg2.image
-                    Addimg3:self.AddImg3.image
-                    Addimg4:self.AddImg4.image
-                    Addimg5:self.AddImg5.image
-                    Addimg6:self.AddImg6.image
-                    Addimg7:self.AddImg7.image
-                    Addimg8:self.AddImg8.image
-                    Addimg9:self.AddImg9.image
-                    Addimg10:self.AddImg10.image
-                    business_email:self.Bussinessemiltextfiled.text
-                    facebook_url:self.facebooktextfiled.text
-                    video_url:self.videourl.text
+                     sub_cat_id:sendId
+                        Addimg1:self.AddImg1.image
+                        Addimg2:self.AddImg2.image
+                        Addimg3:self.AddImg3.image
+                        Addimg4:self.AddImg4.image
+                        Addimg5:self.AddImg5.image
+                        Addimg6:self.AddImg6.image
+                        Addimg7:self.AddImg7.image
+                        Addimg8:self.AddImg8.image
+                        Addimg9:self.AddImg9.image
+                       Addimg10:self.AddImg10.image
+                 business_email:self.Bussinessemiltextfiled.text
+                   facebook_url:self.facebooktextfiled.text
+                      video_url:self.videourl.text
                     language_id:@"2"
-                    start_time:self.BusinesHoursTextFiled.text
-                    end_time:@"0"
-                    MenuUrl:_tf_MenuUrl.text
-                    TableUrl:_tf_TblUrl.text
-                    BusinessHoursStatus:[NSString stringWithFormat:@"%d", self.intBusinessHourStatus]];
+                     start_time:self.BusinesHoursTextFiled.text
+                       end_time:@"0"
+                        MenuUrl:_tf_MenuUrl.text
+                       TableUrl:_tf_TblUrl.text
+            BusinessHoursStatus:[NSString stringWithFormat:@"%d", self.intBusinessHourStatus]];
         }
     }
 }
@@ -1975,7 +1975,7 @@ if (self.DescriptionTextView  == textView) {
             ContectUsView.tabBarController.tabBar.hidden = YES;
             [self.navigationController pushViewController:ContectUsView animated:YES];
         }
-
+            
             break;
         case 6:
         {
@@ -2010,15 +2010,15 @@ if (self.DescriptionTextView  == textView) {
             else
             {
                 IntrestCatViewController *price1=[self.storyboard instantiateViewControllerWithIdentifier:@"IntrestCatViewController"];
-               // price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-               // price1.modalPresentationStyle = UIModalPresentationFormSheet;
+                // price1.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                // price1.modalPresentationStyle = UIModalPresentationFormSheet;
                 [self presentViewController:price1 animated:true completion:nil];
             }
             
         }
             break;
             
-
+            
         default:
             break;
     }
@@ -2056,19 +2056,26 @@ if (self.DescriptionTextView  == textView) {
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
             NSDictionary *imagedic=[responseDic objectForKey:@"image_array"];
             if(imagedic == NULL){
-            NSString*img1=[imagedic objectForKey:@"product_image1"];
-            NSString*img2=[imagedic objectForKey:@"product_image2"];
-            NSString*img3=[imagedic objectForKey:@"product_image3"];
-            NSString*img4=[imagedic objectForKey:@"product_image4"];
-            NSString*img5=[imagedic objectForKey:@"product_image5"];
-            NSString*img6=[imagedic objectForKey:@"product_image6"];
-            FMDBManager *fm = [[FMDBManager alloc] init];
-            [fm openDataBase];
-            [fm updateFave:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
-            [fm updatehistory:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
+                NSString*img1=[imagedic objectForKey:@"product_image1"];
+                NSString*img2=[imagedic objectForKey:@"product_image2"];
+                NSString*img3=[imagedic objectForKey:@"product_image3"];
+                NSString*img4=[imagedic objectForKey:@"product_image4"];
+                NSString*img5=[imagedic objectForKey:@"product_image5"];
+                NSString*img6=[imagedic objectForKey:@"product_image6"];
+                
+                NSString*img7=[imagedic objectForKey:@"product_image7"];
+                NSString*img8=[imagedic objectForKey:@"product_image8"];
+                NSString*img9=[imagedic objectForKey:@"product_image9"];
+                NSString*img10=[imagedic objectForKey:@"product_image10"];
+                
+                
+                FMDBManager *fm = [[FMDBManager alloc] init];
+                [fm openDataBase];
+                [fm updateFave:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 product_image7:img7 product_image8:img8 product_image9:img9 product_image10:img10 rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
+                [fm updatehistory:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 product_image7:img7 product_image8:img8 product_image9:img9 product_image10:img10  rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
                 [self.delegates callweb];
-            [[NSUserDefaults standardUserDefaults]setObject:@"Yes" forKey:@"upda"];
-             [self .navigationController popViewControllerAnimated:YES];
+                [[NSUserDefaults standardUserDefaults]setObject:@"Yes" forKey:@"upda"];
+                [self .navigationController popViewControllerAnimated:YES];
             }else{
                 NSString*img1=@"";
                 NSString*img2=@"";
@@ -2076,10 +2083,16 @@ if (self.DescriptionTextView  == textView) {
                 NSString*img4=@"";
                 NSString*img5=@"";
                 NSString*img6=@"";
+                
+                NSString*img7=@"";
+                NSString*img8=@"";
+                NSString*img9=@"";
+                NSString*img10=@"";
+                
                 FMDBManager *fm = [[FMDBManager alloc] init];
                 [fm openDataBase];
-                [fm updateFave:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
-                [fm updatehistory:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
+                [fm updateFave:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 product_image7:img7 product_image8:img8 product_image9:img9 product_image10:img10  rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
+                [fm updatehistory:[self.editbusinesdic objectForKey:@"user_id"]address:self.AddressTextFiled.text business_name:self.BussinesNameText.text business_type:self.BussinetTypeTextfiled.text business_type_id:Bussines_id category_id:Catigry_id category_name:self.CategeryTextFiled.text create_date:[self.editbusinesdic objectForKey:@"create_date"] description:self.DescriptionTextView.text distance:@"" email:self.Bussinessemiltextfiled.text end_time:@"0" facebook_url:self.facebooktextfiled.text   language_id:@"2" latitude:self.userlat longitude:self.userlong phone:self.phonetextfiled.text product_image1:img1 product_image2:img2 product_image3:img3 product_image4:img4 product_image5:img5 product_image6:img6 product_image7:img7 product_image8:img8 product_image9:img9 product_image10:img10  rating:[self.editbusinesdic objectForKey:@"rating"] start_time:self.BusinesHoursTextFiled.text user_image:[UserDict objectForKey:@"user_image"] username:[UserDict objectForKey:@"username"] website_url:self.WeburlTextFiled.text video_url:self.videourl.text];
                 [self.delegates callweb];
                 [[NSUserDefaults standardUserDefaults]setObject:@"Yes" forKey:@"upda"];
                 [self .navigationController popViewControllerAnimated:YES];
@@ -2090,7 +2103,7 @@ if (self.DescriptionTextView  == textView) {
 
 
 - (IBAction)btn_Share:(id)sender {
-  
+    
     NSString *textToShare = @"Share link using";
     NSURL *myWebsite = [NSURL URLWithString:kAppDelegate.strShareLink];
     
@@ -2109,7 +2122,7 @@ if (self.DescriptionTextView  == textView) {
     activityVC.excludedActivityTypes = excludeActivities;
     
     [self presentViewController:activityVC animated:YES completion:nil];
-  
+    
 }
 
 - (IBAction)ActionOnback:(id)sender {
@@ -2147,7 +2160,7 @@ if (self.DescriptionTextView  == textView) {
         
         isShownaddbusines = false;
     }
-
+    
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
@@ -2233,18 +2246,18 @@ if (self.DescriptionTextView  == textView) {
     NSString *strJsonArr = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
     
     NSLog(@"strJsonArr = %@", strJsonArr);
-
+    
     NSString *body=[NSString stringWithFormat:@"category_id=%@&language_id=%@", strJsonArr, str];
     NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
     
     NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
     [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=all_subcategory"]];
     
-   
-   
+    
+    
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
-        // [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    // [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:data];
     
     

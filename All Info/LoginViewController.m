@@ -11,7 +11,7 @@
 #import "MenuViewController.h"
 #import "WSOperationInEDUApp.h"
 #import "AppDelegate.h"
-
+#import "UnicodeConversionClass.h"
 
 
 
@@ -109,20 +109,15 @@
         //Agree to Terms and Conditions
         self.checkOutlet.selected=YES;
         //self.Ischeck=YES;
-        
         [self.Chackimg setImage:[UIImage imageNamed:@"Log-in_TermsBlack.png"] ];
-        
     }else{
         self.checkOutlet.selected=NO;
         [self.Chackimg setImage:[UIImage imageNamed:@"Log-in_Terms.png"] ];
         //self.Ischeck=NO;
     }
-
 }
 - (IBAction)ActiononLoginBtn:(id)sender {
-    //
-   //
-    //
+ 
     if (self.UserNameTextFiled.text.length==0) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"Please enter your User Name.",nil)  delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
         [alert show];
@@ -151,31 +146,22 @@
      logInWithReadPermissions: @[@"public_profile", @"email", @"user_friends"]
      fromViewController:self
      handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-         if (error)
-         {
+         if (error) {
              NSLog(@"Process error");
-         }
-         else if (result.isCancelled)
-         {
+         } else if (result.isCancelled) {
              [FBSDKAccessToken setCurrentAccessToken:nil];
              [FBSDKProfile setCurrentProfile:nil];
-         }
-         else
-         {
+         }  else {
              NSLog(@"Logged in result....%@", result);
-             if ([result.grantedPermissions containsObject:@"email"])
-             {
-                 if ([FBSDKAccessToken currentAccessToken])
-                 {
+             if ([result.grantedPermissions containsObject:@"email"]) {
+                 if ([FBSDKAccessToken currentAccessToken]) {
                      [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:@{@"fields": @"name, picture, email"}]
-                      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error)
-                      {
-                          if (!error)
-                          {
+                      startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+                          if (!error)  {
                               NSLog(@"fetched user:%@", result);
-                              
+                              UnicodeConversionClass * unicodeClass = [[UnicodeConversionClass alloc] init];
                               strFBID=[result valueForKey:@"id"];
-                              strFBName=[result valueForKey:@"name"];
+                              strFBName= [result valueForKey:@"name"];//[unicodeClass perCharToUniCode: [result valueForKey:@"name"]];
                               strFBemail=[result valueForKey:@"email"];
                               NSString *strURL = [[[result valueForKey:@"picture"] valueForKey:@"data"] valueForKey:@"url"];
                               WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(login_FB:)];
@@ -188,16 +174,15 @@
      }];
 }
 
--(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error
-{
-    if (error != nil)
-    {
+-(void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user withError:(NSError *)error {
+    if (error != nil) {
         NSLog(@"error...%@",error);
     }else{
         NSLog(@"user...%@",user);
-
+        UnicodeConversionClass * unicodeClass = [[UnicodeConversionClass alloc] init];
+        
         strFBID=user.userID;
-        strFBName=user.profile.name;
+        strFBName= user.profile.name;//[unicodeClass perCharToUniCode:user.profile.name];//
         strFBemail=user.profile.email;
         
         WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(login_Google:)];
@@ -275,7 +260,6 @@
             NSString*product_image4=[userDic objectForKey:@"product_image4"];
             NSString*product_image5=[userDic objectForKey:@"product_image5"];
             NSString*product_image6=[userDic objectForKey:@"product_image6"];
-            
             NSString*product_image7=[userDic objectForKey:@"product_image7"];
             NSString*product_image8=[userDic objectForKey:@"product_image8"];
             NSString*product_image9=[userDic objectForKey:@"product_image9"];
@@ -835,13 +819,11 @@
             [MyUserDic setObject:product_image4 forKey:@"product_image4"];
             [MyUserDic setObject:product_image5 forKey:@"product_image5"];
             [MyUserDic setObject:product_image6 forKey:@"product_image6"];
-            
             [MyUserDic setObject:product_image7 forKey:@"product_image7"];
             [MyUserDic setObject:product_image8 forKey:@"product_image8"];
             [MyUserDic setObject:product_image9 forKey:@"product_image9"];
             [MyUserDic setObject:product_image10 forKey:@"product_image10"];
 
-            
             [[NSUserDefaults standardUserDefaults]setValue:MyUserDic forKey:@"userdata"];
             NSLog(@"MyUserDic_Google...%@",MyUserDic);
 
@@ -851,7 +833,6 @@
         }else{
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:[responseDic objectForKey:@"message"] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
             [alert show];
-            
         }
     }
 }

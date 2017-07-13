@@ -25,6 +25,7 @@
 #import "ReadViewController.h"
 #import "BookingViewController.h"
 #import "ContectUsViewController.h"
+#import "LocationViewController.h"
 
 @interface BusinessdetailsViewController ()<MenuViewControllerDelegates>
 {
@@ -119,12 +120,32 @@ bool isbusiness = false;
     setwsLat= [[NSString alloc] initWithFormat: @"%@", [bdic objectForKey:@"latitude"]];
     setwsLong= [[NSString alloc] initWithFormat: @"%@", [bdic objectForKey:@"longitude"]];
     
-    if([bdic[@"is_open"] intValue] == 1) {
+    
+    if(bdic[@"is_open"] != nil) {
+        if([bdic[@"is_open"] intValue] == 2) {
+            lbl_Status.text = NSLocalizedString(@"Close",nil);//@"closed";
+            lbl_Status1.text = NSLocalizedString(@"Close",nil);
+        } else {
+            lbl_Status.text = @"";
+            lbl_Status1.text = @"";
+        }
+    } else {
         lbl_Status.text = @"";
         lbl_Status1.text = @"";
-    } else if([bdic[@"is_open"] intValue] == 2){
-        lbl_Status.text = NSLocalizedString(@"Close",nil);//@"closed";
-        lbl_Status1.text = NSLocalizedString(@"Close",nil);
+    }
+    
+    
+    
+    if([bdic[@"parking_avail"] intValue] == 1) {
+        [self.imgView_Parking setHidden:NO];
+    } else if([bdic[@"parking_avail"] intValue] == 2){
+        [self.imgView_Parking setHidden:YES];
+    }
+    
+    if([bdic[@"public_access"] intValue] == 1) {
+        [self.imgView_People setHidden:NO];
+    } else if([bdic[@"public_access"] intValue] == 2){
+        [self.imgView_People setHidden:YES];
     }
     
     NSString * strTUrl = self.getBussnessDic[@"table_reservation_url"];
@@ -775,7 +796,7 @@ bool isbusiness = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert" ,nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel" ,nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel" ,nil), nil];
             
             alert.tag=1;
             [alert show];
@@ -785,7 +806,7 @@ bool isbusiness = false;
         {
             
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -814,7 +835,15 @@ bool isbusiness = false;
             
         }
             break;
-
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
+            
+            break;
+            
         default:
             break;
     }
@@ -827,7 +856,7 @@ bool isbusiness = false;
     NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle:NSLocalizedString(@"Error" ,nil) message:NSLocalizedString(@"Failed to Get Your Location" ,nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:nil];
-    [errorAlert show];
+    //[errorAlert show];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -1153,12 +1182,36 @@ bool isbusiness = false;
 }
 
 - (IBAction)btn_ShareImage:(id)sender {
-    NSString *textToShare = [NSString stringWithFormat: @"Share business detail using: \n%@",strLink];
+
+    NSString *strBusinessName = @"";
+    NSString* strUnicodeString=[NSString stringWithFormat:@"%@",[self.getBussnessDic objectForKey:@"business_name"]];
     
+    if ([strUnicodeString isEqual:[NSNull null]]) {
+        strUnicodeString=@"";
+    }else if ([strUnicodeString isEqual:@""]) {
+        strUnicodeString=@"";
+    }else if(strUnicodeString == nil){
+        strUnicodeString=@"";
+    }else{
+        if ([strUnicodeString canBeConvertedToEncoding:NSASCIIStringEncoding]){
+            NSData *data = [strUnicodeString dataUsingEncoding:NSUTF8StringEncoding];
+            NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+            strBusinessName =[NSString stringWithFormat:@"%@",string];
+            
+        }else{
+            strBusinessName =[NSString stringWithFormat:@"%@",strUnicodeString];
+        }
+    }
+    
+    NSLog(@"strBusinessName = %@", strBusinessName);
+    NSString *textToShare = [NSString stringWithFormat: @"%@ \n%@", strBusinessName,strLink];
+    
+    
+    /// If user suddenly click and link got empty then this condition executes
     if (strLink == nil) {
        // strLink=@"";
         
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Need to add business before sharing business",nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Need to add business before sharing business",nil) preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             
@@ -1167,11 +1220,9 @@ bool isbusiness = false;
         
         [self presentViewController:alert animated:YES completion:nil];
 
-    }
-    else
-    {
+    }  else {
         NSURL *myWebsite = [NSURL URLWithString:strLink];
-        NSArray *objectsToShare = @[textToShare, myWebsite];
+        NSArray *objectsToShare = @[strBusinessName, myWebsite];
         NSLog(@"objectsToShare....%@",objectsToShare);
         
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];

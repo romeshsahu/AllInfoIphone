@@ -5,7 +5,7 @@
 //  Created by Mahendra Suryavanshi on 3/3/16.
 //  Copyright © 2016 PS.com. All rights reserved.
 //
-
+#import "LocationViewController.h"
 #import "ViewController.h"
 #import "HomeCollectionViewCell.h"
 #import "UIImageView+WebCache.h"
@@ -145,7 +145,6 @@ bool isShown = false;
         [self.searchFiled resignFirstResponder];
         [self performSegueWithIdentifier:@"search" sender:self];
     }
-    
 
     return YES;
 }
@@ -202,7 +201,7 @@ bool isShown = false;
     NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle:NSLocalizedString(@"Error",nil) message:NSLocalizedString(@"Failed to Get Your Location",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-    [errorAlert show];
+  //  [errorAlert show];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -608,7 +607,7 @@ bool isShown = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
@@ -617,7 +616,7 @@ bool isShown = false;
         {
             NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -644,7 +643,14 @@ bool isShown = false;
             }
         }
             break;
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
             
+            break;
 
         default:
             break;
@@ -663,7 +669,7 @@ bool isShown = false;
 
 //Do you want to close the Aolainfo NSLocalizedString(@"Alert",nil)
 - (IBAction)ActionOnback:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Do you want to close the Allinfo",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"" message:NSLocalizedString(@"Do you want to close the Allinfo",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
     alert.tag=11;
     [alert show];
 

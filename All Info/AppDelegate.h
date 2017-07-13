@@ -20,14 +20,15 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate,UNUserNotificationCenterDelegate>
 {
     NSSet *categories;
-
     CLLocationManager *locationManager;
     CLGeocoder *geocoder;
     CLPlacemark *placemark;
 }
+
+
 @property float averageRating;
 @property BOOL flagIsShowAverageRating;
-@property (strong, nonatomic) NSString * strShareLink, * strDeviceId;
+@property (strong, nonatomic) NSString * strShareLink, * strDeviceId, * strSelectedLatitude, * strSelectedLongitude;
 @property (strong, nonatomic) UIImage * imgSubCategory, * imgCategory;
 @property (strong, nonatomic) NSString * strSubCategory, * strCategory;
 @property (strong, nonatomic) NSString * strSubCategoryDate, * strCategoryDate;

@@ -5,7 +5,7 @@
 //  Created by iPhones on 5/5/16.
 //  Copyright © 2016 PS.com. All rights reserved.
 //
-
+#import "LocationViewController.h"
 #import "NewAddBusinessViewController.h"
 #import "MapViewController.h"
 #import "MenuViewController.h"
@@ -18,7 +18,7 @@
 #import "ContectUsViewController.h"
 #import "LoginViewController.h"
 
-@interface NewAddBusinessViewController ()<MenuViewControllerDelegates,MapViewControllerDelegates>
+@interface NewAddBusinessViewController ()<MenuViewControllerDelegates,MapViewControllerDelegates, UITextViewDelegate>
 {
     NSMutableArray *categrtArray, * arrCategory;
     NSMutableArray *SubcategrtArray;
@@ -59,7 +59,7 @@
 @implementation NewAddBusinessViewController
 bool isShownaddbusines;
 
-@synthesize flagIsOpen;
+@synthesize flagIsOpen, strPeopleAccess, strParkingAvailable, flagIsPeopleAccess, flagIsParkingAvaialble;
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -82,7 +82,7 @@ bool isShownaddbusines;
     NSLog(@"self.scrollView_Images = %@", NSStringFromCGSize(self.scrollView_Images.contentSize));
     NSLog(@"self.scrollView_Images = %@", NSStringFromCGRect(self.scrollView_Images.frame));
     
-    [ self.NewScVicw setContentSize:CGSizeMake(320, 1420)];
+    [ self.NewScVicw setContentSize:CGSizeMake(320, 1620)];
 }
 
 - (IBAction)doneClicked:(id)sender
@@ -101,6 +101,8 @@ bool isShownaddbusines;
     [self.videourl resignFirstResponder ];
     [self.tf_TblUrl resignFirstResponder ];
     [self.tf_MenuUrl resignFirstResponder];
+    [tv_PeopleAccess resignFirstResponder];
+    [tv_ParkingAvailable resignFirstResponder];
     
 }
 - (void)viewDidLoad {
@@ -111,6 +113,9 @@ bool isShownaddbusines;
     [self.lbl_PPhone setHidden:YES];
     [self.lbl_PAddress setHidden:YES];
     [self.lbl_PEmail setHidden:YES];
+    
+    tv_ParkingAvailable.delegate =  self;
+    tv_PeopleAccess.delegate =  self;
     
     [super viewDidLoad];
     [self.scrollView_Images setContentSize:CGSizeMake(414, 170)];
@@ -134,6 +139,8 @@ bool isShownaddbusines;
     self.tf_TblUrl.inputAccessoryView = keyboardDoneButtonView;
     self.tf_MenuUrl.inputAccessoryView = keyboardDoneButtonView;
     
+    tv_PeopleAccess.inputAccessoryView = keyboardDoneButtonView;
+    tv_ParkingAvailable.inputAccessoryView = keyboardDoneButtonView;
     self.BusinesHoursTextFiled.inputAccessoryView = keyboardDoneButtonView;
     self.DescriptionTextView.inputAccessoryView = keyboardDoneButtonView;
     
@@ -152,6 +159,9 @@ bool isShownaddbusines;
         self.lbl_AddPictures.text=NSLocalizedString(@"Add Pictures To Gallery",nil);
         
         flagIsOpen = ! flagIsOpen;
+        flagIsParkingAvaialble = !flagIsParkingAvaialble;
+        
+        
         
         if([self.editbusinesdic[@"is_open"] intValue] == 1) {
             [_btn_Status setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
@@ -159,6 +169,26 @@ bool isShownaddbusines;
         } else if ([self.editbusinesdic[@"is_open"] intValue] == 2) {
             [_btn_Status setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
             self.intBusinessHourStatus = 2;
+        }
+        
+        if([self.editbusinesdic[@"public_access"] intValue] == 1) {
+            [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+            self.strPeopleAccess = @"1";
+            flagIsPeopleAccess = NO;
+        } else if ([self.editbusinesdic[@"public_access"] intValue] == 2) {
+            [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
+            self.strPeopleAccess = @"2";
+            flagIsPeopleAccess = YES;
+        }
+        
+        if([self.editbusinesdic[@"parking_avail"] intValue] == 1) {
+            [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+            self.strParkingAvailable = @"1";
+            flagIsParkingAvaialble = NO;
+        } else if ([self.editbusinesdic[@"parking_avail"] intValue] == 2) {
+            [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
+            self.strParkingAvailable = @"2";
+            flagIsParkingAvaialble = YES;
         }
         
         
@@ -215,7 +245,6 @@ bool isShownaddbusines;
                 NSData *data = [strUnicodeString dataUsingEncoding:NSUTF8StringEncoding];
                 NSString *string = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
                 self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",string];
-                
             }else{
                 self.CategeryTextFiled.text=[NSString stringWithFormat:@"%@",strUnicodeString];
             }
@@ -807,6 +836,19 @@ bool isShownaddbusines;
             self.PlacehoderHoures.text=NSLocalizedString(@"Business hours",nil);
             self.placeAddreslable.text=NSLocalizedString(@"Address",nil);
             self.lbl_AddPictures.text=NSLocalizedString(@"Add Pictures To Gallery",nil);
+            lbl_PlaceholderPeople.text=NSLocalizedString(@"PeopleAccess",nil);
+            lbl_PlaceholderParking.text=NSLocalizedString(@"ParkingAvailable",nil);
+            
+            [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+            self.strParkingAvailable = @"1";
+            
+            flagIsPeopleAccess = NO;
+            flagIsParkingAvaialble = NO;
+            
+            [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+            self.strPeopleAccess = @"1";
+            
+            
             categrtArray = [[NSMutableArray alloc]init];
             SubcategrtArray = [[NSMutableArray alloc]init];
             BusinessArray =[[NSMutableArray alloc]init];
@@ -911,8 +953,6 @@ bool isShownaddbusines;
                 
                 NSRange NewRan=[newString2 rangeOfString:str];
                 
-                
-                
                 newString2=[newString2 stringByReplacingCharactersInRange:NewRan withString:@""];
             }
         }else{
@@ -951,15 +991,23 @@ bool isShownaddbusines;
         }else if(newString3.length>0){
             self.PlacehoderHoures.hidden = YES;
         }
+    } else if (textView == tv_ParkingAvailable) {
+        [lbl_PlaceholderParking setHidden:NO];
+        if(tv_ParkingAvailable.text.length > 0) {
+            [lbl_PlaceholderParking setHidden:YES];
+        }
+    } else if (textView == tv_PeopleAccess) {
+        [lbl_PlaceholderPeople setHidden:NO];
+        if(tv_PeopleAccess.text.length > 0) {
+            [lbl_PlaceholderPeople setHidden:YES];
+        }
     }
-    
     
     if(textView == self.AddressTextFiled) {
         if(self.AddressTextFiled.text.length > 0) {
             [self.lbl_PAddress setHidden:YES];
         }
     }
-    
     
     return YES;
 }
@@ -972,7 +1020,7 @@ bool isShownaddbusines;
                                delegate:nil
                                cancelButtonTitle:NSLocalizedString(@"OK",nil)
                                otherButtonTitles:nil];
-    [errorAlert show];
+   // [errorAlert show];
 }
 -(CLLocationCoordinate2D) getLocation{
     locationManager = [[CLLocationManager alloc] init];
@@ -1767,8 +1815,6 @@ bool isShownaddbusines;
                 }
             }
             
-            
-            
             [self.SubcategoryTableview reloadData];
         }
     }
@@ -1804,7 +1850,6 @@ bool isShownaddbusines;
     
     NSLog(@"attstr - %@", [NSString stringWithFormat:@"%@", attString.string]);
     return attString;
-    
 }
 
 
@@ -1895,7 +1940,9 @@ bool isShownaddbusines;
                            MenuUrl:_tf_MenuUrl.text
                           TableUrl:_tf_TblUrl.text
                BusinessHoursStatus:[NSString stringWithFormat:@"%d",
-                                    self.intBusinessHourStatus]];
+                                    self.intBusinessHourStatus]
+                PeopleAccessStatus:strPeopleAccess
+                  ParkingAvailable:strParkingAvailable];
         }
         else
         {
@@ -1930,7 +1977,9 @@ bool isShownaddbusines;
                        end_time:@"0"
                         MenuUrl:_tf_MenuUrl.text
                        TableUrl:_tf_TblUrl.text
-            BusinessHoursStatus:[NSString stringWithFormat:@"%d", self.intBusinessHourStatus]];
+            BusinessHoursStatus:[NSString stringWithFormat:@"%d", self.intBusinessHourStatus]
+             PeopleAccessStatus:strPeopleAccess
+               ParkingAvailable:strParkingAvailable];
         }
     }
 }
@@ -1979,7 +2028,7 @@ bool isShownaddbusines;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
@@ -1989,7 +2038,7 @@ bool isShownaddbusines;
         {
             UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -2018,7 +2067,14 @@ bool isShownaddbusines;
         }
             break;
             
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
             
+            break;
         default:
             break;
     }
@@ -2272,4 +2328,24 @@ bool isShownaddbusines;
     }] resume];
 }
 
+- (IBAction)btn_PeopleAccess:(id)sender {
+    if(!flagIsPeopleAccess) {
+        [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
+        self.strPeopleAccess = @"2";
+    } else {
+        [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+        self.strPeopleAccess = @"1";
+    }
+    flagIsPeopleAccess = !flagIsPeopleAccess;
+}
+- (IBAction)btn_ParkingAvailable:(id)sender {
+    if(!flagIsParkingAvaialble) {
+        [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
+        self.strParkingAvailable = @"2";
+    } else {
+        [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+        self.strParkingAvailable = @"1";
+    }
+    flagIsParkingAvaialble = !flagIsParkingAvaialble;
+}
 @end

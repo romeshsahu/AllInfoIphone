@@ -179,7 +179,6 @@
 "Menu url" = "לינק לתפריט";
 "Table url" = "לינק הזמנת שולחן‎";
 
-
 "Please check network connection."="בדוק את חיבור הרשת.";
 "Cancel"="לְבַטֵל";
 "Alert"="עֵרָנִי";
@@ -190,16 +189,19 @@
 "Camera Unavailable"="מצלמה לא זמינה";
 "Unable to find a camera on your device."="לא ניתן למצוא מצלמה במכשיר שלך.";
 "submitted successfully"="נשלח בהצלחה";
-"Please login first"="בבקשה התחבר קודם";
+"Please login first"="התחברות";
 "Need to add business before sharing business"="צריך להוסיף עסקים לפני שיתוף העסק";
 ""="";
 ""="";
 ""="";
 ""="";
 
+"On" = "יש";
+"Off" = "אין";
 
-
-
+"ParkingAvailable" = "חניה במקום";
+"PeopleAccess" = "גישה לנכים";
+"CurrentLocation" = "עדכון המיקום שלי";
 
 
 

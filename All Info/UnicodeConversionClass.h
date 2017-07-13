@@ -12,5 +12,5 @@
 
 - (NSString *)StringToConvert:(NSString *)Str;
 - (NSString *)timeStampWithDate11:(NSString *)dateStr;
-
+- (NSString *)perCharToUniCode:(NSString *)Str;
 @end

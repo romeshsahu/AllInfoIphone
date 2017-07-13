@@ -15,7 +15,23 @@
 -(void)callweb;
 
 @end
-@interface NewAddBusinessViewController : UIViewController
+@interface NewAddBusinessViewController : UIViewController {
+
+    IBOutlet UITextView *tv_ParkingAvailable;
+    IBOutlet UITextView *tv_PeopleAccess;
+    IBOutlet UILabel *lbl_PlaceholderPeople;
+    
+    IBOutlet UILabel *lbl_PlaceholderParking;
+}
+
+@property BOOL flagIsParkingAvaialble, flagIsPeopleAccess;
+@property NSString * strPeopleAccess, * strParkingAvailable;
+@property (strong, nonatomic) IBOutlet UIButton *btn_PeopleAccess;
+- (IBAction)btn_PeopleAccess:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *btn_ParkingAvailable;
+- (IBAction)btn_ParkingAvailable:(id)sender;
+
+
 @property (weak, nonatomic) IBOutlet UILabel *lbl_PEmail;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_PPhone;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_PAddress;

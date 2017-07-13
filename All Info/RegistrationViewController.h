@@ -9,7 +9,20 @@
 #import <UIKit/UIKit.h>
 #import "IntrestCatViewController.h"
 
-@interface RegistrationViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
+@interface RegistrationViewController : UIViewController<UIActionSheetDelegate,UIImagePickerControllerDelegate,UIAlertViewDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>{
+    
+    IBOutlet UITextView *tv_ParkingAvailable;
+    IBOutlet UITextView *tv_PeopleAccess;
+    IBOutlet UILabel *lbl_PlaceholderPeople;
+    
+    IBOutlet UILabel *lbl_PlaceholderParking;
+}
+    @property BOOL flagIsParkingAvaialble, flagIsPeopleAccess;
+    @property NSString * strPeopleAccess, * strParkingAvailable;
+    @property (strong, nonatomic) IBOutlet UIButton *btn_PeopleAccess;
+    - (IBAction)btn_PeopleAccess:(id)sender;
+    @property (strong, nonatomic) IBOutlet UIButton *btn_ParkingAvailable;
+    - (IBAction)btn_ParkingAvailable:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *lbl_PPassword;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_PUserEmail;

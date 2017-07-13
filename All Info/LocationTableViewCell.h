@@ -19,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *Starimg5;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_KM;
 @property (weak, nonatomic) IBOutlet UILabel *lbl_Status;
+@property (weak, nonatomic) IBOutlet UIImageView *imgView_Parking;
+@property (weak, nonatomic) IBOutlet UIImageView *imgView_People;
 
 @end

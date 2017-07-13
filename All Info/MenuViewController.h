@@ -27,5 +27,6 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *HelpBtnOut;
 @property (weak, nonatomic) IBOutlet UIButton *btnCategory;
+@property (strong, nonatomic) IBOutlet UIButton *btn_Location;
 
 @end

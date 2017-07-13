@@ -49,6 +49,55 @@
 
     
 }
+    
+- (void) addDeviceInfo:(NSString *) strNotificationId {
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
+    {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
+        [alert show];
+        
+    }else{
+        
+        NSString * strUDID = [[UIDevice currentDevice].identifierForVendor UUIDString];
+        
+        [self hideLoader];
+        
+        [self showLoader];
+        responseData=[[NSMutableData alloc]init];
+        NSString *body=[NSString stringWithFormat:@"device_type=1&device_gcm_id=%@&device_id=%@",strNotificationId, strUDID];
+        NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
+        NSLog(@"body = %@", body);
+        NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
+        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=AddDeviceInfo"]];
+        [request setHTTPMethod:@"POST"];
+        [request setTimeoutInterval:120];
+        [request setHTTPBody:data];
+        [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+        conn=[[NSURLConnection alloc]initWithRequest:request delegate:self];
+    }
+
+}
+    
+- (void) getInterestedCategories:(NSString *) userid {
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable)  {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
+        [alert show];
+    } else {
+        [self hideLoader];
+        [self showLoader];
+        responseData=[[NSMutableData alloc]init];
+        NSString *body=[NSString stringWithFormat:@"language_id=%@&login_id=%@",@"2", userid];
+        NSLog(@"body = %@", body);
+        NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
+        NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
+        [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=get_interest_category"]];
+        [request setHTTPMethod:@"POST"];
+        [request setTimeoutInterval:120];
+        [request setHTTPBody:data];
+        [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
+        conn=[[NSURLConnection alloc]initWithRequest:request delegate:self];
+    }
+}
 //http://allinfo.co.il/all_info/webservice/master.php?action=readReview&user_id=2
 -(void)readReview:(NSString*)user_id
 {
@@ -321,18 +370,15 @@
 //name=sunil&phone=123456&business_id=16&email_id=test@gmail.com&message=test
 -(void)sendmessage:(NSString*)name phone:(NSString*)phone business_id:(NSString*)business_id email_id:(NSString*)email_id message:(NSString*)message{
 
-    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
-    {
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable ) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
-        // [self showLoader];
         
         responseData=[[NSMutableData alloc]init];
         NSString *body=[NSString stringWithFormat:@"name=%@&phone=%@&business_id=%@&email_id=%@&message=%@",name,phone,business_id,email_id,message];
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
-        
         NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
         [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=sendMessage"]];
         [request setHTTPMethod:@"POST"];
@@ -420,8 +466,7 @@
     
 }
 -(void)SlectedbySubId:(NSString*)sub_cat_id language_id:(NSString*)language_id latitude:(NSString*)latitude longitude:(NSString*)longitude  {
-    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
-    {
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )  {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
@@ -445,19 +490,16 @@
 #pragma mark.....Login api
 
 -(void)Login:(NSString*)language_id email:(NSString*)email password:(NSString*)password  {
-    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
-    {
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable ) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
         [self hideLoader];
-
         [self showLoader];
         responseData=[[NSMutableData alloc]init];
-        NSString *body=[NSString stringWithFormat:@"language_id=%@&email=%@&password=%@",language_id,email,password];
+        NSString *body=[NSString stringWithFormat:@"language_id=%@&email=%@&password=%@&device_id=%@&device_type=%@",language_id,email,password, [[NSUserDefaults standardUserDefaults] objectForKey:@"DevieceId"], @"1"];
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
-        
         NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
         [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=login"]];
         [request setHTTPMethod:@"POST"];
@@ -479,10 +521,9 @@
         
     }else{
         [self hideLoader];
-        
         [self showLoader];
         responseData=[[NSMutableData alloc]init];
-        NSString *body=[NSString stringWithFormat:@"social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@",social_id,language_id,email,username,profile_image,social_type];
+        NSString *body=[NSString stringWithFormat:@"social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@&device_id=%@&device_type=%@",social_id,language_id,email,username,profile_image,social_type, [[NSUserDefaults standardUserDefaults] objectForKey:@"DevieceId"], @"1"];
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
         
         NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
@@ -507,7 +548,7 @@
         
         [self showLoader];
         responseData=[[NSMutableData alloc]init];
-        NSString *body=[NSString stringWithFormat:@"social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@",social_id,language_id,email,username,profile_image,social_type];
+        NSString *body=[NSString stringWithFormat:@"social_id=%@&language_id=%@&email=%@&username=%@&profile_image=%@&social_type=%@&device_id=%@&device_type=%@",social_id,language_id,email,username,profile_image,social_type, [[NSUserDefaults standardUserDefaults] objectForKey:@"DevieceId"], @"1"];
         
         NSLog(@"google login body....%@",body);
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
@@ -523,7 +564,7 @@
 }
 
 
--(void)UserRegistraion:(NSString*)username  email:(NSString*)email password:(NSString*)password  phone:(NSString*)phone address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id user_image:(UIImage*)ProfileImage Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6  Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status
+-(void)UserRegistraion:(NSString*)username  email:(NSString*)email password:(NSString*)password  phone:(NSString*)phone address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id user_image:(UIImage*)ProfileImage Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6  Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status PeopleAccessStatus:(NSString *) strPeople ParkingAvailable:(NSString *) strParking
 
 {
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
@@ -1049,6 +1090,18 @@
         [data appendData:[status dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 
+        /// For People Access
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"public_access\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[strPeople dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        /// For partking Avaialble
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"parking_avail\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[strParking dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
         NSLog(@"status = %@", status);
         
         
@@ -1060,7 +1113,7 @@
 
 //login_id
 
--(void)AddbusinessRegi:(NSString*)phone login_id:(NSString*)login_id address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6 Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status{
+-(void)AddbusinessRegi:(NSString*)phone login_id:(NSString*)login_id address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6 Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status  PeopleAccessStatus:(NSString *) strPeople ParkingAvailable:(NSString *) strParking{
     
     NSLog(@"sub_cat_id = %@", sub_cat_id);
 
@@ -1085,11 +1138,8 @@
         [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=add_business"]];
         
         [request setHTTPMethod:@"POST"];
-        
         [request addValue:contentType forHTTPHeaderField:@"Content-Type"];
-        
         [request setTimeoutInterval:120.0];
-        
         
         
         UIImage *secondImage = [UIImage imageNamed:@"ALLINFO_App_registration_n_b screen_profile pic display.png"];
@@ -1510,6 +1560,21 @@
         [data appendData:[status dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
 
+        /// For People Access
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"public_access\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[strPeople dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        /// For partking Avaialble
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"parking_avail\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[strParking dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+
+        
+        
+        
         
         [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"end_time\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1521,9 +1586,9 @@
 }
 
 //update businew
--(void)updatebusinessRegi:(NSString*)phone user_id:(NSString*)user_id address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6  Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status{
+-(void)updatebusinessRegi:(NSString*)phone user_id:(NSString*)user_id address:(NSString*)address latitude:(NSString*)latitude longitude:(NSString*)longitude business_name:(NSString*)business_name business_type_id:(NSString*)business_type_id description:(NSString*)description website_url:(NSString*)website_url sub_cat_id:(NSString*)sub_cat_id Addimg1:(UIImage*)Addimg1 Addimg2:(UIImage*)Addimg2 Addimg3:(UIImage*)Addimg3 Addimg4:(UIImage*)Addimg4 Addimg5:(UIImage*)Addimg5 Addimg6:(UIImage*)Addimg6  Addimg7:(UIImage*)Addimg7 Addimg8:(UIImage*)Addimg8 Addimg9:(UIImage*)Addimg9 Addimg10:(UIImage*)Addimg10 business_email:(NSString*)business_email facebook_url:(NSString*)facebook_url video_url:(NSString*)video_url language_id:(NSString*)language_id start_time:(NSString*)start_time end_time:(NSString*)end_time MenuUrl:(NSString *) menuUrl TableUrl:(NSString *) tableUrl BusinessHoursStatus:(NSString *) status PeopleAccessStatus:(NSString *) strPeople ParkingAvailable:(NSString *) strParking{
     
-    NSLog(@"status = %@", status);
+    NSLog(@"strPeople = %@\n strParking = %@", strPeople, strParking);
     
     if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
     {
@@ -1914,8 +1979,6 @@
         [data appendData:[language_id dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         
-        
-        
         [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"longitude\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[longitude dataUsingEncoding:NSUTF8StringEncoding]];
@@ -1992,6 +2055,19 @@
         [data appendData:[status dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         
+        /// For People Access
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"public_access\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[strPeople dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        /// For partking Avaialble
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"parking_avail\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[strParking dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        
         [data appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",boundary] dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"end_time\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[end_time dataUsingEncoding:NSUTF8StringEncoding]];
@@ -2060,12 +2136,11 @@ device_type : 0 - android / 1 - ios
         
     }else{
         [self hideLoader];
-        
         [self showLoader];
         responseData=[[NSMutableData alloc]init];
         NSString *body=[NSString stringWithFormat:@"login_id=%@&category_id=%@&device_id=%@&device_type=%@",login_id,category_id,device_id,device_type];
         NSMutableURLRequest *request=[[NSMutableURLRequest alloc]init];
-        
+        NSLog(@"body = %@", body);
         NSData *data=[body dataUsingEncoding:NSUTF8StringEncoding];
         [request setURL:[NSURL URLWithString:@"http://allinfo.co.il/all_info/webservice/master.php?action=interest_category"]];
         [request setHTTPMethod:@"POST"];
@@ -2074,18 +2149,15 @@ device_type : 0 - android / 1 - ios
         [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
         conn=[[NSURLConnection alloc]initWithRequest:request delegate:self];
     }
-    
 }
 
 -(void)share_page_user_id:(NSString*)user_id {
-    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable )
-    {
+    if([[Reachability sharedReachability] internetConnectionStatus] == NotReachable ) {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Please check network connection.",nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK" ,nil)otherButtonTitles:nil];
         [alert show];
         
     }else{
         [self hideLoader];
-        
         [self showLoader];
         responseData=[[NSMutableData alloc]init];
         NSString *body=[NSString stringWithFormat:@"user_id=%@",user_id];
@@ -2099,11 +2171,7 @@ device_type : 0 - android / 1 - ios
         [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" forHTTPHeaderField:@"Content-Type"];
         conn=[[NSURLConnection alloc]initWithRequest:request delegate:self];
     }
-    
 }
-
-
-
 
 -(void)showLoader{
     

@@ -12,6 +12,7 @@
 #import "SelectLanguageViewController.h"
 #import "BundleLocalization.h"
 #import "WSOperationInEDUApp.h"
+//#import <GoogleMaps/GoogleMaps.h>
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -57,22 +58,6 @@
         [[UIView appearance] setSemanticContentAttribute:UISemanticContentAttributeForceLeftToRight];
     }
     
-    /*
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-#ifdef __IPHONE_8_0
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeSound
-                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
-        [application registerUserNotificationSettings:settings];
-        [[UIApplication sharedApplication]registerForRemoteNotifications];
-        
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"in if" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        // [alert show];
-#endif
-    } else {
-        UIRemoteNotificationType myTypes =  UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        [application registerForRemoteNotificationTypes:myTypes];
-    }
-        */
 
     locationManager = [[CLLocationManager alloc] init];
     geocoder = [[CLGeocoder alloc] init];
@@ -84,7 +69,6 @@
      [locationManager startUpdatingLocation];
      [[BundleLocalization sharedInstance] setLanguage:@"he"];
      [[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"SelectedLanguage"];
-   
     
     UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
                                                              bundle: nil];
@@ -100,10 +84,10 @@
     //RootNavigationController
     [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
     [FBSDKLoginButton class];
-
     
     [GIDSignIn sharedInstance].clientID = @"658798455181-0ja0a73n7ubc4h0drp1spq0uedr57qrn.apps.googleusercontent.com";
     [GIDSignIn sharedInstance].allowsSignInWithBrowser=YES;
+ //   [GMSServices provideAPIKey:@"AIzaSyDCsk1aV-6FGp1JmTOfblI-gg9xEFGikGQ"];
     [self registerForPushNotification];
 
     return YES;
@@ -118,10 +102,7 @@
                 [[UIApplication sharedApplication] registerForRemoteNotifications];
             }
         }];
-    }
-    else {
-        
-        
+    } else {
         NSLog(@"registerForPushNotification 0000");
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
         {
@@ -133,9 +114,7 @@
               (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:categories]];
             [[UIApplication sharedApplication] registerForRemoteNotifications];
 #endif
-        }
-        else
-        {
+        } else {
             NSLog(@"registerForPushNotification: For iOS < 8.0");
             [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
              (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
@@ -183,15 +162,11 @@
                     //  kAppDelegate.strCategoryDate = responseDic[@"cat_last_update"];
                     // kAppDelegate.strSubCategoryDate = responseDic[@"subcat_last_update"];
                 }
-                
                 [defaults synchronize];
-                
-                
                 UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
                                                                          bundle: nil];
                 UINavigationController *controller = (UINavigationController*)[MainStoryboard
                                                                                instantiateViewControllerWithIdentifier: @"RootNavigationController"];
-                
                 
                 UITabBarController *tabar = controller.viewControllers[0];
                 [tabar setSelectedIndex:3];
@@ -204,14 +179,10 @@
                                                                      bundle: nil];
             UINavigationController *controller = (UINavigationController*)[MainStoryboard
                                                                            instantiateViewControllerWithIdentifier: @"RootNavigationController"];
-            
-            
             UITabBarController *tabar = controller.viewControllers[0];
             [tabar setSelectedIndex:3];
-            
             self.window.rootViewController=controller;
         }
-
     } @catch (NSException *exception) {
         NSLog(@"exception....%@",exception);
     }
@@ -242,52 +213,39 @@
     self.receivedData = data;
     // [data release];
     UIDevice *device = [UIDevice currentDevice];
-    
     NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
     
     NSString *device_type=@"1";
     NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=AddDeviceInfo&device_type=%@&device_id=%@&device_gcm_id=%@",device_type,currentDeviceId,deviceid];
     
     //passcode
-    
     NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    
     //initialize a request from url
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[url standardizedURL]];
     
     //set http method
     [request setHTTPMethod:@"POST"];
-    
-    
     [request setValue:@"application/x-www-form-urlencoded; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     self.connection = connection;
     //[connection release];
-    
     //start the connection
     [connection start];
     
-    
-    
 }
-
 
 ///////////////
 // New in iOS 8
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
-{
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
     [application registerForRemoteNotifications];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    
-    
     NSString *token = [[deviceToken description] stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
     NSLog(@"deviceToken:::::   %@",deviceToken);
     NSLog(@"token:::::   %@",token);
+    [self addDeviceInfo:token];
     [[NSUserDefaults standardUserDefaults]setValue:token forKey:@"DevieceId"];
 }
 
@@ -296,6 +254,11 @@
     NSString *str = [NSString stringWithFormat: @"Error: %@", error];
     NSLog(@"Error:::::   %@",str);
     
+}
+
+
+- (void) getGoogleMapApiKey {
+     //AIzaSyDCsk1aV-6FGp1JmTOfblI-gg9xEFGikGQ
 }
 
 #pragma mark- xcode8 method
@@ -310,13 +273,8 @@
     UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
     UITabBarController *tabar = controller.viewControllers[0];
     [tabar setSelectedIndex:3];
-    
     [AppDelegate SharedInstance].window.rootViewController=controller;
     [[AppDelegate SharedInstance].window makeKeyAndVisible];
-    
-    
-    
-    
     
     completionHandler();
 }
@@ -326,25 +284,17 @@
 {
     NSLog(@"recieved notification 1111");
     completionHandler(UIBackgroundFetchResultNoData);
-    
     NSMutableArray *arrAPS=[[NSMutableArray alloc]init];
     arrAPS=[userInfo objectForKey:@"aps"];
     NSString *alert = [NSString stringWithFormat:@"%@",[arrAPS valueForKey:@"alert"]];
-
-    
-    if ([application applicationState] == UIApplicationStateInactive || [application applicationState] == UIApplicationStateBackground)
-    {
+    if ([application applicationState] == UIApplicationStateInactive || [application applicationState] == UIApplicationStateBackground) {
         UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
         UITabBarController *tabar = controller.viewControllers[0];
         [tabar setSelectedIndex:3];
-        
         [AppDelegate SharedInstance].window.rootViewController=controller;
         [[AppDelegate SharedInstance].window makeKeyAndVisible];
-  
-    }
-    else
-    {
+    }  else  {
         NSLog(@"userInfo:::::%@",userInfo);
         [[TWMessageBarManager sharedInstance] hideAll];
         [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Notification" description:alert type:TWMessageBarMessageTypeInfo callback:^{
@@ -353,7 +303,6 @@
             UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
             UITabBarController *tabar = controller.viewControllers[0];
             [tabar setSelectedIndex:3];
-            
             [AppDelegate SharedInstance].window.rootViewController=controller;
             [[AppDelegate SharedInstance].window makeKeyAndVisible];
         }];
@@ -361,8 +310,6 @@
 }
 
 //////////////
-
-
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     
     //initialize convert the received data to string with UTF8 encoding
@@ -426,11 +373,9 @@
     
     NSMutableArray *arrAPS=[[NSMutableArray alloc]init];
     arrAPS=[userInfo objectForKey:@"aps"];
-    
     NSString *alert = [NSString stringWithFormat:@"%@",[arrAPS valueForKey:@"alert"]];
     
-    if ([application applicationState] == UIApplicationStateInactive || [application applicationState] == UIApplicationStateBackground)
-    {
+    if ([application applicationState] == UIApplicationStateInactive || [application applicationState] == UIApplicationStateBackground)  {
         UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
         UITabBarController *tabar = controller.viewControllers[0];
@@ -439,23 +384,33 @@
         [AppDelegate SharedInstance].window.rootViewController=controller;
         [[AppDelegate SharedInstance].window makeKeyAndVisible];
         
-    }
-    else
-    {
+    } else {
         NSLog(@"userInfo:::::%@",userInfo);
         [[TWMessageBarManager sharedInstance] hideAll];
         [[TWMessageBarManager sharedInstance] showMessageWithTitle:@"Notification" description:alert type:TWMessageBarMessageTypeInfo callback:^{
-            
             UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
             UINavigationController *controller = (UINavigationController*)[MainStoryboard instantiateViewControllerWithIdentifier: @"RootNavigationController"];
             UITabBarController *tabar = controller.viewControllers[0];
             [tabar setSelectedIndex:3];
-            
             [AppDelegate SharedInstance].window.rootViewController=controller;
             [[AppDelegate SharedInstance].window makeKeyAndVisible];
         }];
     }
-    
 }
 
+- (void) addDeviceInfo:(NSString *) strDeviceToken {
+    WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(AddDeviceApiResponse:)];
+    [ws addDeviceInfo:strDeviceToken];
+}
+
+-(void)AddDeviceApiResponse:(id)response {
+    NSDictionary *responseDic=response;
+    if ([response isKindOfClass:[NSDictionary class]]) {
+        NSLog(@"responseDic = %@", responseDic);
+        if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+        }
+    }
+}
+    
+    
 @end

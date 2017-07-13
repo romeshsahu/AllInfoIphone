@@ -14,7 +14,6 @@
 {
     NSData *UnicodedStr = [Str dataUsingEncoding:NSUTF8StringEncoding];
     NSString *StringValue = [[NSString alloc] initWithData:UnicodedStr encoding:NSNonLossyASCIIStringEncoding];
-
     if (StringValue == NULL) {
         StringValue=Str;
     }
@@ -30,7 +29,6 @@
 //    NSString *ServerDate=[userDefaults valueForKey:@"ServerDate"];
 //    NSString *time_zone=[userDefaults valueForKey:@"time_zone"];
 
-    
    /* NSTimeZone *currentTimeZone = [NSTimeZone localTimeZone];
     NSDateFormatter * format = [[NSDateFormatter alloc] init];
     // from server dateFormat
@@ -65,7 +63,6 @@
     NSLog(@"%@",estDate);
     NSString *dateStr11 = [format stringFromDate:estDate];*/
     
-    
     //UTC time
     NSDateFormatter *utcDateFormatter = [[NSDateFormatter alloc] init];
     [utcDateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -85,7 +82,37 @@
     // formatted string
     NSString *localDate = [localDateFormatter stringFromDate: dateInUTC];
     return localDate;
-    
 }
 
+- (NSString *)perCharToUniCode:(NSString *)Str {
+        NSMutableString *strFinal = [[NSMutableString alloc]init];
+        for (NSUInteger charIdx=0; charIdx<Str.length; charIdx++)
+        // Do something with character at index charIdx, for example:
+        {
+            NSLog(@"%C", [Str characterAtIndex:charIdx]);
+            NSData *UnicodedStr = [[NSString stringWithFormat:@"%C",[Str characterAtIndex:charIdx]] dataUsingEncoding:NSNonLossyASCIIStringEncoding];
+            NSString *StringValue = [[NSString alloc] initWithData:UnicodedStr encoding:NSUTF8StringEncoding];
+            
+            if (StringValue == NULL) {
+                StringValue=[NSString stringWithFormat:@"%C",[Str characterAtIndex:charIdx]];
+            }
+            
+            if ([StringValue containsString:@"\\"]) {
+                if (StringValue.length<5) {
+                    NSLog(@"pre macro...%@",StringValue);
+                    NSData *data = [[NSString stringWithFormat:@"%C",[Str characterAtIndex:charIdx]] dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+                    NSString *newString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+                    NSLog(@"newString...%@",newString);
+                    [strFinal appendString:newString];
+                }  else  {
+                    NSLog(@"newString...%@",StringValue);
+                    [strFinal appendString:StringValue];
+                }
+            } else {
+                [strFinal appendString:[NSString stringWithFormat:@"%C",[Str characterAtIndex:charIdx]] ];
+            }
+            NSLog(@"strFinal...%@",strFinal);
+        }
+        return strFinal;
+    }
 @end

@@ -5,7 +5,7 @@
 //  Created by iPhones on 4/23/16.
 //  Copyright © 2016 Parkhya solutions. All rights reserved.
 //
-
+#import "LocationViewController.h"
 #import "HistoryViewController.h"
 #import "FMDBManager.h"
 #import "HistoryTableViewCell.h"
@@ -191,6 +191,15 @@ bool isShownhist = false;
 */
 
 - (IBAction)ActionOnHome:(id)sender {
+    UIStoryboard *MainStoryboard = [UIStoryboard storyboardWithName:@"Main"
+                                                             bundle: nil];
+    UINavigationController *controller = (UINavigationController*)[MainStoryboard
+                                                                   instantiateViewControllerWithIdentifier: @"RootNavigationController"];
+    UITabBarController *tabar = controller.viewControllers[0];
+    [tabar setSelectedIndex:3];
+    
+    [AppDelegate SharedInstance].window.rootViewController=controller;
+    [[AppDelegate SharedInstance].window makeKeyAndVisible];
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController{
@@ -234,7 +243,7 @@ bool isShownhist = false;
 }
 
 - (IBAction)ActionONBack:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Do you want to close the Allinfo",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Do you want to close the Allinfo",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
     alert.tag=11;
     [alert show];
     
@@ -315,7 +324,7 @@ bool isShownhist = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil)  message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""  message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
@@ -324,7 +333,7 @@ bool isShownhist = false;
         {
             NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -352,7 +361,14 @@ bool isShownhist = false;
             
         }
             break;
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
             
+            break;
 
         default:
             break;

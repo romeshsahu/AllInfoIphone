@@ -5,7 +5,7 @@
 //  Created by Mahendra Suryavanshi on 3/5/16.
 //  Copyright © 2016 PS.com. All rights reserved.
 //
-
+#import "LocationViewController.h"
 #import "GifFileViewController.h"
 #import "UIImage+animatedGIF.h"
 #import <AudioToolbox/AudioToolbox.h>
@@ -53,37 +53,31 @@ bool isShowngif = false;
     [pullToRefreshManager_ relocatePullToRefreshView];
 }
 - (void)viewWillAppear:(BOOL)animated {
-         serchListArr = [[NSMutableArray alloc] init];
-
-    pageNo = 1;
-    [super viewWillAppear:animated];
-    HistoryInfo=[[Allinfo alloc]init];
-    [sample.view removeFromSuperview];
-    
-    [self.LocationTableView reloadData];
-    
-    self.tabBarController.tabBar.hidden=NO;
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [locationManager startUpdatingLocation];
+    serchListArr = [[NSMutableArray alloc] init];
+    pageNo = 1;
+    [super viewWillAppear:animated];
+    HistoryInfo=[[Allinfo alloc]init];
+    [sample.view removeFromSuperview];
+    [self.LocationTableView reloadData];
+    self.tabBarController.tabBar.hidden=NO;
     if (self.issearch==YES) {
-        
         [self performSelector:@selector(serchByprodect) withObject:nil afterDelay:1.0f];
     }else{
         [self performSelector:@selector(GetprodectList) withObject:nil afterDelay:1.0f];
-        
     }
-    
 }
 
--(void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
-{
+- (void) tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
     NSLog(@"working");
-    
 }
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     serchListArr = [[NSMutableArray alloc]init];
     
     
@@ -228,7 +222,7 @@ bool isShowngif = false;
     NSLog(@"didFailWithError: %@", error);
     UIAlertView *errorAlert = [[UIAlertView alloc]
                                initWithTitle:NSLocalizedString( @"Error",nil) message:NSLocalizedString(@"Failed to Get Your Location",nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:nil];
-    [errorAlert show];
+  //  [errorAlert show];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -243,16 +237,13 @@ bool isShowngif = false;
                 if (Userlat == nil || [Userlat isKindOfClass:[NSNull class]] ||  Userlong == nil || [Userlong isKindOfClass:[NSNull class]] ) {
                     //do something
                 }else{
-                    
                     [self serchByprodect];
                 }
-                
             }else{
                 if (Userlat == nil || [Userlat isKindOfClass:[NSNull class]] ||  Userlong == nil || [Userlong isKindOfClass:[NSNull class]] ) {
                     //do something
                 }else{
-                
-                [self GetprodectList];
+                 //  [self GetprodectList];
                 }
                 
             }
@@ -264,7 +255,7 @@ bool isShowngif = false;
             [[NSUserDefaults standardUserDefaults] setObject:Userlat2 forKey:@"Userlat"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            NSLog(@"currentLocation.coordinate.longitude = %f, currentLocation.coordinate.latitude = %f", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
+           // NSLog(@"currentLocation.coordinate.longitude = %f, currentLocation.coordinate.latitude = %f", currentLocation.coordinate.longitude, currentLocation.coordinate.latitude);
             
             Userlong= [[NSUserDefaults standardUserDefaults]
                        stringForKey:@"Userlong"];
@@ -282,6 +273,7 @@ bool isShowngif = false;
     LocationTableViewCell *cell = (LocationTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"MapLocaton"];
     if(serchListArr.count > 0) {
     BussnessDic = [serchListArr objectAtIndex:indexPath.row];
+        
     //SelectedLanguage
     NSString *leg=[[NSUserDefaults standardUserDefaults]objectForKey:@"SelectedLanguage"];
     NSString *imageToLoad = [BussnessDic objectForKey:@"product_image1"];
@@ -297,8 +289,8 @@ bool isShowngif = false;
     NSString *imageToLoad10 = [BussnessDic objectForKey:@"product_image10"];
     
     
-    NSLog(@"imageToLoad = %@", imageToLoad);
-    NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
+   // NSLog(@"imageToLoad = %@", imageToLoad);
+   // NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
     if(imageToLoad.length > 0) {
         [cell.PrdoctImgView sd_setImageWithURL:[NSURL URLWithString:imageToLoad] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
     } else if(imageToLoad2.length > 0) {
@@ -330,7 +322,7 @@ bool isShowngif = false;
             if(arr.count > 0){
                 NSDictionary * dict = arr[0];
                 kAppDelegate.strSubCategory = dict[@"sub_category_image"];
-                NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
+          //      NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
                 [cell.PrdoctImgView sd_setImageWithURL:[NSURL URLWithString:kAppDelegate.strSubCategory] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"]];
             }
         }
@@ -361,7 +353,7 @@ bool isShowngif = false;
      }
     }
    // cell.Prodectlabel.text=[NSString stringWithFormat:@"%@",strUnicodeString];
-    NSLog(@"Your name is %@", strUnicodeString);
+   // NSLog(@"Your name is %@", strUnicodeString);
     
     cell.Prodectlabel.lineBreakMode = NSLineBreakByWordWrapping;
     cell.Prodectlabel.numberOfLines = 0;
@@ -375,12 +367,30 @@ bool isShowngif = false;
     float  intRating = [BussnessDic[@"rating"] floatValue];
     cell.lbl_Status.text = BussnessDic[@"status"];
     
-    if([BussnessDic[@"is_open"] intValue] == 1){
-        cell.lbl_Status.text = @"";//@"open";
-    } else {
-        cell.lbl_Status.text = NSLocalizedString(@"Close",nil);
-    }
+        if([BussnessDic[@"parking_avail"] intValue] == 1){
+            [cell.imgView_Parking setHidden:NO];
+        } else {
+            [cell.imgView_Parking setHidden:YES];
+        }
+        //   NSLog(@"People = %d", [BussnessDic[@"public_access"] intValue]);
+        if([BussnessDic[@"public_access"] intValue] == 1){
+            [cell.imgView_People setHidden:NO];
+        } else {
+            [cell.imgView_People setHidden:YES];
+        }
+        
+        if(BussnessDic[@"is_open"] != nil) {
+            if([BussnessDic[@"is_open"] intValue] == 2){
+                //closed
+                cell.lbl_Status.text = NSLocalizedString(@"Close",nil);
+            } else {
+                cell.lbl_Status.text = @"";
+            }
+        } else {
+            cell.lbl_Status.text = @"";
+        }
     
+    // NSLog(@"Parking = %d", [BussnessDic[@"parking_avail"] intValue]);
     [self setCellAndRatingImage:intRating andCell:cell];
     }
     
@@ -389,7 +399,7 @@ bool isShowngif = false;
 
 - (void) setCellAndRatingImage:(float) intRating andCell:(LocationTableViewCell *) cell {
     
-    NSLog(@"intRating = %2.f", intRating);
+   // NSLog(@"intRating = %2.f", intRating);
     
     cell.Starimg1.image = [UIImage imageNamed:@"star_blank.png"];
     cell.Starimg2.image = [UIImage imageNamed:@"star_blank.png"];
@@ -451,12 +461,9 @@ bool isShowngif = false;
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     BussnessDic = [serchListArr objectAtIndex:indexPath.row];
-    
     NSLog(@"BussnessDic = %@", BussnessDic);
-    
     NSMutableDictionary * dictBD = [[NSMutableDictionary alloc] init];
     dictBD = [BussnessDic mutableCopy];
     [dictBD setObject:kAppDelegate.strSubCategory forKey:@"subcategory_image"];
@@ -470,6 +477,7 @@ bool isShowngif = false;
 
 
 - (IBAction)ActionOnMapView:(id)sender {
+    locationManager.delegate = nil;
    // [self performSegueWithIdentifier:@"MapViewList" sender:self];
 }
 
@@ -479,9 +487,12 @@ bool isShowngif = false;
         MapListViewController *MapView = segue.destinationViewController;
        // MapView.delegates = self;
        // MapView.isaddnew=YES;
+        
         MapView.getSubcategryDic=_getSubcategryDic;
         MapView.isserchsetview=true;
-
+        MapView.strSCName = _ShowTitalLabe.text;
+        MapView.intLimit = ((int)pageNo - 1) * 10;
+        NSLog(@"(int)pageNo * 10 = %d", ((int)pageNo - 1) * 10);
     }
 
     if ([segue.identifier isEqualToString:@"Details"]) {
@@ -494,6 +505,7 @@ bool isShowngif = false;
         kAppDelegate.flagIsShowAverageRating = NO;
         BusinessdetailsViewController *Bissnesdetails=segue.destinationViewController;
         Bissnesdetails.getBussnessDic=[dictBD mutableCopy];
+      
         Bissnesdetails.isserchsetview=true;
     }
 }
@@ -501,6 +513,16 @@ bool isShowngif = false;
     return serchListArr.count;
 }
 -(void)serchByprodect{
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    if([defaults objectForKey:@"SelectedLatitude"] != nil) {
+        Userlat = [defaults objectForKey:@"SelectedLatitude"];
+    }
+    if([defaults objectForKey:@"SelectedLongitude"] != nil) {
+        Userlong = [defaults objectForKey:@"SelectedLongitude"];
+    }
+    
     
     [self.connectionnew cancel];
     
@@ -512,7 +534,7 @@ bool isShowngif = false;
     HUD.labelText = @"Loading";
     [HUD show:NO];  
     NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=search&string=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",self.serchByName ,Userlat,Userlong,[NSString stringWithFormat:@"%li",(long)pageNo],@"10"];
-    
+    NSLog(@"urlStr = %@", urlStr);
     //passcode
     
     NSURL *url = [NSURL URLWithString:[urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
@@ -549,6 +571,14 @@ bool isShowngif = false;
        [HUD show:NO];
     //initialize url that is going to be fetched.
     //NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=%@&language_id=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",[self.getSubcategryDic objectForKey:@"sub_cat_id"] ,@"2",lat,latonh,@"1",[NSString stringWithFormat:@"%li",(long)pageNo]];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    if([defaults objectForKey:@"SelectedLatitude"] != nil) {
+        Userlat = [defaults objectForKey:@"SelectedLatitude"];
+    }
+    if([defaults objectForKey:@"SelectedLongitude"] != nil) {
+        Userlong = [defaults objectForKey:@"SelectedLongitude"];
+    }
     
         // dynamic
           NSString *urlStr=[NSString stringWithFormat:@"http://allinfo.co.il/all_info/webservice/master.php?action=searchBusiness&sub_cat_id=%@&language_id=%@&latitude=%@&longitude=%@&page_no=%@&limit=%@",[self.getSubcategryDic objectForKey:@"sub_cat_id"] ,@"2",Userlat,Userlong,[NSString stringWithFormat:@"%li",(long)pageNo],@"10"];
@@ -577,7 +607,7 @@ bool isShowngif = false;
     
     //start the connection
     [self.connection start];
-
+ NSLog(@"(int)pageNo * 10 = %d", (int)pageNo * 10);
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
@@ -597,7 +627,7 @@ bool isShowngif = false;
                     [self.LocationTableView reloadData];
 
             }
-                NSLog(@"serchListArr = %@", serchListArr);
+                NSLog(@"serchListArr = %d", (int)serchListArr.count);
                 
                  [self reloadData];
             
@@ -609,7 +639,7 @@ bool isShowngif = false;
         }
     }
     }
- }else  if (connection==self.connectionnew){
+ }else if (connection==self.connectionnew){
      
      if (self.receivedDatanew != nil) {
         NSDictionary *responseDic =[NSJSONSerialization JSONObjectWithData:self.receivedDatanew options:kNilOptions error:nil];
@@ -624,7 +654,6 @@ bool isShowngif = false;
                     }
                     pageNo++;
                     [self.LocationTableView reloadData];
-                    
                     
                 }
                 [self reloadData];
@@ -722,14 +751,11 @@ bool isShowngif = false;
         if (buttonIndex == 0){
             
             [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"login"];
-            
             [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"userdata"];
-            
             
             //login
             
         }
-        
         
     }
 }
@@ -786,7 +812,7 @@ bool isShowngif = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString( @"Alert" ,nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK"  ,nil) otherButtonTitles:NSLocalizedString( @"Cancel" ,nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK"  ,nil) otherButtonTitles:NSLocalizedString( @"Cancel" ,nil), nil];
             alert.tag=1;
             [alert show];
         }
@@ -795,7 +821,7 @@ bool isShowngif = false;
         {
             NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -823,7 +849,14 @@ bool isShowngif = false;
             
         }
             break;
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
             
+            break;
 
         default:
             break;

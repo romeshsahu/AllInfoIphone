@@ -6,7 +6,7 @@
 //  Created by Mahendra Suryavanshi on 3/3/16.
 //  Copyright © 2016 PS.com. All rights reserved.
 //
-
+#import "LocationViewController.h"
 #import "RegistrationViewController.h"
 #import "MapViewController.h"
 #import "MenuViewController.h"
@@ -62,6 +62,9 @@ MapViewControllerDelegates,UITextFieldDelegate,UIScrollViewDelegate>
 
 @implementation RegistrationViewController
 bool isShownreg = false;
+
+@synthesize flagIsPeopleAccess, flagIsParkingAvaialble;
+
 -(void)viewWillAppear:(BOOL)animated
 {
     
@@ -86,7 +89,7 @@ bool isShownreg = false;
     arrCatName=[[NSMutableArray alloc]init];
     
     //self.RegistScrollView.contentSize = CGSizeMake(320, 2500);
-     [self.RegistScrollView setContentSize:CGSizeMake(320, 1700)];
+     [self.RegistScrollView setContentSize:CGSizeMake(320, 1900)];
      [self.scrollView_Images setContentSize:CGSizeMake(414, 170)];
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
@@ -109,7 +112,7 @@ bool isShownreg = false;
 - (void)viewDidLayoutSubviews
 {
     
-    [ self.RegistScrollView setContentSize:CGSizeMake(320, 1700)];
+    [ self.RegistScrollView setContentSize:CGSizeMake(320, 1900)];
 }
 -(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
@@ -129,8 +132,6 @@ bool isShownreg = false;
             
             NSRange NewRan=[newString rangeOfString:str];
             
-            
-            
             newString=[newString stringByReplacingCharactersInRange:NewRan withString:@""];
         }
     }else{
@@ -148,8 +149,6 @@ bool isShownreg = false;
         self.PlaceholderLabelh.hidden = YES;
     }
     
-    
-    
     return YES;
 }
 
@@ -161,7 +160,7 @@ bool isShownreg = false;
                                delegate:nil
                                cancelButtonTitle:NSLocalizedString(@"OK",nil)
                                otherButtonTitles:nil];
-    [errorAlert show];
+  //  [errorAlert show];
 }
 -(CLLocationCoordinate2D) getLocation{
     locationManager = [[CLLocationManager alloc] init];
@@ -226,7 +225,8 @@ bool isShownreg = false;
      self.DescriptionTextView.inputAccessoryView = keyboardDoneButtonView;
     self.tf_TblUrl.inputAccessoryView = keyboardDoneButtonView;
     self.tf_MenuUrl.inputAccessoryView = keyboardDoneButtonView;
-
+    tv_PeopleAccess.inputAccessoryView = keyboardDoneButtonView;
+    tv_ParkingAvailable.inputAccessoryView = keyboardDoneButtonView;
     
         if ([self.NametextFiled respondsToSelector:@selector(setAttributedPlaceholder:)]) {
             UIColor *color = [UIColor lightGrayColor];
@@ -251,6 +251,20 @@ bool isShownreg = false;
             [self.ProfileImageBtnOut setTitle:NSLocalizedString(@"PROFILE IMAGE",nil) forState:UIControlStateNormal];
             [self.ResterBtnOut setTitle:NSLocalizedString(@"Send",nil) forState:UIControlStateNormal];
         
+            
+            lbl_PlaceholderPeople.text=NSLocalizedString(@"PeopleAccess",nil);
+            lbl_PlaceholderParking.text=NSLocalizedString(@"ParkingAvailable",nil);
+            
+            [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+            self.strParkingAvailable = @"1";
+            
+            flagIsPeopleAccess = NO;
+            flagIsParkingAvaialble = NO;
+            
+            [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+            self.strPeopleAccess = @"1";
+            
+            
         }
     self.tabBarController.tabBar.hidden=YES;
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"Mapdata"];
@@ -1162,7 +1176,7 @@ bool isShownreg = false;
         
         
     WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(Register:)];
-    [ws UserRegistraion:self.NametextFiled.text email:self.EmailtextFiled.text password:self.PasswordTextfiled.text  phone:self.phonetextfiled.text address:self.AddressTextFiled.text latitude:self.userlat longitude: self.userlong business_name:self.BussinesNameText.text business_type_id:Bussines_id description:self.DescriptionTextView.text website_url:self.WeburlTextFiled.text sub_cat_id:sendId user_image:self.ProfileImageView.image Addimg1:self.AddImg1.image Addimg2:self.AddImg2.image  Addimg3:self.AddImg3.image  Addimg4:self.AddImg4.image  Addimg5:self.AddImg5.image  Addimg6:self.AddImg6.image Addimg7:self.AddImg7.image Addimg8:self.AddImg8.image Addimg9:self.AddImg9.image Addimg10:self.AddImg10.image  business_email:self.Bussinessemiltextfiled.text facebook_url:self.facebooktextfiled.text video_url:self.videourl.text  language_id:@"2" start_time:self.BusinesshoursText.text end_time:@"" MenuUrl:_tf_MenuUrl.text TableUrl:_tf_TblUrl.text BusinessHoursStatus:[NSString stringWithFormat:@"%d", _intBusinessHourStatus]];
+    [ws UserRegistraion:self.NametextFiled.text email:self.EmailtextFiled.text password:self.PasswordTextfiled.text  phone:self.phonetextfiled.text address:self.AddressTextFiled.text latitude:self.userlat longitude: self.userlong business_name:self.BussinesNameText.text business_type_id:Bussines_id description:self.DescriptionTextView.text website_url:self.WeburlTextFiled.text sub_cat_id:sendId user_image:self.ProfileImageView.image Addimg1:self.AddImg1.image Addimg2:self.AddImg2.image  Addimg3:self.AddImg3.image  Addimg4:self.AddImg4.image  Addimg5:self.AddImg5.image  Addimg6:self.AddImg6.image Addimg7:self.AddImg7.image Addimg8:self.AddImg8.image Addimg9:self.AddImg9.image Addimg10:self.AddImg10.image  business_email:self.Bussinessemiltextfiled.text facebook_url:self.facebooktextfiled.text video_url:self.videourl.text  language_id:@"2" start_time:self.BusinesshoursText.text end_time:@"" MenuUrl:_tf_MenuUrl.text TableUrl:_tf_TblUrl.text BusinessHoursStatus:[NSString stringWithFormat:@"%d", _intBusinessHourStatus] PeopleAccessStatus:_strPeopleAccess ParkingAvailable:_strParkingAvailable];
     }
     
 }
@@ -1228,7 +1242,7 @@ bool isShownreg = false;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert" ,nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
             alert.tag=1;
             [alert show];
         }
@@ -1237,7 +1251,7 @@ bool isShownreg = false;
         {
             NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -1266,7 +1280,14 @@ bool isShownreg = false;
         }
             break;
             
-
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
+            
+            break;
         default:
             break;
     }
@@ -1344,6 +1365,28 @@ bool isShownreg = false;
         MapViewController *MapView = segue.destinationViewController;
         MapView.delegates = self;
     }
+    
+}
+
+- (IBAction)btn_PeopleAccess:(id)sender {
+    if(!flagIsPeopleAccess) {
+        [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
+        self.strPeopleAccess = @"2";
+    } else {
+        [_btn_PeopleAccess setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+        self.strPeopleAccess = @"1";
+    }
+    flagIsPeopleAccess = !flagIsPeopleAccess;
+}
+- (IBAction)btn_ParkingAvailable:(id)sender {
+    if(!flagIsParkingAvaialble) {
+        [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"close_hours.png"] forState:UIControlStateNormal];
+        self.strParkingAvailable = @"2";
+    } else {
+        [_btn_ParkingAvailable setBackgroundImage:[UIImage imageNamed:@"open_hours.png"] forState:UIControlStateNormal];
+        self.strParkingAvailable = @"1";
+    }
+    flagIsParkingAvaialble = !flagIsParkingAvaialble;
 }
 
 @end

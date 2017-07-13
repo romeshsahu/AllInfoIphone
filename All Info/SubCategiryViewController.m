@@ -5,7 +5,7 @@
 //  Created by Mahendra Suryavanshi on 3/5/16.
 //  Copyright © 2016 PS.com. All rights reserved.
 //
-
+#import "LocationViewController.h"
 #import "SubCategiryViewController.h"
 #import "HomeCollectionViewCell.h"
 #import "WSOperationInEDUApp.h"
@@ -348,7 +348,7 @@ bool issub = false;
         {
             NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -375,7 +375,14 @@ bool issub = false;
             }
         }
             break;
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
             
+            break;
 
         default:
             break;

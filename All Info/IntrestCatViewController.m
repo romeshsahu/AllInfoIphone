@@ -61,7 +61,9 @@ bool isShownmodule1 = false;
     arrSelectedCat=[[NSMutableArray alloc]init];
     arrSelectedCat_Check=[[NSMutableArray alloc]init];
 
-    [self GetcategoryList];
+    [self getInterestedCategoryList];
+    
+    //[self GetcategoryList];
     self.tabBarController.tabBar.hidden = YES;
 
     la=userlat;
@@ -77,7 +79,7 @@ bool isShownmodule1 = false;
                                delegate:nil
                                cancelButtonTitle:NSLocalizedString(@"OK" ,nil)
                                otherButtonTitles:nil];
-    [errorAlert show];
+   // [errorAlert show];
 }
 
 -(CLLocationCoordinate2D) getLocation{
@@ -114,6 +116,43 @@ bool isShownmodule1 = false;
     lo=userlong;
 }
 
+- (void) getInterestedCategoryList {
+    
+    WSOperationInEDUApp *ws=[[WSOperationInEDUApp alloc]initWithDelegate:self callback:@selector(GetInterestedCategory:)];
+    [ws getInterestedCategories:[UserDict objectForKey:@"login_id"]];
+    
+}
+    
+-(void)GetInterestedCategory:(id)response {
+        NSDictionary *responseDic=response;
+        if ([response isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"responseDic = %@", responseDic);
+            if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
+                categrtArray = [[responseDic objectForKey:@"result"] mutableCopy];
+                
+                NSSortDescriptor * descriptor = [NSSortDescriptor sortDescriptorWithKey:@"show_date" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
+                NSArray * arrSorted = [NSArray arrayWithObject:descriptor];
+                
+                [categrtArray sortUsingDescriptors:arrSorted];
+                
+                arrSelectedCat_Check = [[NSMutableArray alloc] init];
+                arrSelectedCat = [[NSMutableArray alloc] init];
+                
+                for (int i=0; i<categrtArray.count; i++) {
+                    if([categrtArray[i][@"interest"] isEqualToString:@"yes"]) {
+                        [arrSelectedCat addObject:categrtArray[i][@"category_id"]];
+                        [arrSelectedCat_Check addObject:@"check"];
+                    } else {
+                        [arrSelectedCat_Check addObject:@""];
+                    }   
+                }
+               
+                 [_HomeCollectionView reloadData];
+                NSLog(@"arrSelectedCat = %@", arrSelectedCat);
+                NSLog(@"arrSelectedCat_Check = %@", arrSelectedCat_Check);
+            }
+        }
+    }
 -(void)GetcategoryList{
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"D cat date = %@, kAppDelegate.strCategoryDate = %@", [defaults objectForKey:@"cat_last_update"], kAppDelegate.strCategoryDate);
@@ -125,17 +164,13 @@ bool isShownmodule1 = false;
         FMDBManager *fm = [[FMDBManager alloc] init];
         [fm openDataBase];
         categrtArray = [fm Categryarry];
-        
         NSSortDescriptor * descriptor = [NSSortDescriptor sortDescriptorWithKey:@"show_date" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
         NSArray * arrSorted = [NSArray arrayWithObject:descriptor];
-        
         [categrtArray sortUsingDescriptors:arrSorted];
-        
         [self.HomeCollectionView reloadData];
         for (int i=0; i<categrtArray.count; i++) {
             [arrSelectedCat_Check addObject:@""];
         }
-
     }
 }
 
@@ -144,8 +179,8 @@ bool isShownmodule1 = false;
     NSLog(@"view did appear");
 }
 
--(void)GetBusinesList:(id)response
-{
+- (void)GetBusinesList:(id)response {
+    
     NSDictionary *responseDic=response;
     if ([response isKindOfClass:[NSDictionary class]]) {
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
@@ -161,9 +196,7 @@ bool isShownmodule1 = false;
                 FMDBManager *fm = [[FMDBManager alloc] init];
                 [fm openDataBase];
                 [fm saveallBusinss:BusinessDic];
-                
             }
-            
         }
     }
 }
@@ -173,7 +206,6 @@ bool isShownmodule1 = false;
     if ([response isKindOfClass:[NSDictionary class]]) {
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
             //categrtArray=[responseDic objectForKey:@"result"];
-            
             NSArray *CategrArr=[responseDic objectForKey:@"result"];
             for (int i=0; i<CategrArr.count; i++) {
                 NSDictionary *CategrDic=[CategrArr objectAtIndex:i];
@@ -188,8 +220,6 @@ bool isShownmodule1 = false;
                 FMDBManager *fm = [[FMDBManager alloc] init];
                 [fm openDataBase];
                 [fm saveallcatgery:CategrDic];
-                
-                
                 [arrSelectedCat_Check addObject:@""];
             }
             //if (CategrArr && CategrArr.count>0) {
@@ -203,15 +233,7 @@ bool isShownmodule1 = false;
         
         NSSortDescriptor * descriptor = [NSSortDescriptor sortDescriptorWithKey:@"show_date" ascending:NO selector:@selector(localizedCaseInsensitiveCompare:)];
         NSArray * arrSorted = [NSArray arrayWithObject:descriptor];
-        
         [categrtArray sortUsingDescriptors:arrSorted];
-        
-        // [categrtArray removeAllObjects];
-        //[categrtArray addObjectsFromArray:arrSorted];
-        
-        
-        
-        // }
         [self.HomeCollectionView reloadData];
     }
 }
@@ -297,10 +319,9 @@ bool isShownmodule1 = false;
     [cell.HomeImageView sd_setImageWithURL:[NSURL URLWithString:imageToLoad] placeholderImage:[UIImage imageNamed:@"allinfo_logo_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
     }];
     
-    cell.imgCheck.image = [UIImage imageNamed:@""];
+    cell.imgCheck.image = [[UIImage alloc] init];
     if ([arrSelectedCat_Check[indexPath.row] isEqualToString:@"check"]) {
         cell.imgCheck.image = [UIImage imageNamed:@"checkBlueTick.png"];
-
     }
     
     return cell;
@@ -336,7 +357,6 @@ bool isShownmodule1 = false;
         [arrSelectedCat addObject:str1];
         [arrSelectedCat_Check replaceObjectAtIndex:indexPath.row withObject:@"check"];
        // datasetCell.imgCheck.image = [UIImage imageNamed:@"checkBlueTick.png"];
-
     }
     [collectionView reloadData];
 
@@ -368,9 +388,7 @@ bool isShownmodule1 = false;
 - (IBAction)btnDone:(id)sender {
     
     if (arrSelectedCat.count>0) {
-        
         strSelectedCat = [arrSelectedCat componentsJoinedByString:@","];
-
         NSString *device_id =[[NSUserDefaults standardUserDefaults] objectForKey:@"DevieceId"];
         if (device_id == nil) {
             device_id = @"db1beb6c1f3f8286b6f94c9b6239b12c8fa6014004860f64606c3ac5681014b0";
@@ -379,23 +397,21 @@ bool isShownmodule1 = false;
         [ws interest_category_login_id:[UserDict objectForKey:@"login_id"] category_id:strSelectedCat device_id:device_id device_type:@"1"];
     }
 }
--(void)intrest_category:(id)response
-{
+    
+- (void)intrest_category:(id)response {
     NSDictionary *responseDic=response;
     if ([response isKindOfClass:[NSDictionary class]]) {
+        NSLog(@"responseDic = %@", responseDic);
         if ([[responseDic objectForKey:@"message"]isEqualToString:@"success"]) {
-            UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"submitted successfully",nil) preferredStyle:UIAlertControllerStyleAlert];
-            
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"submitted successfully",nil) preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
-            
             [alert addAction:yesButton];
             [self presentViewController:alert animated:YES completion:nil];
         }
     }
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -404,9 +420,7 @@ bool isShownmodule1 = false;
 
 - (IBAction)ActionONBack:(id)sender {
    // [self dismissViewControllerAnimated:YES completion:nil];
-    
-    [self .navigationController popViewControllerAnimated:YES];
-
+   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -91,11 +91,9 @@
     {
         // Downward
         [pullToRefreshManager_ tableViewScrolled];
-        
     }
     
     lastContentOffset = currentOffset;
-    
     
 }
 
@@ -119,7 +117,6 @@
     //    }
     
 }
-
 
 /**
  * Tells client that refresh has been triggered
@@ -163,7 +160,6 @@
 }
 
 - (void)loadTable {
-    
     
     reloads_++;
     

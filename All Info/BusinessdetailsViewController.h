@@ -101,7 +101,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage9;
 @property (weak, nonatomic) IBOutlet UIImageView *ProfileImage10;
 
-
+@property (weak, nonatomic) IBOutlet UIImageView *imgView_Parking;
+@property (weak, nonatomic) IBOutlet UIImageView *imgView_People;
 
 @property (weak, nonatomic) IBOutlet UILabel *SubcategryLab;
 - (IBAction)ActionOnmap:(id)sender;

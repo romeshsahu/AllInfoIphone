@@ -17,7 +17,8 @@
 #import "UnicodeConversionClass.h"
 #import "GifFileViewController.h"
 #import "IntrestCatViewController.h"
-
+//#import <GoogleMaps/GoogleMaps.h>
+//#import "SMCalloutView.h"
 
 @interface MapListViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate,MBProgressHUDDelegate>
 
@@ -37,8 +38,10 @@
 }
 - (IBAction)btn_Share:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UILabel *lbl_SubCategoryName;
+
 @property bool isserchsetview;
-@property NSString *serchByName;
+@property NSString *serchByName, * strSCName;
 @property (retain, nonatomic) NSURLConnection *connection;
 @property (retain, nonatomic) NSMutableData *receivedData;
 
@@ -49,10 +52,9 @@
 @property BOOL issearch;
 @property NSDictionary *getSubcategryDic;
 - (IBAction)BackBtn:(id)sender;
-
+    @property int intLimit;
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-
 
 @end
 

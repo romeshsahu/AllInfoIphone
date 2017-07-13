@@ -432,7 +432,7 @@
         isId = YES;
     }
     
-    if (isId == NO) {
+   if (isId == NO) {
         BOOL success = [self.db executeUpdate:@"INSERT INTO history_Table (address, business_name, business_type,business_type_id,category_id, category_name,create_date,description,distance,email,end_time,facebook_url,language_id,latitude,longitude,phone,product_image1,product_image2,product_image3,product_image4,product_image5,product_image6,product_image7,product_image8,product_image9,product_image10,rating,start_time,user_id,user_image,username,video_url,website_url, is_open, subcategory_image) VALUES (:address, :business_name,:business_type,:business_type_id,:category_id, :category_name,:create_date,:description,:distance,:email,:end_time,:facebook_url,:language_id,:latitude,:longitude,:phone,:product_image1,:product_image2,:product_image3,:product_image4,:product_image5,:product_image6,:product_image7,:product_image8,:product_image9,:product_image10,:rating,:start_time,:user_id,:user_image,:username,:video_url,:website_url,:is_open, :subcategory_image)" withParameterDictionary:Busnesdic];
         
         if (!success) {
@@ -485,9 +485,7 @@
         NSString *language_id = [s stringForColumn:@"language_id"];
         NSString *is_open = [s stringForColumn:@"is_open"];
         NSString *subcategory_image = [s stringForColumn:@"subcategory_image"];
-        
-        
-        
+
         if([is_open isEqual:[NSNull null]] || [is_open isEqual:@""] || is_open == nil) {
             is_open =  @"";
         }

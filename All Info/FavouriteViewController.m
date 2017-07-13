@@ -5,7 +5,7 @@
 //  Created by iPhones on 4/23/16.
 //  Copyright © 2016 Parkhya solutions. All rights reserved.
 //
-
+#import "LocationViewController.h"
 #import "FavouriteViewController.h"
 #import "FavirateCollectionViewCell.h"
 #import "SubCategiryViewController.h"
@@ -57,20 +57,22 @@ bool isShownfaver;
     NSLog(@"favtatearr = %d", (int)favtatearr.count);
     [self.favitarateCollectionView reloadData];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     return favtatearr.count;
 }
 
 -(NSInteger)numberOfSectionsInCollectionView:
-(UICollectionView *)collectionView
-{
+(UICollectionView *)collectionView {
     return 1;
 }
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     FavirateCollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:kCid forIndexPath:indexPath];
@@ -102,8 +104,6 @@ bool isShownfaver;
     NSString *imageToLoad8 = [favrateDic objectForKey:@"product_image8"];
     NSString *imageToLoad9 = [favrateDic objectForKey:@"product_image9"];
     NSString *imageToLoad10 = [favrateDic objectForKey:@"product_image10"];
-    
-    
     
     NSLog(@"imageToLoad = %@", imageToLoad);
     NSLog(@"kAppDelegate.strSubCategory = %@", kAppDelegate.strSubCategory);
@@ -250,7 +250,7 @@ bool isShownfaver;
             break;
         case 6:
         {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert" ,nil) message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel" ,nil), nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Are you sure you want to logout?",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK" ,nil) otherButtonTitles:NSLocalizedString(@"Cancel" ,nil), nil];
             alert.tag=1;
             [alert show];
         }
@@ -259,7 +259,7 @@ bool isShownfaver;
         {
             NSDictionary *UserDict =[[NSUserDefaults standardUserDefaults] objectForKey:@"userdata"];
             if (UserDict == nil) {
-                UIAlertController * alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"" message:NSLocalizedString(@"Please login first",nil) preferredStyle:UIAlertControllerStyleAlert];
                 
                 UIAlertAction* yesButton = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK",nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
                     
@@ -287,7 +287,14 @@ bool isShownfaver;
             
         }
             break;
+        case 8:
+        {
+            LocationViewController*vcLocationViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"LocationViewController"];
+            vcLocationViewController.tabBarController.tabBar.hidden = YES;
+            [self.navigationController pushViewController:vcLocationViewController animated:YES];
+        }
             
+            break;
 
         default:
             break;
@@ -354,7 +361,7 @@ bool isShownfaver;
 }
 
 - (IBAction)ActionOnback:(id)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Alert",nil) message:NSLocalizedString(@"Do you want to close the Allinfo",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:NSLocalizedString(@"Do you want to close the Allinfo",nil) delegate:self cancelButtonTitle:NSLocalizedString(@"OK",nil) otherButtonTitles:NSLocalizedString(@"Cancel",nil), nil];
     alert.tag=11;
     [alert show];
     
